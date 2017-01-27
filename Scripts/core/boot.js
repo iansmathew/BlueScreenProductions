@@ -1,4 +1,4 @@
-//state loads asset files for menu
+//state loads asset files for menu screen
 var bootState = {
     //place assets to be loaded here
     preload: function(){

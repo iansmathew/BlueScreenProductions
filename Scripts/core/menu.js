@@ -9,3 +9,28 @@ var menuState = {
 
     },
 };
+
+/* -- States below are the different menu button states -- */
+
+var optionState = {
+    //code to make assets goes here
+    create: function(){
+
+    },
+    //code to update the assets goes here //changes are reflected in game render
+    update: function(){
+
+    },
+},
+
+var creditState = {
+    //code to make assets goes here
+    create: function(){
+
+    },
+    //code to update the assets goes here //changes are reflected in game render
+    update: function(){
+
+    },
+},
+

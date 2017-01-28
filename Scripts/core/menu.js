@@ -2,7 +2,7 @@
 var menuState = {
     //code to make assets goes here
     create: function(){
-
+        game.state.start('load');//remove this code before starting menu UI
     },
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
@@ -20,8 +20,8 @@ var optionState = {
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
-    },
-},
+    }
+};
 
 var creditState = {
     //code to make assets goes here
@@ -31,6 +31,6 @@ var creditState = {
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
-    },
-},
+    }
+};
 

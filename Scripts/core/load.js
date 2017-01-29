@@ -1,4 +1,4 @@
-//state preloads assets for playState
+//state preload's assets for playState
 var loadState = {
     //place assets to be loaded here
     preload: function(){
@@ -19,5 +19,5 @@ var loadState = {
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
-    },
+    }
 };

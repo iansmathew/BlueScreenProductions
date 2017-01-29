@@ -15,5 +15,5 @@ var bootState = {
 
 
         game.state.start('menu');
-    },
+    }
 };

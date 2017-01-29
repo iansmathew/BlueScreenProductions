@@ -7,7 +7,7 @@ var playState = {
         this.map.addTilesetImage('tileSet1');
         this.background = this.map.createLayer('Tile Layer 2');
         this.foreground = this.map.createLayer('Tile Layer 1');
-        this.map.setCollisionBetween(1, 1000, true, this.foreground)
+        this.map.setCollisionBetween(1, 1000, true, this.foreground);
         /*-- setting world properties --*/
 
         game.physics.arcade.gravity.y = 1000;
@@ -23,9 +23,9 @@ var playState = {
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
         this.spawnEnemies('enemyLarge', 1, game.width/2, 0);
-        
 
     },
+
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
         this.physics.arcade.collide(this.player, this.foreground);
@@ -151,11 +151,11 @@ var playState = {
         }
         else
             player.hp -= enemy.dmg;
-    },
+    }
 };
 
 var enemyProperties = {
     enemyLarge: {hp: 100, vel: 50, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50},
     enemyMed: {hp: 50, vel: 100, img: 'medBubble', nextSize: 'enemySmall', dmg: 20},
-    enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10},
+    enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10}
 };

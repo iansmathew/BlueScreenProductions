@@ -9,7 +9,7 @@ var loadState = {
         game.load.image('bigBubble', "././Assets/img/tempGameAssets/tempBigBubble.png");
         game.load.image('medBubble', "././Assets/img/tempGameAssets/tempMediumBubble.png");
         game.load.image('smallBubble', "././Assets/img/tempGameAssets/tempSmallBubble.png");
-
+        game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
 
     },
     //code to make assets goes here

@@ -1,6 +1,6 @@
 //this is where we declare our game. This code loads last, but runs first
 //refer to the 'keys' for switching states
-var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(1280, 736, Phaser.AUTO, 'gameDiv');
 
 game.state.add('boot', bootState);
 game.state.add('menu', menuState);

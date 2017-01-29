@@ -2,25 +2,13 @@
 var playState = {
     //code to make assets goes here
     create: function(){
-        /*-- creating player --*/
+        /*-- setting world properties --*/
         game.add.sprite(0, 0, 'background');
-        //game.physics.arcade.gravity.y = 1000; //Do not enable, need to fix gravity.
-        this.player = game.add.sprite(game.width/2, 780, 'player');
-        this.player.anchor.setTo(0.5, 0.5);
-        game.physics.arcade.enable(this.player);
-        this.player.body.gravity.y = 1500;
-        this.player.body.bounce.set(0.3);
-        this.player.body.collideWorldBounds = true;
-        this.player.cursor = game.input.keyboard.createCursorKeys();
-        this.player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.player.hp = 100;
-        this.player.weapon = game.add.weapon(30, 'bullet'); //
-        this.player.weapon.enableBody = true;
-        this.player.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.player.weapon.bulletGravity = (0, 0);
-        this.player.weapon.bulletSpeed = 850;
-        this.player.weapon.fireRate = 200;
-        this.player.weapon.trackSprite(this.player);
+        game.physics.arcade.gravity.y = 1000;
+
+        //-- creating player --//
+        this.player = this.createPlayer();
+        this.player.weapon = this.setWeapon(this.player);
 
 
         /*-- creating enemy group --*/
@@ -39,6 +27,38 @@ var playState = {
         game.physics.arcade.overlap(this.player.weapon.bullets, this.enemies, this.hitEnemy, null, this);
         game.physics.arcade.overlap(this.player, this.enemies, this.killPlayer, null, this);
         
+    },
+
+    createPlayer: function () {
+        var player = game.add.sprite(game.width/2, 780, 'player');
+        player.anchor.setTo(0.5, 0.5);
+        game.physics.arcade.enable(player);
+        player.body.gravity.y = 1500;
+        player.body.bounce.set(0.3);
+        player.body.collideWorldBounds = true;
+        player.cursor = game.input.keyboard.createCursorKeys();
+        player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        //-- User defined properties for player --//
+        player.hp = 100;
+
+        return player;
+    },
+
+    setWeapon: function (player) {
+        player.weapon = game.add.weapon(30, 'bullet'); //
+        player.weapon.enableBody = true;
+        player.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        player.weapon.bulletGravity.y =-1000;
+        player.weapon.bulletSpeed = 850;
+        player.weapon.fireRate = 200;
+        player.weapon.trackSprite(player);
+
+        return player.weapon;
+    },
+
+    createEnemies: function () {
+
     },
 
     movePlayer: function (player) {

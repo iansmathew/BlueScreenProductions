@@ -62,6 +62,8 @@ var playState = {
     },
 
     movePlayer: function (player) {
+        if (!player.alive) 
+
         if (player.cursor.left.isDown){
             player.body.velocity.x = -300;
         }
@@ -128,17 +130,10 @@ var playState = {
             player.kill();
             player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
             player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
-            this.btnPlayA = game.add.button(570, 300, 'playAgain',playAgain);
         }
         else
             player.hp -= enemy.dmg;
     },
-
-    playAgain: function() {
-        game.state.start('load');
-
-    },
-
 };
 
 var enemyProperties = {

@@ -18,6 +18,8 @@ var menuState = {
         this.btnE = game.add.button(570, 500, 'exit',this.exit);
 
     },
+
+
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
@@ -37,11 +39,13 @@ var menuState = {
 
     exit:function() {
 
-    },
+    }
 
 };
 
 /* -- States below are the different menu button states -- */
+
+
 
 var optionState = {
     //code to make assets goes here
@@ -53,6 +57,9 @@ var optionState = {
 
     }
 };
+
+
+
 
 var creditState = {
     //code to make assets goes here

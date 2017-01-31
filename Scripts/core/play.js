@@ -24,6 +24,14 @@ var playState = {
 
         this.spawnEnemies('enemyLarge', 1, game.width/2, 0);
 
+        /*-- making sounds --*/
+        this.shootSfx = game.add.audio('bulletSfx');
+        this.shootSfx.allowMultiple = false;
+
+        this.bubbleSfx = game.add.audio('bubbleSfx');
+        this.bubbleSfx.allowMultiple = false;
+        
+
     },
 
     //code to update the assets goes here //changes are reflected in game render
@@ -67,7 +75,7 @@ var playState = {
         player.weapon.bulletSpeed = 850;
         player.weapon.fireRate = 200;
         player.weapon.trackSprite(player);
-
+       
         return player.weapon;
     },
 
@@ -109,6 +117,8 @@ var playState = {
         else if (player.fireButton.isDown) { //firing straight up
             player.weapon.fireAngle = Phaser.ANGLE_UP;
             player.weapon.fire();
+            //if(shootSfx.isPLaying == false){shootSfx.play();}
+            this.shootSfx.play();
         }
     },
     
@@ -136,6 +146,7 @@ var playState = {
         if (enemy.hp <= 0){
             enemy.kill();
             this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
+            this.bubbleSfx.play();
 
         }
         else {

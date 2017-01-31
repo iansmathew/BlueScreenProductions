@@ -10,6 +10,8 @@ var loadState = {
         game.load.image('medBubble', "././Assets/img/tempGameAssets/tempMediumBubble.png");
         game.load.image('smallBubble', "././Assets/img/tempGameAssets/tempSmallBubble.png");
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
+        game.load.audio('bulletSfx', "././Assets/sound/blaster.mp3");
+        game.load.audio('bubbleSfx', "././Assets/sound/explosion.mp3");
 
     },
     //code to make assets goes here

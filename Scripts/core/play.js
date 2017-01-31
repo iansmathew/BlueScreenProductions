@@ -25,11 +25,11 @@ var playState = {
         this.spawnEnemies('enemyLarge', 1, game.width/2, 0);
 
         /*-- making sounds --*/
-        shootSfx = game.add.audio('bulletSfx');
-        shootSfx.allowMultiple = false;
+        this.shootSfx = game.add.audio('bulletSfx');
+        this.shootSfx.allowMultiple = false;
 
-        bubbleSfx = game.add.audio('bubbleSfx');
-        bubbleSfx.allowMultiple = false;
+        this.bubbleSfx = game.add.audio('bubbleSfx');
+        this.bubbleSfx.allowMultiple = false;
         
 
     },
@@ -118,7 +118,7 @@ var playState = {
             player.weapon.fireAngle = Phaser.ANGLE_UP;
             player.weapon.fire();
             //if(shootSfx.isPLaying == false){shootSfx.play();}
-            shootSfx.play();
+            this.shootSfx.play();
         }
     },
     
@@ -146,7 +146,7 @@ var playState = {
         if (enemy.hp <= 0){
             enemy.kill();
             this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
-            bubbleSfx.play();
+            this.bubbleSfx.play();
 
         }
         else {

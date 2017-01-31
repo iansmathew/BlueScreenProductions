@@ -40,7 +40,7 @@ var playState = {
     },
 
     createPlayer: function () {
-        var player = game.add.sprite(game.width/2, 780, 'player');
+        var player = game.add.sprite(game.width/2, 600, 'player');
         player.anchor.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 1500;

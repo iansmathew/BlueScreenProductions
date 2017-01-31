@@ -4,7 +4,7 @@ var loadState = {
     preload: function(){
         game.load.image('tileSet1', "Assets/TileMaps/tileSet1.png");
         game.load.tilemap('tileMap', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.spritesheet('player', "Assets/img/tempGameAssets/Player.png", 80, 110);
+        game.load.spritesheet('player', "Assets/img/tempGameAssets/Player.png", 60, 83);
         game.load.image('bullet', "././Assets/img/tempGameAssets/tempBullet.png");
         game.load.image('bigBubble', "././Assets/img/tempGameAssets/tempBigBubble.png");
         game.load.image('medBubble', "././Assets/img/tempGameAssets/tempMediumBubble.png");

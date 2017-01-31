@@ -93,7 +93,7 @@ var playState = {
 
         //jump
         if (player.cursor.up.isDown && player.body.onFloor()){
-            player.body.velocity.y = -800;
+            player.body.velocity.y = -1000;
             //player.frame = 6;//Requires Fixing image only stays for 1 frame
         }
 

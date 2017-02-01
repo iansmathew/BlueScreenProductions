@@ -6,6 +6,8 @@ game.state.add('boot', bootState);
 game.state.add('menu', menuState);
 game.state.add('option', optionState);
 game.state.add('credit', creditState);
+game.state.add('instruction', instructionState);
+game.state.add('gameOver', gameOverState);
 game.state.add('load', loadState);
 game.state.add('play', playState);
 

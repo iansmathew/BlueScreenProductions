@@ -72,3 +72,23 @@ var creditState = {
     }
 };
 
+var instructionState = {
+    create: function () {
+        
+    },
+    
+    update: function () {
+        
+    }
+};
+
+var gameOverState = {
+    create: function () {
+        
+    },
+    
+    update: function () {
+        
+    }
+};
+

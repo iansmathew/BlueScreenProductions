@@ -12,7 +12,7 @@ var menuState = {
         nameLabel.anchor.setTo(0.5, 0.5);
 
         //create buttons
-        this.btnP1 = game.add.button(570, 200, 'singleP', this.player1);
+        this.btnP1 = game.add.button(570, 200, 'singleP', instructionState);
         this.btnO = game.add.button(570, 300, 'options', this.options);
         this.btnC = game.add.button(570, 400, 'credits',this.credits);
         this.btnE = game.add.button(570, 500, 'exit',this.exit);
@@ -44,6 +44,12 @@ var menuState = {
 };
 
 /* -- States below are the different menu button states -- */
+
+
+var instructionState = {
+
+
+};
 
 
 

@@ -21,3 +21,6 @@ When you've finished coding a feature COMPLETELY (eg: Menu Screen is done) submi
   - basic collisions
   - player death
   - enemy damage and spawn
+  - bullet and death sound
+  - basic animations
+  

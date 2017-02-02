@@ -69,18 +69,20 @@ var playState = {
         player.anchor.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 1500;
-        player.body.bounce.set(0.3);
+        player.body.setSize(50, 70, 5, 13); //reducing the player collision box
+        //player.body.bounce.set(0.3);
         player.body.collideWorldBounds = true;
         player.cursor = game.input.keyboard.createCursorKeys();
         player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         //-- User defined properties for player --//
         player.hp = 100;
+        player.invulnerable = false;
 
         /*-- creating Player Animation --*/
         player.animations.add('right', [0, 1], 8, true);
         player.animations.add('left', [3, 4], 8, true);
-        player.invulnerable = false;
+
 
         return player;
     },

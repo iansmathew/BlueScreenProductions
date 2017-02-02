@@ -8,8 +8,8 @@ var playState = {
         this.background = this.map.createLayer('Tile Layer 2');
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 1000, true, this.foreground);
-        /*-- setting world properties --*/
 
+        /*-- setting world properties --*/
         game.physics.arcade.gravity.y = 1000;
 
         //-- creating player --//
@@ -30,12 +30,12 @@ var playState = {
 
         this.bubbleSfx = game.add.audio('bubbleSfx');
         this.bubbleSfx.allowMultiple = false;
-        
 
     },
 
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
+
         this.physics.arcade.collide(this.player, this.foreground);
         this.physics.arcade.collide(this.enemies, this.foreground);
         this.movePlayer(this.player);
@@ -46,6 +46,23 @@ var playState = {
             game.state.start('gameOver');
         }
     },
+
+    //this function is used solely to show th physics body and render other debug stuff.
+    //Comment it out if you're not using it.
+        render: function () {
+
+
+            game.debug.bodyInfo(this.player, 32, 32);
+            game.debug.body(this.player);
+            // call renderGroup on each of the alive members
+            this.enemies.forEachAlive(renderGroup, this);
+            this.player.weapon.bullets.forEachAlive(renderGroup, this);
+            //render function for groups
+            function renderGroup(member) {
+                game.debug.body(member);
+            }
+
+        },
 
     createPlayer: function () {
         var player = game.add.sprite(game.width/2, 600, 'player');
@@ -63,6 +80,7 @@ var playState = {
         /*-- creating Player Animation --*/
         player.animations.add('right', [0, 1], 8, true);
         player.animations.add('left', [3, 4], 8, true);
+        player.invulnerable = false;
 
         return player;
     },
@@ -143,26 +161,43 @@ var playState = {
     hitEnemy: function (bullet, enemy) {
         bullet.kill(); //bullet dies on impact
 
-        if (enemy.hp <= 0){
-            enemy.kill();
-            this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
-            this.bubbleSfx.play();
 
-        }
-        else {
+        if (enemy.hp > 0){
             enemy.hp -= 10;
+        }
+
+        else {
+            enemy.kill();
+            this.bubbleSfx.play();
+            this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
+
+
         }
     },
 
     killPlayer: function (player, enemy) {
-        if (player.hp <= 0) {
-            player.kill();
-            player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
-            player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+        if (player.invulnerable == false) {
+            if (player.hp <= 0) {
+                player.kill();
+                player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
+                player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+            }
+            else {
+                player.hp -= enemy.dmg;
+                console.log(player.hp);
+
+                player.invulnerable = true;
+                this.setInvulnerable(player);
+            }
         }
-        else
-            player.hp -= enemy.dmg;
-    }
+    },
+
+    setInvulnerable: function (player) {
+        game.time.events.add(2000,
+            function () {
+                player.invulnerable = false;
+        }, this);
+    },
 };
 
 var enemyProperties = {
@@ -171,3 +206,10 @@ var enemyProperties = {
     enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10}
 };
 
+/*
+var waveProperties = {
+    wave1 : {limit: 24, delay: 0},
+    wave2 : {limit: 48, delay: 20000},
+    wave3 : {limit: 72, delay: 30000},
+
+};*/

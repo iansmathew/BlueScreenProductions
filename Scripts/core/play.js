@@ -101,7 +101,7 @@ var playState = {
 
         //jump
         if (player.cursor.up.isDown && player.body.onFloor()){
-            player.body.velocity.y = -1000;
+            player.body.velocity.y = -999;
             //player.frame = 6;//Requires Fixing image only stays for 1 frame
         }
 
@@ -118,7 +118,7 @@ var playState = {
             player.weapon.fireAngle = Phaser.ANGLE_UP;
             player.weapon.fire();
             //if(shootSfx.isPLaying == false){shootSfx.play();}
-            this.shootSfx.play();
+            this.shootSfx.play(null, null, 1, false, false);
         }
     },
     

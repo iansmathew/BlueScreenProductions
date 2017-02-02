@@ -8,8 +8,9 @@ Clone the forked repo (from yourAccount/BlueScreenProductions) through Github De
 Start coding your game/feature
 
 <--WHEN TO USE SYNC AND WHEN TO SUBMIT PULL REQUEST-->    
-When you've finished coding for the day, sync your local repo to your own GitHub repo (yourAccount/BlueScreenProductions)
-When you've finished coding a feature COMPLETELY (eg: Menu Screen is done) submit a pull request to iansmathew/BlueScreenProductions
+When you've finished coding for the day, FIRST commit to master, then sync your local repo to your own GitHub repo (yourAccount/BlueScreenProductions)
+
+When you've finished coding a feature COMPLETELY (eg: Menu Screen is done), FIRST commit to master, then sync and THEN submit a pull request to iansmathew/BlueScreenProductions
 
 
 ## APLHA RELEASE GAME INFO:

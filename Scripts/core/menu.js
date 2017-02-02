@@ -46,13 +46,6 @@ var menuState = {
 /* -- States below are the different menu button states -- */
 
 
-var instructionState = {
-
-
-};
-
-
-
 var optionState = {
     //code to make assets goes here
     create: function(){
@@ -63,8 +56,6 @@ var optionState = {
 
     }
 };
-
-
 
 
 var creditState = {
@@ -80,7 +71,12 @@ var creditState = {
 
 var instructionState = {
     create: function () {
-        
+        game.add.image(0, 0, 'background');
+
+        var instructions = game.add.text(game.width/2, 80, 'Instructions',
+            {font: '50px Times New Roman', fill: '#ffffff' });
+
+
     },
     
     update: function () {

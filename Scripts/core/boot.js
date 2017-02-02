@@ -7,6 +7,7 @@ var bootState = {
         game.load.image('options', "././Assets/img/tempMenuAssets/btnHelp.png");
         game.load.image('credits', "././Assets/img/tempMenuAssets/tempCredits.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");
+        game.load.image('play', "././Assets/img/tempMenuAssets/btnStart.png");
     },
     //code to make assets goes here
     create: function(){

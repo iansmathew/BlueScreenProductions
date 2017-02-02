@@ -12,7 +12,7 @@ var menuState = {
         nameLabel.anchor.setTo(0.5, 0.5);
 
         //create buttons
-        this.btnP1 = game.add.button(570, 200, 'singleP', instructionState);
+        this.btnP1 = game.add.button(570, 200, 'singleP', this.instructionState);
         this.btnO = game.add.button(570, 300, 'options', this.options);
         this.btnC = game.add.button(570, 400, 'credits',this.credits);
         this.btnE = game.add.button(570, 500, 'exit',this.exit);
@@ -25,10 +25,6 @@ var menuState = {
 
     },
 
-    player1: function() {
-        game.state.start('load');
-    },
-
     options: function() {
 
     },
@@ -39,7 +35,12 @@ var menuState = {
 
     exit:function() {
 
-    }
+    },
+
+    instructionState: function () { //I added this function, which you forgot to
+        game.state.start('instruction');
+        console.log("Clicked:");
+    },
 
 };
 
@@ -73,15 +74,33 @@ var instructionState = {
     create: function () {
         game.add.image(0, 0, 'background');
 
-        var instructions = game.add.text(game.width/2, 80, 'Instructions',
+        var instructions = game.add.text(500, 80, 'Instructions',
             {font: '50px Times New Roman', fill: '#ffffff' });
 
+        var upMoveMent = game.add.text(300, 200, 'Up Arroew Key - Jump',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        var rMoveMent = game.add.text(300, 300, 'Right Arroew Key - Move right',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        var lMoveMent = game.add.text(300, 400, 'Left Arroew Key - Move left',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        this.btnPlay = game.add.button(570, 600, 'play', this.player1);
 
     },
     
     update: function () {
         
-    }
+    },
+
+    player1: function() {
+        game.state.start('load');
+    },
+
 };
 
 var gameOverState = {

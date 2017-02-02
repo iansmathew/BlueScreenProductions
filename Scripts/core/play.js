@@ -171,26 +171,3 @@ var enemyProperties = {
     enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10}
 };
 
-var gameOverState = {
-    create: function () {
-        game.add.image(0, 0, 'background');
-
-        var gameOver = game.add.text(550, 300, 'GAME OVER!',
-            {font: '40px Times New Roman', fill: '#ffffff' });
-
-        this.btnPlayA = game.add.button(500, 600, 'playAgain', this.playAgain);
-        this.btnE = game.add.button(700, 610, 'exit',this.exit);
-    },
-
-    update: function () {
-
-    },
-
-    playAgain: function () {
-        game.state.start('load');
-    },
-
-    exit: function() {
-        game.state.start('boot');
-    }
-}

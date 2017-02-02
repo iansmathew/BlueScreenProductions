@@ -39,7 +39,6 @@ var menuState = {
 
     instructionState: function () { //I added this function, which you forgot to
         game.state.start('instruction');
-        console.log("Clicked:");
     },
 
 };
@@ -77,13 +76,13 @@ var instructionState = {
         var instructions = game.add.text(500, 80, 'Instructions',
             {font: '50px Times New Roman', fill: '#ffffff' });
 
-        var upMoveMent = game.add.text(300, 200, 'Up Arroew Key - Jump',
+        var upMoveMent = game.add.text(300, 200, 'Up Arrow Key - Jump',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
-        var rMoveMent = game.add.text(300, 300, 'Right Arroew Key - Move right',
+        var rMoveMent = game.add.text(300, 300, 'Right Arrow Key - Move right',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
-        var lMoveMent = game.add.text(300, 400, 'Left Arroew Key - Move left',
+        var lMoveMent = game.add.text(300, 400, 'Left Arrow Key - Move left',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
         var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
@@ -105,11 +104,25 @@ var instructionState = {
 
 var gameOverState = {
     create: function () {
-        
+        game.add.image(0, 0, 'background');
+
+        var gameOver = game.add.text(550, 300, 'GAME OVER!',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        this.btnPlayA = game.add.button(500, 600, 'playAgain', this.playAgain);
+        this.btnE = game.add.button(700, 610, 'exit',this.exit);
     },
-    
+
     update: function () {
-        
+
+    },
+
+    playAgain: function () {
+        game.state.start('load');
+    },
+
+    exit: function() {
+        game.state.start('boot');
     }
 };
 

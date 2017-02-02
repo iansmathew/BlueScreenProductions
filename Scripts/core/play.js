@@ -43,7 +43,7 @@ var playState = {
         game.physics.arcade.overlap(this.player, this.enemies, this.killPlayer, null, this);
 
         if (!this.player.alive) {
-            game.state.start('menu');
+            game.state.start('gameOver');
         }
     },
 
@@ -170,3 +170,27 @@ var enemyProperties = {
     enemyMed: {hp: 50, vel: 100, img: 'medBubble', nextSize: 'enemySmall', dmg: 20},
     enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10}
 };
+
+var gameOverState = {
+    create: function () {
+        game.add.image(0, 0, 'background');
+
+        var gameOver = game.add.text(550, 300, 'GAME OVER!',
+            {font: '40px Times New Roman', fill: '#ffffff' });
+
+        this.btnPlayA = game.add.button(500, 600, 'playAgain', this.playAgain);
+        this.btnE = game.add.button(700, 610, 'exit',this.exit);
+    },
+
+    update: function () {
+
+    },
+
+    playAgain: function () {
+        game.state.start('load');
+    },
+
+    exit: function() {
+        game.state.start('boot');
+    }
+}

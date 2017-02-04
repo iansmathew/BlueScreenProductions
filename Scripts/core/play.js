@@ -162,35 +162,31 @@ var playState = {
     
     hitEnemy: function (bullet, enemy) {
         bullet.kill(); //bullet dies on impact
+        enemy.hp -= 10;
 
-
-        if (enemy.hp > 0){
-            enemy.hp -= 10;
-        }
-
-        else {
+        if (enemy.hp <= 0)
+        {
             enemy.kill();
             this.bubbleSfx.play();
             this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
-
-
         }
     },
 
     killPlayer: function (player, enemy) {
         if (player.invulnerable == false) {
-            if (player.hp <= 0) {
-                player.kill();
-                player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
-                player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
-            }
-            else {
                 player.hp -= enemy.dmg;
-                console.log(player.hp);
 
                 player.invulnerable = true;
                 this.setInvulnerable(player);
-            }
+
+                if (player.hp <= 0)
+                {
+                    player.kill();
+                    player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
+                    player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+                }
+
+                console.log(player.hp);
         }
     },
 

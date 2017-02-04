@@ -12,12 +12,16 @@ var playState = {
         /*-- setting world properties --*/
         game.physics.arcade.gravity.y = 1000;
 
-        //-- creating player --//
+        //-- creating players and player group --//
         this.player_1 = this.createPlayer(1);
         this.player_1.weapon = this.setWeapon(this.player_1);
 
         this.player_2 = this.createPlayer(2);
         this.player_2.weapon = this.setWeapon(this.player_2);
+
+        this.players= game.add.group();
+        this.players.add(this.player_1);
+        this.players.add(this.player_2);
 
 
         /*-- creating enemy group --*/
@@ -39,31 +43,24 @@ var playState = {
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
-        game.physics.arcade.collide(this.player_1, this.foreground);
-        game.physics.arcade.collide(this.player_2, this.foreground);
+        game.physics.arcade.collide(this.players, this.foreground);
         game.physics.arcade.collide(this.enemies, this.foreground);
+        game.physics.arcade.overlap(this.players, this.enemies, this.killPlayer, null, this);
         game.physics.arcade.overlap(this.player_1.weapon.bullets, this.enemies, this.hitEnemy, null, this);
-        game.physics.arcade.overlap(this.player_1, this.enemies, this.killPlayer, null, this);
         game.physics.arcade.collide(this.player_1.weapon.bullets, this.foreground, this.killBullet, null, this);
         game.physics.arcade.overlap(this.player_2.weapon.bullets, this.enemies, this.hitEnemy, null, this);
-        game.physics.arcade.overlap(this.player_2, this.enemies, this.killPlayer, null, this);
         game.physics.arcade.collide(this.player_2.weapon.bullets, this.foreground, this.killBullet, null, this);
         this.movePlayer(this.player_1);
         this.movePlayer(this.player_2);
 
 
-        if (!this.player_1.alive) {
-            game.state.start('gameOver');
-        }
     },
 
     //this function is used solely to show th physics body and render other debug stuff.
     //Comment it out if you're not using it.
         render: function () {
-
-
-            game.debug.bodyInfo(this.player_1, 32, 32);
             game.debug.body(this.player_1);
+            game.debug.body(this.player_2);
             // call renderGroup on each of the alive members
             this.enemies.forEachAlive(renderGroup, this);
             this.player_1.weapon.bullets.forEachAlive(renderGroup, this);
@@ -80,7 +77,6 @@ var playState = {
         game.physics.arcade.enable(player);
         player.body.gravity.y = 1500;
         player.body.setSize(50, 70, 5, 13); //reducing the player collision box
-        //player.body.bounce.set(0.3);
         player.body.collideWorldBounds = true;
 
         if (p_num == 1) {
@@ -214,6 +210,11 @@ var playState = {
                     player.kill();
                     player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
                     player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+
+                    /* -- deciding whether to quit the game -- */
+
+                    if (!this.players.getFirstAlive()) //quits when there's no players alive
+                        game.state.start('gameOver');
                 }
 
                 console.log(player.hp);

@@ -13,8 +13,11 @@ var playState = {
         game.physics.arcade.gravity.y = 1000;
 
         //-- creating player --//
-        this.player = this.createPlayer();
-        this.player.weapon = this.setWeapon(this.player);
+        this.player_1 = this.createPlayer(1);
+        this.player_1.weapon = this.setWeapon(this.player_1);
+
+        this.player_2 = this.createPlayer(2);
+        this.player_2.weapon = this.setWeapon(this.player_2);
 
 
         /*-- creating enemy group --*/
@@ -36,13 +39,20 @@ var playState = {
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
 
-        this.physics.arcade.collide(this.player, this.foreground);
-        this.physics.arcade.collide(this.enemies, this.foreground);
-        this.movePlayer(this.player);
-        game.physics.arcade.overlap(this.player.weapon.bullets, this.enemies, this.hitEnemy, null, this);
-        game.physics.arcade.overlap(this.player, this.enemies, this.killPlayer, null, this);
+        game.physics.arcade.collide(this.player_1, this.foreground);
+        game.physics.arcade.collide(this.player_2, this.foreground);
+        game.physics.arcade.collide(this.enemies, this.foreground);
+        game.physics.arcade.overlap(this.player_1.weapon.bullets, this.enemies, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(this.player_1, this.enemies, this.killPlayer, null, this);
+        game.physics.arcade.collide(this.player_1.weapon.bullets, this.foreground, this.killBullet, null, this);
+        game.physics.arcade.overlap(this.player_2.weapon.bullets, this.enemies, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(this.player_2, this.enemies, this.killPlayer, null, this);
+        game.physics.arcade.collide(this.player_2.weapon.bullets, this.foreground, this.killBullet, null, this);
+        this.movePlayer(this.player_1);
+        this.movePlayer(this.player_2);
 
-        if (!this.player.alive) {
+
+        if (!this.player_1.alive) {
             game.state.start('gameOver');
         }
     },
@@ -52,11 +62,11 @@ var playState = {
         render: function () {
 
 
-            game.debug.bodyInfo(this.player, 32, 32);
-            game.debug.body(this.player);
+            game.debug.bodyInfo(this.player_1, 32, 32);
+            game.debug.body(this.player_1);
             // call renderGroup on each of the alive members
             this.enemies.forEachAlive(renderGroup, this);
-            this.player.weapon.bullets.forEachAlive(renderGroup, this);
+            this.player_1.weapon.bullets.forEachAlive(renderGroup, this);
             //render function for groups
             function renderGroup(member) {
                 game.debug.body(member);
@@ -64,16 +74,31 @@ var playState = {
 
         },
 
-    createPlayer: function () {
-        var player = game.add.sprite(game.width/2, 600, 'player');
+    createPlayer: function (p_num) {
+        var player = game.add.sprite(game.width/2, 600, (p_num == 1) ? 'player1' : 'player2');
         player.anchor.setTo(0.5, 0.5);
         game.physics.arcade.enable(player);
         player.body.gravity.y = 1500;
         player.body.setSize(50, 70, 5, 13); //reducing the player collision box
         //player.body.bounce.set(0.3);
         player.body.collideWorldBounds = true;
-        player.cursor = game.input.keyboard.createCursorKeys();
-        player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+        if (p_num == 1) {
+
+            player.cursor = game.input.keyboard.createCursorKeys();
+            player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        }
+        else {
+            this.wasd = {
+                up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+                down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+                left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+                right: game.input.keyboard.addKey(Phaser.Keyboard.D),
+            };
+            player.cursor = this.wasd;
+            player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+        }
+
 
         //-- User defined properties for player --//
         player.hp = 100;
@@ -104,6 +129,8 @@ var playState = {
     },
 
     movePlayer: function (player) {
+        if (!player.alive)
+            return ;
 
         if (player.cursor.left.isDown){
             player.body.velocity.x = -300;
@@ -137,9 +164,12 @@ var playState = {
         else if (player.fireButton.isDown) { //firing straight up
             player.weapon.fireAngle = Phaser.ANGLE_UP;
             player.weapon.fire();
-            //if(shootSfx.isPLaying == false){shootSfx.play();}
             this.shootSfx.play(null, null, 1, false, false);
         }
+    },
+
+    killBullet: function (bullet, foreground) {
+        bullet.kill();
     },
     
     spawnEnemies: function (type, num, prevX, prevY) {

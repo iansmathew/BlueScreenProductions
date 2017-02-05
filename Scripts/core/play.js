@@ -122,6 +122,7 @@ var playState = {
         //-- User defined properties for player --//
         player.hp = 100;
         player.invulnerable = false;
+        player.color = (p_num == 1) ? "red" : "blue";
 
         /*-- creating Player Animation --*/
         player.animations.add('right', [0, 1], 8, true);
@@ -173,14 +174,18 @@ var playState = {
     },
 
     movePlayer: function (player) {
+
         if (!player.alive)
             return ;
 
-        if (player.cursor.left.isDown){
+        var pad = (player.color == "red") ? this.pad1 : this.pad2;
+
+        /*-- Movements --*/
+        if (player.cursor.left.isDown || pad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)< -0.1){ //move left
             player.body.velocity.x = -300;
             player.animations.play('left');
         }
-        else if (player.cursor.right.isDown){
+        else if (player.cursor.right.isDown || pad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)>0.1){ //move right
             player.body.velocity.x = 300;
             player.animations.play('right');
         }
@@ -190,66 +195,18 @@ var playState = {
             player.frame = 2;
         }
 
-        //jump
-        if (player.cursor.up.isDown && player.body.onFloor()){
+        if ((player.cursor.up.isDown || pad.justPressed(Phaser.Gamepad.XBOX360_A)) && player.body.onFloor()){ //jump
             player.body.velocity.y = -999;
-            //player.frame = 6;//Requires Fixing image only stays for 1 frame
-        }
-
-        //controller input
-        if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
-            this.indicator.animations.frame = 0;
-        } else {
-            this.indicator.animations.frame = 1;
-        }
-        if(this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)< -0.1){
-            this.player_1.body.velocity.x = -300;
-            this.player_1.animations.play('left');
-        }
-        if(this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)>0.1){
-            this.player_1.body.velocity.x = 300;
-            this.player_1.animations.play('right');
-
-        }
-        if(this.pad1.justPressed(Phaser.Gamepad.XBOX360_A)&& this.player_1.body.onFloor() ){
-            this.player_1.body.velocity.y = -999;
-            this.wEmitter.x = this.player_1.x;
-            this.wEmitter.y = this.player_1.y-16;
+            this.wEmitter.x = player.x;
+            this.wEmitter.y = player.y-16;
             this.wEmitter.start(true,500,null,3);
-            console.log("!");
         }
 
-        //player 2 controller
-        if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad2.connected) {
-            this.indicator2.animations.frame = 0;
-        } else {
-            this.indicator2.animations.frame = 1;
-        }
-        if(this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)< -0.1){
-            this.player_2.body.velocity.x = -300;
-            this.player_2.animations.play('left');
-        }
-        if(this.pad2.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)>0.1){
-            this.player_2.body.velocity.x = 300;
-            this.player_2.animations.play('right');
+        /*-- Firing --*/
+        player.weapon.fireAngle = -(90 + 90 * -pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
 
-        }
-        if(this.pad2.justPressed(Phaser.Gamepad.XBOX360_A)&& this.player_2.body.onFloor() ){
-            this.player_2.body.velocity.y = -999;
-            this.wEmitter.x = this.player_2.x;
-            this.wEmitter.y = this.player_2.y-16;
-            this.wEmitter.start(true,500,null,3);
-            console.log("!");
-        }
-
-        this.player_1.weapon.fireAngle = -(90 + 90 * -this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
-        this.player_2.weapon.fireAngle = -(90 + 90 * -this.pad1.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
-
-        if(this.pad1.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
-            this.player_1.weapon.fire();
-        }
-        if(this.pad2.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad2.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
-            this.player_2.weapon.fire();
+        if(pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad1.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
+            player.weapon.fire();
         }
 
         //firing angles
@@ -266,6 +223,20 @@ var playState = {
             player.weapon.fire();
             this.shootSfx.play(null, null, 1, false, false);
         }
+
+        /*-- Are controllers active? --*/
+        if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) { //indicators - player 1
+            this.indicator.animations.frame = 0;
+        } else {
+            this.indicator.animations.frame = 1;
+        }
+
+        if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad2.connected) { //indicators - player 2
+            this.indicator2.animations.frame = 0;
+        } else {
+            this.indicator2.animations.frame = 1;
+        }
+
     },
 
     killBullet: function (bullet, foreground) {

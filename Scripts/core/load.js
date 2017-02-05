@@ -14,6 +14,8 @@ var loadState = {
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");
         game.load.audio('bulletSfx', "././Assets/sound/blaster.mp3");
         game.load.audio('bubbleSfx', "././Assets/sound/explosion.mp3");
+        game.load.image('bloodVfx', "././Assets/img/tempGameAssets/BloodFX.png");
+        game.load.spritesheet('FireworkVFX', "././Assets/img/tempGameAssets/FireworkVFX.png",32,32,4);
 
     },
     //code to make assets goes here

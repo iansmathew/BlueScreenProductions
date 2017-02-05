@@ -80,7 +80,7 @@ var playState = {
 
     //this function is used solely to show th physics body and render other debug stuff.
     //Comment it out if you're not using it.
-        render: function () {
+        /*render: function () {
             game.debug.body(this.player_1);
             game.debug.body(this.player_2);
             // call renderGroup on each of the alive members
@@ -91,7 +91,7 @@ var playState = {
                 game.debug.body(member);
             }
 
-        },
+        },*/
 
     createPlayer: function (p_num) {
         var player = game.add.sprite(game.width/2, 600, (p_num == 1) ? 'player1' : 'player2');
@@ -112,7 +112,7 @@ var playState = {
                     up: game.input.keyboard.addKey(Phaser.Keyboard.W),
                     down: game.input.keyboard.addKey(Phaser.Keyboard.S),
                     left: game.input.keyboard.addKey(Phaser.Keyboard.A),
-                    right: game.input.keyboard.addKey(Phaser.Keyboard.D),
+                    right: game.input.keyboard.addKey(Phaser.Keyboard.D)
                 };
             player.cursor = this.wasd;
             player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
@@ -144,33 +144,43 @@ var playState = {
         return player.weapon;
     },
 
-    pEmitterFunc: function(){
-        this.pEmitter.makeParticles('bloodVfx');
-        this.pEmitter.gravity = -1200;
-        this.pEmitter.setYSpeed(-500, 500);
-        this.pEmitter.setXSpeed(-500, 500);
-        this.pEmitter.setScale(0.5,0,0.5,0,300);
+    spawnEnemies: function () {
+        if (this.waveProperties.counter > 0) {
+            while (this.waveProperties.active < this.waveProperties.max / 2) {
+
+                var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
+
+                var enemy = this.enemies.create(null, null, enemyProperties[type].img);
+                enemy.reset(game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400));
+                enemy.anchor.setTo(0.5, 0.5);
+                enemy.body.collideWorldBounds = true;
+                enemy.body.bounce.set(1);
+                enemy.body.allowGravity = false;
+
+                enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+                enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+                enemy.nextSize = enemyProperties[type].nextSize;
+                enemy.hp = enemyProperties[type].hp;
+                enemy.dmg = enemyProperties[type].dmg;
+                enemy.points = enemyProperties[type].points;
+                this.waveProperties.counter -= enemyProperties[type].points;
+                this.waveProperties.active += enemyProperties[type].points;
+
+            }
+        }
+        else {
+            this.increaseWave();
+
+
+        }
     },
 
-    bEmitterFunc: function(){
-        this.bEmitter.makeParticles('FireworkVFX',[1,2,3]);
-        this.bEmitter.gravity = -1500;
-        this.bEmitter.area = 500 * 500;
-        this.bEmitter.bounce.setTo(0.5,0.5);
-        this.bEmitter.setYSpeed(-500, 500);
-        this.bEmitter.setXSpeed(-500, 500);
-        this.bEmitter.minParticleSpeed.setTo(-200, -300);
-        this.bEmitter.maxParticleSpeed.setTo(200, 400);
-        this.bEmitter.setScale(0.5,0,0.5,0,1500);
-    },
-
-    //temp assigned to jump
-    wEmitterFunc: function(){
-        this.wEmitter.makeParticles('FireworkVFX',[1]);
-        this.wEmitter.gravity = -1500;
-        this.wEmitter.setScale(0.5,0,0.5,0,500);
-        this.wEmitter.setYSpeed(-16,16);
-        this.wEmitter.setXSpeed(16,-16);
+    increaseWave: function () {
+        console.log("Next wave started..");
+        //add text that shows PREPARE FOR NEXT WAVE here.
+        this.waveProperties.max *= 2;
+        this.waveProperties.timeCheck += this.waveProperties.timeCheck;
+        this.waveProperties.counter = this.waveProperties.max;
     },
 
     movePlayer: function (player) {
@@ -239,34 +249,8 @@ var playState = {
 
     },
 
-    killBullet: function (bullet, foreground) {
+    killBullet: function (bullet) {
         bullet.kill();
-    },
-    
-    spawnEnemies: function () {
-        if (this.waveProperties.counter > 0) {
-            while (this.waveProperties.active < this.waveProperties.max / 2) {
-
-                var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
-
-                var enemy = this.enemies.create(null, null, enemyProperties[type].img);
-                enemy.reset(game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400));
-                enemy.anchor.setTo(0.5, 0.5);
-                enemy.body.collideWorldBounds = true;
-                enemy.body.bounce.set(1);
-                enemy.body.allowGravity = false;
-
-                enemy.body.velocity.y = enemyProperties[type].vel;
-                enemy.body.velocity.x = enemyProperties[type].vel * game.rnd.pick([-1, 1]);
-                enemy.nextSize = enemyProperties[type].nextSize;
-                enemy.hp = enemyProperties[type].hp;
-                enemy.dmg = enemyProperties[type].dmg;
-                enemy.points = enemyProperties[type].points;
-                this.waveProperties.counter -= enemyProperties[type].points;
-                this.waveProperties.active += enemyProperties[type].points;
-
-            }
-        }
     },
     
     hitEnemy: function (bullet, enemy) {
@@ -297,8 +281,8 @@ var playState = {
             new_enemy.body.bounce.set(1);
             new_enemy.body.allowGravity = false;
 
-            new_enemy.body.velocity.y = enemyProperties[enemy].vel;
-            new_enemy.body.velocity.x = enemyProperties[enemy].vel * game.rnd.pick([-1, 1]);
+            new_enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
+            new_enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
             new_enemy.nextSize = enemyProperties[enemy].nextSize;
             new_enemy.hp = enemyProperties[enemy].hp;
             new_enemy.dmg = enemyProperties[enemy].dmg;
@@ -328,7 +312,6 @@ var playState = {
                     player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
 
                     /* -- deciding whether to quit the game -- */
-
                     if (!this.players.getFirstAlive()) //quits when there's no players alive
                         game.time.events.add(1000, function () { game.state.start('gameOver');}, this); //delay game over by 1 sec for animation
                 }
@@ -342,16 +325,56 @@ var playState = {
         }, this);
     },
 
+
+    pEmitterFunc: function(){
+        this.pEmitter.makeParticles('bloodVfx');
+        this.pEmitter.gravity = -1200;
+        this.pEmitter.setYSpeed(-500, 500);
+        this.pEmitter.setXSpeed(-500, 500);
+        this.pEmitter.setScale(0.5,0,0.5,0,300);
+    },
+
+    bEmitterFunc: function(){
+        this.bEmitter.makeParticles('FireworkVFX',[1,2,3]);
+        this.bEmitter.gravity = -1500;
+        this.bEmitter.area = 500 * 500;
+        this.bEmitter.bounce.setTo(0.5,0.5);
+        this.bEmitter.setYSpeed(-500, 500);
+        this.bEmitter.setXSpeed(-500, 500);
+        this.bEmitter.minParticleSpeed.setTo(-200, -300);
+        this.bEmitter.maxParticleSpeed.setTo(200, 400);
+        this.bEmitter.setScale(0.5,0,0.5,0,1500);
+    },
+
+    //temp assigned to jump
+    wEmitterFunc: function(){
+        this.wEmitter.makeParticles('FireworkVFX',1);
+        this.wEmitter.gravity = -1500;
+        this.wEmitter.setScale(0.5,0,0.5,0,500);
+        this.wEmitter.setYSpeed(-16,16);
+        this.wEmitter.setXSpeed(16,-16);
+    },
+
     waveProperties: {
         timeCheck: 1500,
         max: 24,
         active: 0,
         counter: 24,
+    },
+
+    /*-- This function is called when you switch from this state --*/
+    //use it to reset anything
+    shutdown: function () {
+        //resetting wave properties
+        this.waveProperties.timeCheck = 1500;
+        this.waveProperties.max = 24;
+        this.waveProperties.active = 0;
+        this.waveProperties.counter = 24;
     }
 };
 
 var enemyProperties = {
-    enemyLarge: {hp: 100, vel: 50, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10},
-    enemyMed: {hp: 50, vel: 100, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5},
-    enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1},
+    enemyLarge: {hp: 100, minV: 50, maxV: 80, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10},
+    enemyMed: {hp: 50, minV: 100, maxV: 80, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5},
+    enemySmall: {hp: 20, minV: 200, maxV: 80, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1}
 };

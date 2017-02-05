@@ -2,6 +2,7 @@
 var playState = {
     //code to make assets goes here
     create: function(){
+
         /*--Initializing TileMap --*/
         this.map = game.add.tilemap('tileMap');
         this.map.addTilesetImage('tileSet1');
@@ -19,27 +20,9 @@ var playState = {
         this.player_2 = this.createPlayer(2);
         this.player_2.weapon = this.setWeapon(this.player_2);
 
-        this.players= game.add.group();
+        this.players = game.add.group();
         this.players.add(this.player_1);
         this.players.add(this.player_2);
-
-
-        /*-- creating enemy group --*/
-        this.enemies = game.add.group();
-        this.enemies.enableBody = true;
-        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
-
-        this.createEnemies();
-
-        /*-- making emitters --*/
-        this.pEmitter = game.add.emitter(0,0,100);
-        this.pEmitterFunc();
-
-        this.bEmitter = game.add.emitter(game.world.centerX,game.world.centerY,100);
-        this.bEmitterFunc();
-
-        this.wEmitter  = game.add.emitter(0,0,100);
-        this.wEmitterFunc();
 
         /*-- player game pad init --*/
         game.input.gamepad.start();
@@ -53,6 +36,21 @@ var playState = {
         this.pad1 = game.input.gamepad.pad1;
         this.pad2 = game.input.gamepad.pad2;
 
+        /*-- creating enemy group --*/
+        this.enemies = game.add.group();
+        this.enemies.enableBody = true;
+        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+        /*-- making emitters --*/
+        this.pEmitter = game.add.emitter(0,0,100);
+        this.pEmitterFunc();
+
+        this.bEmitter = game.add.emitter(game.world.centerX,game.world.centerY,100);
+        this.bEmitterFunc();
+
+        this.wEmitter  = game.add.emitter(0,0,100);
+        this.wEmitterFunc();
+
         /*-- making sounds --*/
         this.shootSfx = game.add.audio('bulletSfx');
         this.shootSfx.allowMultiple = false;
@@ -61,7 +59,7 @@ var playState = {
         this.bubbleSfx.allowMultiple = false;
 
         /* --Setting enemy wave --*/
-        //game.time.events.loop(waveProperties.timeCheck, this.spawnEnemies, this);
+        game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemies, this);
 
     },
 
@@ -77,6 +75,7 @@ var playState = {
         game.physics.arcade.collide(this.player_2.weapon.bullets, this.foreground, this.killBullet, null, this);
         this.movePlayer(this.player_1);
         this.movePlayer(this.player_2);
+
     },
 
     //this function is used solely to show th physics body and render other debug stuff.
@@ -108,12 +107,13 @@ var playState = {
             player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         }
         else {
-            this.wasd = {
-                up: game.input.keyboard.addKey(Phaser.Keyboard.W),
-                down: game.input.keyboard.addKey(Phaser.Keyboard.S),
-                left: game.input.keyboard.addKey(Phaser.Keyboard.A),
-                right: game.input.keyboard.addKey(Phaser.Keyboard.D),
-            };
+            this.wasd =
+                {
+                    up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+                    down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+                    left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+                    right: game.input.keyboard.addKey(Phaser.Keyboard.D),
+                };
             player.cursor = this.wasd;
             player.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
         }
@@ -149,8 +149,6 @@ var playState = {
         this.pEmitter.setYSpeed(-500, 500);
         this.pEmitter.setXSpeed(-500, 500);
         this.pEmitter.setScale(0.5,0,0.5,0,300);
-
-
     },
 
     bEmitterFunc: function(){
@@ -163,8 +161,8 @@ var playState = {
         this.bEmitter.minParticleSpeed.setTo(-200, -300);
         this.bEmitter.maxParticleSpeed.setTo(200, 400);
         this.bEmitter.setScale(0.5,0,0.5,0,1500);
-
     },
+
     //temp assigned to jump
     wEmitterFunc: function(){
         this.wEmitter.makeParticles('FireworkVFX',[1]);
@@ -172,13 +170,6 @@ var playState = {
         this.wEmitter.setScale(0.5,0,0.5,0,500);
         this.wEmitter.setYSpeed(-16,16);
         this.wEmitter.setXSpeed(16,-16);
-
-    },
-
-
-    createEnemies: function () {
-        //console.log("Fix this");
-        this.enemies.createMultiple();
     },
 
     movePlayer: function (player) {
@@ -273,7 +264,7 @@ var playState = {
         else if (player.fireButton.isDown) { //firing straight up
             player.weapon.fireAngle = Phaser.ANGLE_UP;
             player.weapon.fire();
-            //this.shootSfx.play(null, null, 1, false, false);
+            this.shootSfx.play(null, null, 1, false, false);
         }
     },
 
@@ -281,37 +272,29 @@ var playState = {
         bullet.kill();
     },
     
-    spawnEnemies: function (type, num, prevX, prevY) {
-        console.log("spawnEnemies fired..");
-        /*for (var i =0; i < num; i++){
-         if (type == 'null') //if the enemy that just died was a smallEnemy then don't spawn more
-         return;
+    spawnEnemies: function () {
+        if (this.waveProperties.counter > 0) {
+            while (this.waveProperties.active < this.waveProperties.max / 2) {
 
-         var ball = this.enemies.create(prevX + (100*i), prevY, enemyProperties[type].img);
-         ball.anchor.setTo(0.5, 0.5);
-         ball.body.collideWorldBounds = true;
-         ball.body.bounce.set(1); //ball bounces opposite way when it collides with anything
-         ball.body.allowGravity = false;
-         ball.body.velocity.y = enemyProperties[type].vel;
-         ball.body.velocity.x = enemyProperties[type].vel * game.rnd.pick([-1, 1]);
-         ball.nextSize = enemyProperties[type].nextSize;
-         ball.hp = enemyProperties[type].hp;
-         ball.dmg = enemyProperties[type].dmg;
-         }*/
-        while (waveProperties.active < waveProperties.min) {
-            var enemy = this.bigEnemies.getFirstDead();
-            if (!enemy) {
-                console.log("No enemy left in group");
-                return;
+                var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
+
+                var enemy = this.enemies.create(null, null, enemyProperties[type].img);
+                enemy.reset(game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400));
+                enemy.anchor.setTo(0.5, 0.5);
+                enemy.body.collideWorldBounds = true;
+                enemy.body.bounce.set(1);
+                enemy.body.allowGravity = false;
+
+                enemy.body.velocity.y = enemyProperties[type].vel;
+                enemy.body.velocity.x = enemyProperties[type].vel * game.rnd.pick([-1, 1]);
+                enemy.nextSize = enemyProperties[type].nextSize;
+                enemy.hp = enemyProperties[type].hp;
+                enemy.dmg = enemyProperties[type].dmg;
+                enemy.points = enemyProperties[type].points;
+                this.waveProperties.counter -= enemyProperties[type].points;
+                this.waveProperties.active += enemyProperties[type].points;
+
             }
-
-            enemy.anchor.setTo(0.5, 0.5);
-            enemy.reset(game.width/2, game.height/2);
-            enemy.body.bounce.set(1);
-            enemy.body.allowGravity = false;
-            enemy.body.velocity.y = game.rnd.integerInRange(50, 60);
-            enemy.body.velocity.x = game.rnd.integerInRange(50, 60);
-            enemy.hp = 50;
         }
     },
     
@@ -323,10 +306,34 @@ var playState = {
         {
             this.bEmitter.x = enemy.x;
             this.bEmitter.y = enemy.y;
-            this.bEmitter.start(true,2000,null,20);
-            enemy.kill();
             this.bubbleSfx.play();
-            this.spawnEnemies(enemy.nextSize, 2, enemy.x, enemy.y);
+            this.bEmitter.start(true,2000,null,20);
+            enemy.destroy();
+            this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
+            this.waveProperties.active -= enemy.points;
+
+        }
+    },
+
+    splitEnemy: function (enemy, prevX, prevY) {
+        if (enemy == "null")
+            return;
+
+        for (var i=0; i < 2; i++) {
+            var new_enemy = this.enemies.create(prevX, prevY, enemyProperties[enemy].img);
+            new_enemy.anchor.setTo(0.5, 0.5);
+            new_enemy.body.collideWorldBounds = true;
+            new_enemy.body.bounce.set(1);
+            new_enemy.body.allowGravity = false;
+
+            new_enemy.body.velocity.y = enemyProperties[enemy].vel;
+            new_enemy.body.velocity.x = enemyProperties[enemy].vel * game.rnd.pick([-1, 1]);
+            new_enemy.nextSize = enemyProperties[enemy].nextSize;
+            new_enemy.hp = enemyProperties[enemy].hp;
+            new_enemy.dmg = enemyProperties[enemy].dmg;
+            new_enemy.points = enemyProperties[enemy].points;
+            this.waveProperties.counter -= enemyProperties[enemy].points;
+            this.waveProperties.active += enemyProperties[enemy].points;
         }
     },
 
@@ -352,13 +359,8 @@ var playState = {
                     /* -- deciding whether to quit the game -- */
 
                     if (!this.players.getFirstAlive()) //quits when there's no players alive
-                        game.time.events.add(1000, //delay game over by 1 sec for animation
-                            function () {
-                                game.state.start('gameOver');
-                            }, this);
+                        game.time.events.add(1000, function () { game.state.start('gameOver');}, this); //delay game over by 1 sec for animation
                 }
-
-                console.log(player.hp);
         }
     },
 
@@ -368,19 +370,17 @@ var playState = {
                 player.invulnerable = false;
         }, this);
     },
+
+    waveProperties: {
+        timeCheck: 1500,
+        max: 24,
+        active: 0,
+        counter: 24,
+    }
 };
 
 var enemyProperties = {
     enemyLarge: {hp: 100, vel: 50, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10},
     enemyMed: {hp: 50, vel: 100, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5},
     enemySmall: {hp: 20, vel: 200, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1},
-};
-
-
-var waveProperties = {
-    timeCheck: 1500,
-    max: 24,
-    min: 12,
-    active: 0,
-
 };

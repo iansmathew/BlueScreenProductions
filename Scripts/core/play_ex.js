@@ -1,0 +1,125 @@
+playState.prototype.waveProperties = {
+    timeCheck: 1500,
+    max: 24,
+    active: 0,
+    counter: 24,
+};
+
+playState.prototype.spawnEnemies = function(){
+    if (this.waveProperties.counter > 0) {
+        while (this.waveProperties.active < this.waveProperties.max / 2) {
+
+            var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
+
+            var enemy = this.enemies.create(null, null, enemyProperties[type].img);
+            enemy.reset(game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400));
+            enemy.anchor.setTo(0.5, 0.5);
+            enemy.body.collideWorldBounds = true;
+            enemy.body.bounce.set(1);
+            enemy.body.allowGravity = false;
+
+            enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+            enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+            enemy.nextSize = enemyProperties[type].nextSize;
+            enemy.hp = enemyProperties[type].hp;
+            enemy.dmg = enemyProperties[type].dmg;
+            enemy.points = enemyProperties[type].points;
+            enemy.bubbleSfx = game.add.audio('bubbleSfx');
+            enemy.bubbleSfx.allowMultiple = true;
+
+            this.waveProperties.counter -= enemyProperties[type].points;
+            this.waveProperties.active += enemyProperties[type].points;
+
+        }
+        } else {
+        console.log("Next wave started..");
+        //add text that shows PREPARE FOR NEXT WAVE here.
+        this.waveProperties.max *= 2;
+        this.waveProperties.timeCheck += this.waveProperties.timeCheck;
+        this.waveProperties.counter = this.waveProperties.max;
+        }
+};
+
+playState.prototype.killPlayer = function(player, enemy){
+    if (player.invulnerable == false) {
+            player.hp -= enemy.dmg;
+            player.pEmitter.x = player.x;
+            player.pEmitter.y = player.y;
+            player.pEmitter.start(true,300,null,10);
+
+            player.invulnerable = true;
+            this.setInvulnerable(player);
+
+            if (player.hp <= 0)
+            {
+                player.pEmitter.x = player.x;
+                player.pEmitter.y = player.y;
+                player.pEmitter.start(true,2000,null,50);
+                player.kill();
+                player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
+                player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+
+                /* -- deciding whether to quit the game -- */
+                if (!this.players.getFirstAlive()) //quits when there's no players alive
+                    game.time.events.add(1000, function () { game.state.start('gameOver');}, this); //delay game over by 1 sec for animation
+            }
+    }
+};
+
+playState.prototype.setInvulnerable =  function (player) {
+    game.time.events.add(2000,
+        function () {
+            player.invulnerable = false;
+    }, this);
+};
+
+playState.prototype.killBullet = function(bullet){
+    bullet.kill();
+};
+
+playState.prototype.hitEnemy = function(bullet, enemy){
+    switch(bullet.key){ //checks which kind of weapon hit the enemy by looking at it's image name
+        case 'bullet' :
+            enemy.hp -= 10;
+            break;
+
+    }
+    bullet.kill(); //bullet dies on impact
+
+
+    if (enemy.hp <= 0)
+    {
+        this.bEmitter.x = enemy.x;
+        this.bEmitter.y = enemy.y;
+        enemy.bubbleSfx.play();
+        this.bEmitter.start(true,2000,null,20);
+        enemy.destroy();
+        this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
+        this.waveProperties.active -= enemy.points;
+
+    }
+};
+
+playState.prototype.splitEnemy = function(enemy, prevX, prevY){
+     if (enemy == "null")
+            return;
+
+    for (var i=0; i < 2; i++) {
+        var new_enemy = this.enemies.create(prevX, prevY, enemyProperties[enemy].img);
+        new_enemy.anchor.setTo(0.5, 0.5);
+        new_enemy.body.collideWorldBounds = true;
+        new_enemy.body.bounce.set(1);
+        new_enemy.body.allowGravity = false;
+
+        new_enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
+        new_enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
+        new_enemy.nextSize = enemyProperties[enemy].nextSize;
+        new_enemy.hp = enemyProperties[enemy].hp;
+        new_enemy.dmg = enemyProperties[enemy].dmg;
+        new_enemy.points = enemyProperties[enemy].points;
+        new_enemy.bubbleSfx = game.add.audio('bubbleSfx');
+        new_enemy.bubbleSfx.allowMultiple = true;
+        this.waveProperties.counter -= enemyProperties[enemy].points;
+        this.waveProperties.active += enemyProperties[enemy].points;
+    }
+};

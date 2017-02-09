@@ -10,27 +10,11 @@ playState.prototype.spawnEnemies = function(){
         while (this.waveProperties.active < this.waveProperties.max / 2) {
 
             var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
+            var posX = game.rnd.integerInRange(80, 1400);
+            var posY = game.rnd.integerInRange(50, 400);
+            this.createEnemy(type, posX, posY);
 
-            var enemy = this.enemies.create(null, null, enemyProperties[type].img);
-            enemy.reset(game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400));
-            enemy.anchor.setTo(0.5, 0.5);
-            enemy.body.collideWorldBounds = true;
-            enemy.body.bounce.set(1);
-            enemy.body.allowGravity = false;
-
-            enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
-            enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
-            enemy.nextSize = enemyProperties[type].nextSize;
-            enemy.hp = enemyProperties[type].hp;
-            enemy.dmg = enemyProperties[type].dmg;
-            enemy.points = enemyProperties[type].points;
-            enemy.bubbleSfx = game.add.audio('bubbleSfx');
-            enemy.bubbleSfx.allowMultiple = true;
-
-            this.waveProperties.counter -= enemyProperties[type].points;
-            this.waveProperties.active += enemyProperties[type].points;
-
-        }
+            }
         } else {
         console.log("Next wave started..");
         //add text that shows PREPARE FOR NEXT WAVE here.
@@ -105,21 +89,27 @@ playState.prototype.splitEnemy = function(enemy, prevX, prevY){
             return;
 
     for (var i=0; i < 2; i++) {
-        var new_enemy = this.enemies.create(prevX, prevY, enemyProperties[enemy].img);
-        new_enemy.anchor.setTo(0.5, 0.5);
-        new_enemy.body.collideWorldBounds = true;
-        new_enemy.body.bounce.set(1);
-        new_enemy.body.allowGravity = false;
-
-        new_enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
-        new_enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[enemy].minV, enemyProperties[enemy].maxV) * game.rnd.pick([-1, 1]);
-        new_enemy.nextSize = enemyProperties[enemy].nextSize;
-        new_enemy.hp = enemyProperties[enemy].hp;
-        new_enemy.dmg = enemyProperties[enemy].dmg;
-        new_enemy.points = enemyProperties[enemy].points;
-        new_enemy.bubbleSfx = game.add.audio('bubbleSfx');
-        new_enemy.bubbleSfx.allowMultiple = true;
-        this.waveProperties.counter -= enemyProperties[enemy].points;
-        this.waveProperties.active += enemyProperties[enemy].points;
+        this.createEnemy(enemy, prevX, prevY);
     }
 };
+
+playState.prototype.createEnemy = function(type, posX, posY){
+    var enemy = this.enemies.create(posX, posY, enemyProperties[type].img);
+    enemy.anchor.setTo(0.5, 0.5);
+    enemy.body.collideWorldBounds = true;
+    enemy.body.bounce.set(1);
+    enemy.body.allowGravity = false;
+
+    enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+    enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
+    enemy.nextSize = enemyProperties[type].nextSize;
+    enemy.hp = enemyProperties[type].hp;
+    enemy.dmg = enemyProperties[type].dmg;
+    enemy.points = enemyProperties[type].points;
+    enemy.bubbleSfx = game.add.audio('bubbleSfx');
+    enemy.bubbleSfx.allowMultiple = true;
+
+    this.waveProperties.counter -= enemyProperties[type].points;
+    this.waveProperties.active += enemyProperties[type].points;
+
+}

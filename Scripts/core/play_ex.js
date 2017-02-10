@@ -6,7 +6,7 @@ playState.prototype.waveProperties = {
 };
 
 playState.prototype.spawnEnemies = function(){
-    if (this.waveProperties.counter > 0) {
+    if (this.waveProperties.counter > 0 && this.spawnWaves == true) {
         while (this.waveProperties.active < this.waveProperties.max / 2) {
 
             var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
@@ -16,11 +16,21 @@ playState.prototype.spawnEnemies = function(){
 
             }
         } else {
+
         console.log("Next wave started..");
+        this.spawnWaves = false; //don't spawn waves for 3 seconds
+
         //add text that shows PREPARE FOR NEXT WAVE here.
         this.waveProperties.max *= 2;
         this.waveProperties.timeCheck += this.waveProperties.timeCheck;
         this.waveProperties.counter = this.waveProperties.max;
+
+        game.time.events.add(2000, //delay new wave by x seconds
+            function () {
+                this.spawnWaves = true;
+            }, this);
+
+
         }
 };
 
@@ -81,11 +91,14 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
 
     if (enemy.hp <= 0)
     {
+        enemy.animations.play('pop');
+        enemy.animations.currentAnim.onComplete.add(function () {
+            enemy.destroy(); //call destroy when animation ends
+        }, this);
         this.bEmitter.x = enemy.x;
         this.bEmitter.y = enemy.y;
         enemy.bubbleSfx.play();
         this.bEmitter.start(true,2000,null,20);
-        enemy.destroy();
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
         this.waveProperties.active -= enemy.points;
         player.score += enemy.score;
@@ -120,6 +133,7 @@ playState.prototype.createEnemy = function(type, posX, posY){
     enemy.score = enemyProperties[type].score;
     enemy.bubbleSfx = game.add.audio('bubbleSfx');
     enemy.bubbleSfx.allowMultiple = true;
+    enemy.animations.add('pop', [1,2,3,4,5],30,false);
 
     this.waveProperties.counter -= enemyProperties[type].points;
     this.waveProperties.active += enemyProperties[type].points;

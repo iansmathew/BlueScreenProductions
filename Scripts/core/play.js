@@ -9,6 +9,8 @@ playState.prototype = {
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 1000, true, this.foreground);
 
+        this.spawnWaves = true; //bool to decide whether to spawn waves or not
+
         game.physics.arcade.gravity.y = 1000;
 
         this.players = game.add.group();

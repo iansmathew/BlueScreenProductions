@@ -7,9 +7,9 @@ var loadState = {
         game.load.spritesheet('player1', "Assets/img/tempGameAssets/Player1.png", 60, 83);
         game.load.spritesheet('player2', "Assets/img/tempGameAssets/Player2.png", 60, 83);
         game.load.image('bullet', "././Assets/img/tempGameAssets/tempBullet.png");
-        game.load.image('bigBubble', "././Assets/img/tempGameAssets/tempBigBubble.png");
-        game.load.image('medBubble', "././Assets/img/tempGameAssets/tempMediumBubble.png");
-        game.load.image('smallBubble', "././Assets/img/tempGameAssets/tempSmallBubble.png");
+        game.load.spritesheet('bigBubble', "././Assets/img/tempGameAssets/largeBubble.png",120,120);
+        game.load.spritesheet('medBubble', "././Assets/img/tempGameAssets/mediumBubble.png",74,74);
+        game.load.spritesheet('smallBubble',"././Assets/img/tempGameAssets/smallBubble.png",24,24);
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");
         game.load.audio('bulletSfx', "././Assets/sound/blaster.mp3");

@@ -11,6 +11,8 @@ Player = function(game, x, y, p_num, group){
     this.weapon = null;
     this.invulnerable = false;
     this.color = (p_num == 1) ? "red" : "blue";
+    this.isWalking = true;
+    this.score = 0;
     this.group = group;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
@@ -47,7 +49,7 @@ Player.prototype.update = function(){
 };
 
 Player.prototype.movePlayer = function(){
-    if (!this.alive)
+    if (!this.alive || !this.isWalking)
         return;
     
     this.weapon.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));

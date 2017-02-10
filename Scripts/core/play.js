@@ -40,9 +40,13 @@ playState.prototype = {
        game.physics.arcade.collide(this.players, this.foreground);
         game.physics.arcade.collide(this.enemies, this.foreground);
         game.physics.arcade.overlap(this.players, this.enemies, this.killPlayer, null, this);
-        game.physics.arcade.overlap(this.player1.weapon.bullets, this.enemies, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(this.player1.weapon.bullets, this.enemies, function (bullets, enemy) {
+            this.hitEnemy(bullets, enemy, this.player1);
+        }, null, this);
         game.physics.arcade.collide(this.player1.weapon.bullets, this.foreground, this.killBullet, null, this);
-        game.physics.arcade.overlap(this.player2.weapon.bullets, this.enemies, this.hitEnemy, null, this);
+        game.physics.arcade.overlap(this.player2.weapon.bullets, this.enemies, function (bullets, enemy) {
+            this.hitEnemy(bullets, enemy, this.player2);
+        }, null, this);
         game.physics.arcade.collide(this.player2.weapon.bullets, this.foreground, this.killBullet, null, this);
     },
 
@@ -56,8 +60,8 @@ playState.prototype = {
 }
 
 var enemyProperties = {
-    enemyLarge: {hp: 100, minV: 50, maxV: 80, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10},
-    enemyMed: {hp: 50, minV: 100, maxV: 80, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5},
-    enemySmall: {hp: 10, minV: 200, maxV: 80, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1}
+    enemyLarge: {hp: 100, minV: 50, maxV: 80, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10, score: 100}, //DO NOT CHANGE POINTS!
+    enemyMed: {hp: 50, minV: 100, maxV: 80, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5, score: 50},
+    enemySmall: {hp: 10, minV: 200, maxV: 80, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1, score: 25}
 };
 

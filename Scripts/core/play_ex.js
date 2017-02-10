@@ -26,6 +26,10 @@ playState.prototype.spawnEnemies = function(){
 
 playState.prototype.killPlayer = function(player, enemy){
     if (player.invulnerable == false) {
+            player.isWalking = false;
+            player.body.velocity.x = (player.body.touching.right) ? -500 : 500;
+            player.body.velocity.y = -300;
+
             player.hp -= enemy.dmg;
             player.pEmitter.x = player.x;
             player.pEmitter.y = player.y;
@@ -51,6 +55,10 @@ playState.prototype.killPlayer = function(player, enemy){
 };
 
 playState.prototype.setInvulnerable =  function (player) {
+    game.time.events.add(100,
+        function () {
+            player.isWalking = true;
+        }, this);
     game.time.events.add(2000,
         function () {
             player.invulnerable = false;
@@ -61,7 +69,7 @@ playState.prototype.killBullet = function(bullet){
     bullet.kill();
 };
 
-playState.prototype.hitEnemy = function(bullet, enemy){
+playState.prototype.hitEnemy = function(bullet, enemy, player){
     switch(bullet.key){ //checks which kind of weapon hit the enemy by looking at it's image name
         case 'bullet' :
             enemy.hp -= 10;
@@ -80,6 +88,9 @@ playState.prototype.hitEnemy = function(bullet, enemy){
         enemy.destroy();
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
         this.waveProperties.active -= enemy.points;
+        player.score += enemy.score;
+        //console.log(player.score);
+
 
     }
 };
@@ -106,6 +117,7 @@ playState.prototype.createEnemy = function(type, posX, posY){
     enemy.hp = enemyProperties[type].hp;
     enemy.dmg = enemyProperties[type].dmg;
     enemy.points = enemyProperties[type].points;
+    enemy.score = enemyProperties[type].score;
     enemy.bubbleSfx = game.add.audio('bubbleSfx');
     enemy.bubbleSfx.allowMultiple = true;
 

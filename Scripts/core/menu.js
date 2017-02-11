@@ -12,62 +12,24 @@ var menuState = {
         nameLabel.anchor.setTo(0.5, 0.5);
 
         //create buttons
-        this.btnP1 = game.add.button(570, 200, 'singleP', this.instructionState);
-        this.btnO = game.add.button(570, 300, 'options', this.options);
-        this.btnC = game.add.button(570, 400, 'credits',this.credits);
-        this.btnE = game.add.button(570, 500, 'exit',this.exit);
+        this.btnP1 = game.add.button(570, 200, 'singleP', function () {
+            game.state.start('instruction'); //switches to Help
+        });
+        this.btnO = game.add.button(570, 300, 'options', function () {
+            //switches to Options
+        });
+        this.btnC = game.add.button(570, 400, 'credits',function () {
+            //switches to Credits
+        });
+        this.btnE = game.add.button(570, 500, 'exit', function () {
+            //switches to Exit
+        });
 
-    },
-
-
-    //code to update the assets goes here //changes are reflected in game render
-    update: function(){
-
-    },
-
-    options: function() {
-
-    },
-
-    credits:function() {
-
-    },
-
-    exit:function() {
-
-    },
-
-    instructionState: function () { //I added this function, which you forgot to
-        game.state.start('instruction');
-    },
+    }
 
 };
 
 /* -- States below are the different menu button states -- */
-
-
-var optionState = {
-    //code to make assets goes here
-    create: function(){
-
-    },
-    //code to update the assets goes here //changes are reflected in game render
-    update: function(){
-
-    }
-};
-
-
-var creditState = {
-    //code to make assets goes here
-    create: function(){
-
-    },
-    //code to update the assets goes here //changes are reflected in game render
-    update: function(){
-
-    }
-};
 
 var instructionState = {
     create: function () {
@@ -88,20 +50,40 @@ var instructionState = {
         var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
-        this.btnPlay = game.add.button(570, 600, 'play', this.player1);
+        this.btnPlay = game.add.button(570, 600, 'play', function () {
+            game.state.start('load'); //Switches to load state. This starts the game.
+        });
 
-    },
-    
-    update: function () {
-        
-    },
-
-    player1: function() {
-        game.state.start('load');
-    },
-
+    }
 };
 
+
+    var optionState = {
+    //code to create the buttons and text
+    create: function(){
+
+    },
+    //code to update the assets goes here //changes are reflected in game render
+    update: function(){
+
+    }
+};
+
+
+var creditState = {
+    //code to create the buttons and text
+    create: function(){
+
+    },
+    //code to update the assets goes here //changes are reflected in game render
+    update: function(){
+
+    }
+};
+
+
+
+/* This is not a part of menu. State is shown when both players die*/
 var gameOverState = {
     create: function () {
         game.add.image(0, 0, 'background');
@@ -109,20 +91,12 @@ var gameOverState = {
         var gameOver = game.add.text(550, 300, 'GAME OVER!',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
-        this.btnPlayA = game.add.button(500, 600, 'playAgain', this.playAgain);
-        this.btnE = game.add.button(700, 610, 'exit',this.exit);
-    },
-
-    update: function () {
-
-    },
-
-    playAgain: function () {
-        game.state.start('load');
-    },
-
-    exit: function() {
-        game.state.start('boot');
+        this.btnPlayA = game.add.button(500, 600, 'playAgain', function () {
+            game.state.start('play'); //Starts the game again
+        });
+        this.btnE = game.add.button(700, 610, 'exit',function () {
+            game.state.start('boot'); //Goes to menuState
+        });
     }
 };
 

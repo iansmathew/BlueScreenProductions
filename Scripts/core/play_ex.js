@@ -100,22 +100,28 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
 
     if (enemy.hp <= 0)
     {
+        player.score += enemy.score;
+
         enemy.body.enable = false;
         enemy.animations.play('pop');
         enemy.animations.currentAnim.onComplete.add(function () {
             enemy.destroy(); //call destroy when animation ends
         }, this);
+
         this.bEmitter.x = enemy.x;
         this.bEmitter.y = enemy.y;
         enemy.bubbleSfx.play();
         this.bEmitter.start(true,2000,null,20);
+
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
         this.waveProperties.active -= enemy.newWave ? enemy.points : 0;
-        player.score += enemy.score;
-        //console.log(player.score);
-
-
+        this.updateCounter(player);
     }
+};
+
+playState.prototype.updateCounter = function (player) {
+    var counter = (player.color == "red") ? this.scoreCounter1 : this.scoreCounter2;
+    counter.text = (player.color == "red") ? "P1 Score: " + player.score : "P2 Score: " + player.score;
 };
 
 playState.prototype.splitEnemy = function(enemy, prevX, prevY){

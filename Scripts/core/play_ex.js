@@ -1,66 +1,74 @@
 playState.prototype.waveProperties = {
-    timeCheck: 1500,
-    max: 24,
-    active: 0,
-    counter: 24,
+    timeCheck: 1500, //delay to check if you need to spawn an enemy or not
+    max: 12, //max amount of enemies on the screen at a time
+    active: 0, //number of active enemies on the screen
+    counter: 24 //maximum number of enemies in the wave
 };
 
-playState.prototype.spawnEnemies = function(){
-    if (this.waveProperties.counter > 0 && this.spawnWaves == true) {
-        while (this.waveProperties.active < this.waveProperties.max / 2) {
+playState.prototype.spawnEnemyWave = function(){
+    console.log("Spawn Enemies: " + this.spawnWaves);
+    console.log("Active: " + this.waveProperties.active);
+    console.log("Max: " + this.waveProperties.max);
+    console.log("Counter: " + this.waveProperties.counter);
 
-            var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
-            var posX = game.rnd.integerInRange(80, 1400);
-            var posY = game.rnd.integerInRange(50, 400);
-            this.createEnemy(type, posX, posY);
+    if (this.waveProperties.counter > 0) {
+        if (this.spawnWaves && this.waveProperties.active < this.waveProperties.max) {
+            while (this.waveProperties.active < this.waveProperties.max)
+            {
+                var type = Phaser.ArrayUtils.getRandomItem(["enemyLarge", "enemyMed", "enemySmall"]);
+                var posX = game.rnd.integerInRange(80, 1400);
+                var posY = game.rnd.integerInRange(50, 400);
+                this.createEnemy(type, posX, posY, true);
 
             }
-        } else {
+        }
+    }
+    else if (this.enemies.getFirstAlive() == null) {
+        this.spawnWaves = false;
+        console.log("Get ready for next wave");
+        if (this.spawnWaves == false) {
+            var myText = game.add.text(500, 80, 'Get ready for next wave');
+            game.add.tween(myText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
+            game.add.tween(myText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
-        console.log("Next wave started..");
-        this.spawnWaves = false; //don't spawn waves for 3 seconds
 
-        //add text that shows PREPARE FOR NEXT WAVE here.
-        this.waveProperties.max *= 2;
-        this.waveProperties.timeCheck += this.waveProperties.timeCheck;
-        this.waveProperties.counter = this.waveProperties.max;
-
-        game.time.events.add(2000, //delay new wave by x seconds
-            function () {
-                this.spawnWaves = true;
-            }, this);
+            this.waveProperties.active = 0;
+            this.waveProperties.counter = this.waveProperties.max * 4;
+            this.waveProperties.max *= 2;
+            this.spawnWaves = true;
 
 
         }
+    }
 };
 
 playState.prototype.killPlayer = function(player, enemy){
     if (player.invulnerable == false) {
-            player.isWalking = false;
-            player.body.velocity.x = (player.body.touching.right) ? -500 : 500;
-            player.body.velocity.y = -300;
+        player.isWalking = false;
+        player.body.velocity.x = (player.body.touching.right) ? -500 : 500;
+        player.body.velocity.y = -300;
 
-            player.hp -= enemy.dmg;
+        player.hp -= enemy.dmg;
+        player.pEmitter.x = player.x;
+        player.pEmitter.y = player.y;
+        player.pEmitter.start(true,300,null,10);
+
+        player.invulnerable = true;
+        this.setInvulnerable(player);
+
+        if (player.hp <= 0)
+        {
             player.pEmitter.x = player.x;
             player.pEmitter.y = player.y;
-            player.pEmitter.start(true,300,null,10);
+            player.pEmitter.start(true,2000,null,50);
+            player.kill();
+            player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
+            player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
 
-            player.invulnerable = true;
-            this.setInvulnerable(player);
-
-            if (player.hp <= 0)
-            {
-                player.pEmitter.x = player.x;
-                player.pEmitter.y = player.y;
-                player.pEmitter.start(true,2000,null,50);
-                player.kill();
-                player.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
-                player.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
-
-                /* -- deciding whether to quit the game -- */
-                if (!this.players.getFirstAlive()) //quits when there's no players alive
-                    game.time.events.add(1000, function () { game.state.start('gameOver');}, this); //delay game over by 1 sec for animation
-            }
+            /* -- deciding whether to quit the game -- */
+            if (!this.players.getFirstAlive()) //quits when there's no players alive
+                game.time.events.add(1000, function () { game.state.start('gameOver');}, this); //delay game over by 1 sec for animation
+        }
     }
 };
 
@@ -69,6 +77,7 @@ playState.prototype.setInvulnerable =  function (player) {
         function () {
             player.isWalking = true;
         }, this);
+
     game.time.events.add(2000,
         function () {
             player.invulnerable = false;
@@ -82,7 +91,7 @@ playState.prototype.killBullet = function(bullet){
 playState.prototype.hitEnemy = function(bullet, enemy, player){
     switch(bullet.key){ //checks which kind of weapon hit the enemy by looking at it's image name
         case 'bullet' :
-            enemy.hp -= 10;
+            enemy.hp -= player.weapon.damage;
             break;
 
     }
@@ -91,6 +100,7 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
 
     if (enemy.hp <= 0)
     {
+        enemy.body.enable = false;
         enemy.animations.play('pop');
         enemy.animations.currentAnim.onComplete.add(function () {
             enemy.destroy(); //call destroy when animation ends
@@ -100,7 +110,7 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
         enemy.bubbleSfx.play();
         this.bEmitter.start(true,2000,null,20);
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
-        this.waveProperties.active -= enemy.points;
+        this.waveProperties.active -= enemy.newWave ? enemy.points : 0;
         player.score += enemy.score;
         //console.log(player.score);
 
@@ -113,29 +123,33 @@ playState.prototype.splitEnemy = function(enemy, prevX, prevY){
             return;
 
     for (var i=0; i < 2; i++) {
-        this.createEnemy(enemy, prevX, prevY);
+        this.createEnemy(enemy, prevX, prevY, false);
     }
 };
 
-playState.prototype.createEnemy = function(type, posX, posY){
+playState.prototype.createEnemy = function(type, posX, posY, newWave){
     var enemy = this.enemies.create(posX, posY, enemyProperties[type].img);
     enemy.anchor.setTo(0.5, 0.5);
     enemy.body.collideWorldBounds = true;
     enemy.body.bounce.set(1);
     enemy.body.allowGravity = false;
+    enemy.scale.setTo(0,0);
 
     enemy.body.velocity.y = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
     enemy.body.velocity.x = game.rnd.integerInRange(enemyProperties[type].minV, enemyProperties[type].maxV) * game.rnd.pick([-1, 1]);
     enemy.nextSize = enemyProperties[type].nextSize;
     enemy.hp = enemyProperties[type].hp;
     enemy.dmg = enemyProperties[type].dmg;
+    enemy.newWave = newWave;
     enemy.points = enemyProperties[type].points;
     enemy.score = enemyProperties[type].score;
     enemy.bubbleSfx = game.add.audio('bubbleSfx');
     enemy.bubbleSfx.allowMultiple = true;
     enemy.animations.add('pop', [1,2,3,4,5],30,false);
 
-    this.waveProperties.counter -= enemyProperties[type].points;
-    this.waveProperties.active += enemyProperties[type].points;
+    game.add.tween(enemy.scale).to({x: 1, y: 1}, 300).start();
+
+    this.waveProperties.counter -= newWave ? enemyProperties[type].points : 0;
+    this.waveProperties.active += newWave ?  enemyProperties[type].points : 0;
 
 }

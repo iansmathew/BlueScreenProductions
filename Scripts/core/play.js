@@ -13,6 +13,7 @@ playState.prototype = {
 
         game.physics.arcade.gravity.y = 1000;
 
+        //creating players
         this.players = game.add.group();
         this.player1 = new Player(game, game.width/2, game.height/2, 1, this.players);
         this.player2 = new Player(game, game.width/2, game.height/2, 2, this.players);
@@ -20,10 +21,12 @@ playState.prototype = {
         this.players.add(this.player1);
         this.players.add(this.player2);
 
+        //creating enemy group
         this.enemies = game.add.group();
         this.enemies.enableBody = true;
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
+        //making one emitter for all enemy deaths
         this.bEmitter = game.add.emitter(game.world.centerX,game.world.centerY,100);
         this.bEmitter.makeParticles('FireworkVFX',[1,2,3]);
         this.bEmitter.gravity = -1500;
@@ -35,27 +38,31 @@ playState.prototype = {
         this.bEmitter.maxParticleSpeed.setTo(200, 400);
         this.bEmitter.setScale(0.5,0,0.5,0,1500);
 
-        game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemies, this);
+        game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemyWave, this); //loop that spawns enemies
     },
 
     update: function(){
-       game.physics.arcade.collide(this.players, this.foreground);
+        game.physics.arcade.collide(this.players, this.foreground);
         game.physics.arcade.collide(this.enemies, this.foreground);
+
         game.physics.arcade.overlap(this.players, this.enemies, this.killPlayer, null, this);
+
+        game.physics.arcade.collide(this.player1.weapon.bullets, this.foreground, this.killBullet, null, this);
+        game.physics.arcade.collide(this.player2.weapon.bullets, this.foreground, this.killBullet, null, this);
+
         game.physics.arcade.overlap(this.player1.weapon.bullets, this.enemies, function (bullets, enemy) {
             this.hitEnemy(bullets, enemy, this.player1);
         }, null, this);
-        game.physics.arcade.collide(this.player1.weapon.bullets, this.foreground, this.killBullet, null, this);
         game.physics.arcade.overlap(this.player2.weapon.bullets, this.enemies, function (bullets, enemy) {
             this.hitEnemy(bullets, enemy, this.player2);
         }, null, this);
-        game.physics.arcade.collide(this.player2.weapon.bullets, this.foreground, this.killBullet, null, this);
+
     },
 
     shutdown: function () {
         //resetting wave properties
         this.waveProperties.timeCheck = 1500;
-        this.waveProperties.max = 24;
+        this.waveProperties.max = 12;
         this.waveProperties.active = 0;
         this.waveProperties.counter = 24;
     }

@@ -123,6 +123,7 @@ Player.prototype.setWeapon = function() {
     this.weapon.bulletSpeed = 850;
     this.weapon.fireRate = 200;
     this.weapon.trackSprite(this);
+    this.weapon.damage = 10;
 };
 
 

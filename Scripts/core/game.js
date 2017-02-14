@@ -2,6 +2,11 @@
 //refer to the 'keys' for switching states
 var game = new Phaser.Game(1280, 736, Phaser.AUTO, 'gameDiv');
 
+game.global = {
+	score1: 0,
+	score2: 0,
+};
+
 game.state.add('boot', bootState);
 game.state.add('menu', menuState);
 game.state.add('option', optionState);

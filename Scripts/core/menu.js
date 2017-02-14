@@ -97,6 +97,12 @@ var gameOverState = {
         this.btnE = game.add.button(700, 610, 'exit',function () {
             game.state.start('boot'); //Goes to menuState
         });
+		
+		 this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + game.global.score1,
+            {font: '20px Times New Roman', fill: '#ffffff' });
+
+        this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + game.global.score2,
+            {font: '20px Times New Roman', fill: '#ffffff' });
     }
 };
 

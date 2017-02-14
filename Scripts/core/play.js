@@ -71,6 +71,9 @@ playState.prototype = {
         this.waveProperties.max = 12;
         this.waveProperties.active = 0;
         this.waveProperties.counter = 24;
+		
+		game.global.score1 = this.player1.score;
+		game.global.score2 = this.player2.score;
     }
 }
 

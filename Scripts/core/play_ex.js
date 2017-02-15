@@ -6,10 +6,10 @@ playState.prototype.waveProperties = {
 };
 
 playState.prototype.spawnEnemyWave = function(){
-    console.log("Spawn Enemies: " + this.spawnWaves);
+    /*console.log("Spawn Enemies: " + this.spawnWaves);
     console.log("Active: " + this.waveProperties.active);
     console.log("Max: " + this.waveProperties.max);
-    console.log("Counter: " + this.waveProperties.counter);
+    console.log("Counter: " + this.waveProperties.counter);*/
 
     if (this.waveProperties.counter > 0) {
         if (this.spawnWaves && this.waveProperties.active < this.waveProperties.max) {
@@ -93,7 +93,6 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
         case 'bullet' :
             enemy.hp -= player.weapon.damage;
             break;
-
     }
     bullet.kill(); //bullet dies on impact
 
@@ -116,7 +115,21 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
         this.waveProperties.active -= enemy.newWave ? enemy.points : 0;
         this.updateCounter(player);
+
+        console.log(enemy.powerUpChance);
+
+        var roll = game.rnd.integerInRange(0, 100);
+        if (roll <= enemy.powerUpChance) {
+            console.log("WOOHOO");
+            this.spawnPowerUp(enemy.x, enemy.y);
+        }
     }
+};
+
+playState.prototype.spawnPowerUp = function (x, y) {
+    var drop = game.add.sprite(x, y, 'bullet');
+    game.physics.arcade.enable(drop);
+    this.powerUp.add(drop);
 };
 
 playState.prototype.updateCounter = function (player) {
@@ -148,6 +161,7 @@ playState.prototype.createEnemy = function(type, posX, posY, newWave){
     enemy.dmg = enemyProperties[type].dmg;
     enemy.newWave = newWave;
     enemy.points = enemyProperties[type].points;
+    enemy.powerUpChance = 100;
     enemy.score = enemyProperties[type].score;
     enemy.bubbleSfx = game.add.audio('bubbleSfx');
     enemy.bubbleSfx.allowMultiple = true;
@@ -158,4 +172,11 @@ playState.prototype.createEnemy = function(type, posX, posY, newWave){
     this.waveProperties.counter -= newWave ? enemyProperties[type].points : 0;
     this.waveProperties.active += newWave ?  enemyProperties[type].points : 0;
 
-}
+};
+
+playState.prototype.changeWeapon = function (player, powerUp) {
+    powerUp.destroy();
+    var gunType = game.rnd.pick(['shotgun', 'machineGun']);
+    console.log(gunType);
+    this.setWeapon[gunType](player);
+};

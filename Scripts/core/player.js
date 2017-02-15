@@ -34,7 +34,7 @@ Player = function(game, x, y, p_num, group){
     this.pEmitter.setScale(0.5,0,0.5,0,300);
 
     this.createKeys();
-    this.setWeapon();
+    this.setPistol();
 
     //at the very end
     game.add.existing(this);
@@ -115,7 +115,7 @@ Player.prototype.createKeys = function(){
         }
 };
 
-Player.prototype.setWeapon = function() {
+Player.prototype.setPistol = function() {
     this.weapon = game.add.weapon(30, 'bullet'); //
     this.weapon.enableBody = true;
     this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;

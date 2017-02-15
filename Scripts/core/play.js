@@ -15,8 +15,8 @@ playState.prototype = {
 
         //creating players
         this.players = game.add.group();
-        this.player1 = new Player(game, game.width/2, game.height/2, 1, this.players);
-        this.player2 = new Player(game, game.width/2, game.height/2, 2, this.players);
+        this.player1 = new Player(game, 1150, 636, 1, this.players);
+        this.player2 = new Player(game, 120, 636, 2, this.players);
         
         this.players.add(this.player1);
         this.players.add(this.player2);
@@ -45,11 +45,18 @@ playState.prototype = {
         this.bEmitter.setScale(0.5,0,0.5,0,1500);
 
         game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemyWave, this); //loop that spawns enemies
+
+        this.powerUp = game.add.group();
     },
 
     update: function(){
         game.physics.arcade.collide(this.players, this.foreground);
         game.physics.arcade.collide(this.enemies, this.foreground);
+
+        game.physics.arcade.collide(this.powerUp, this.foreground);
+
+        game.physics.arcade.overlap( this.player1, this.powerUp, this.changeWeapon, null, this);
+        game.physics.arcade.overlap(this.player2, this.powerUp, this.changeWeapon, null, this);
 
         game.physics.arcade.overlap(this.players, this.enemies, this.killPlayer, null, this);
 

@@ -14,5 +14,7 @@
   - Bullet firing and deaths
   - Basic Wave System
   - Basic placeholder sounds
+  - Basic Powerups (Shotgun/MachineGun)
+  - 
   
   

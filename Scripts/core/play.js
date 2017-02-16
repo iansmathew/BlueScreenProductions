@@ -47,6 +47,7 @@ playState.prototype = {
         game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemyWave, this); //loop that spawns enemies
 
         this.powerUp = game.add.group();
+
     },
 
     update: function(){

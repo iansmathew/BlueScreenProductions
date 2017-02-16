@@ -16,8 +16,11 @@ var loadState = {
         game.load.image('bloodVfx', "././Assets/img/tempGameAssets/BloodFX.png");
         game.load.spritesheet('FireworkVFX', "././Assets/img/tempGameAssets/FireworkVFX.png",32,32,4);
 
-        game.load.audio('bulletSfx', "././Assets/sound/blaster.mp3");
-        game.load.audio('bubbleSfx', "././Assets/sound/explosion.mp3");
+        game.load.audio('bulletSfx', "././Assets/sound/Guns/blaster.mp3");
+        game.load.audio('bubbleSfx', "././Assets/sound/Blorp/Blorp.mp3");
+        game.load.audio('shotgunSfx',"././Assets/sound/Guns/shotgun.mp3");
+        game.load.audio('machineGunSfx',"././Assets/sound/Guns/machineGun.mp3");
+        game.load.audio('sniperSfx',"././Assets/sound/Guns/sniper.mp3");
 
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");

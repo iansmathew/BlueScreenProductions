@@ -19,7 +19,7 @@ var menuState = {
             //switches to Options
         });
         this.btnC = game.add.button(570, 400, 'credits',function () {
-            //switches to Credits
+            game.state.start('credit');
         });
         this.btnE = game.add.button(570, 500, 'exit', function () {
             //switches to Exit
@@ -73,6 +73,20 @@ var instructionState = {
 var creditState = {
     //code to create the buttons and text
     create: function(){
+        game.add.image(0,0,'background');
+         game.add.text(300,70,'                      PEW PEW\n               ' +
+            '              BY\n     BLUE SCREEN PRODUCTIONS',
+            {font: '40px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(250,300,'Producer                               Cory Ronald',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(250,335,'Lead Engineer                      Ian Sebastion Matthew',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(250,365,'Lead Assets                          Jonathan Baker',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(250,395,'Lead UI                                Chris Lee',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+
+
 
     },
     //code to update the assets goes here //changes are reflected in game render

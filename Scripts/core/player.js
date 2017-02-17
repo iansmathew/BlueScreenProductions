@@ -93,8 +93,6 @@ Player.prototype.movePlayer = function(){
     else if (this.fireButton.isDown) { //firing straight up
         this.weapon.fireAngle = Phaser.ANGLE_UP;
         this.weapon.fire();
-        this.weapon.fire();
-        this.weapon.fire();
         this.shootSfx.play(null, null, 0.1, false, false);
     }
 };

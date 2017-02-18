@@ -108,7 +108,7 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
 
         this.bEmitter.x = enemy.x;
         this.bEmitter.y = enemy.y;
-        enemy.bubbleSfx.play();
+        enemy.bubbleSfx.play(null, null, 0.1, false, false);
         this.bEmitter.start(true,2000,null,20);
 
         this.splitEnemy(enemy.nextSize , enemy.x, enemy.y);
@@ -174,6 +174,7 @@ playState.prototype.createEnemy = function(type, posX, posY, newWave){
 
 playState.prototype.changeWeapon = function (player, powerUp) {
     powerUp.destroy();
-    var gunType = game.rnd.pick(['shotgun', 'machineGun']);
+    var gunType = game.rnd.pick(['shotgun', 'machineGun','sniper']);
+    console.log(gunType);
     this.setWeapon[gunType](player);
 };

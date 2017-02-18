@@ -16,7 +16,11 @@ Player = function(game, x, y, p_num, group){
     this.group = group;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
-    this.shootSfx = game.add.audio('bulletSfx');
+    this.shotgunSfx = game.add.audio('shotgunSfx');
+    this.pistolSfx = game.add.audio('bulletSfx');
+    this.machineSfx = game.add.audio('machineGunSfx');
+    this.sniperSfx = game.add.audio('sniperSfx');
+    this.shootSfx = this.shotgunSfx;
     this.shootSfx.allowMultiple = false;
 
     this.wEmitter  = game.add.emitter(0,0,100);
@@ -35,7 +39,6 @@ Player = function(game, x, y, p_num, group){
 
     this.createKeys();
     this.setPistol();
-
     //at the very end
     game.add.existing(this);
 };
@@ -75,22 +78,22 @@ Player.prototype.movePlayer = function(){
         }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
             this.weapon.fire();
-            this.shootSfx.play(null, null, 1, false, false);
+            this.shootSfx.play(null, null, 0.1, false, false);
         }
     if (this.fireButton.isDown && this.cursor.left.isDown){
             this.weapon.fireAngle = -135;
             this.weapon.fire();
-            this.shootSfx.play(null, null, 1, false, false);
+            this.shootSfx.play(null, null, 0.1, false, false);
         }
     else if (this.fireButton.isDown && this.cursor.right.isDown){
         this.weapon.fireAngle = -45;
         this.weapon.fire();
-        this.shootSfx.play(null, null, 1, false, false);
+        this.shootSfx.play(null, null, 0.1, false, false);
     }
     else if (this.fireButton.isDown) { //firing straight up
         this.weapon.fireAngle = Phaser.ANGLE_UP;
         this.weapon.fire();
-        this.shootSfx.play(null, null, 1, false, false);
+        this.shootSfx.play(null, null, 0.1, false, false);
     }
 };
 
@@ -124,6 +127,7 @@ Player.prototype.setPistol = function() {
     this.weapon.fireRate = 200;
     this.weapon.trackSprite(this);
     this.weapon.damage = 10;
+    this.shootSfx = this.pistolSfx;
 };
 
 

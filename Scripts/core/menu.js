@@ -98,7 +98,7 @@ var creditState = {
         game.add.text(275,625,'Content Lead                                Jason Lin',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
         this.btnE = game.add.button(1125, 655, 'exit',function () {
-            game.state.start('boot'); //Goes to menuState
+            game.state.start('menu'); //Goes to menuState
         });
 
 
@@ -125,7 +125,7 @@ var gameOverState = {
             game.state.start('play'); //Starts the game again
         });
         this.btnE = game.add.button(700, 610, 'exit',function () {
-            game.state.start('boot'); //Goes to menuState
+            game.state.start('menu'); //Goes to menuState
         });
 		
 		 this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + game.global.score1,

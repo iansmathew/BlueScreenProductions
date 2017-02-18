@@ -27,10 +27,10 @@ playState.prototype = {
         this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
         this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+            {font: '20px Times New Roman', fill: '#ffffff'});
 
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + this.player2.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+            {font: '20px Times New Roman', fill: '#ffffff'});
 
         //making one emitter for all enemy deaths
         this.bEmitter = game.add.emitter(game.world.centerX,game.world.centerY,100);

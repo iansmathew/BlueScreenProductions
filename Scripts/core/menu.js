@@ -74,17 +74,33 @@ var creditState = {
     //code to create the buttons and text
     create: function(){
         game.add.image(0,0,'background');
-         game.add.text(300,70,'                      PEW PEW\n               ' +
+         game.add.text(300,50,'                      PEW PEW\n               ' +
             '              BY\n     BLUE SCREEN PRODUCTIONS',
             {font: '40px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(250,300,'Producer                               Cory Ronald',
+        game.add.text(275,265,'Producer                                       Cory Ronald',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(250,335,'Lead Engineer                      Ian Sebastion Matthew',
+        game.add.text(275,305,'Design Lead                                  Diego Camacho',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(250,365,'Lead Assets                          Jonathan Baker',
+        game.add.text(275,345,'Engineer Lead                              Ian Sebastion Mathew',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(250,395,'Lead UI                                Chris Lee',
+        game.add.text(275,385,'Assets Lead                                   Jonathan Baker',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,425,'UI Lead                                         Chris Lee',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,465,'Sound Lead                                   Matthew Gordon',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,505,'QA Lead                                       Terry Humber',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,545,'Development Lead                       Colin Pugh',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,585,'Gameplay Lead                            Antonio Yumbla',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        game.add.text(275,625,'Content Lead                                Jason Lin',
+            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        this.btnE = game.add.button(1125, 655, 'exit',function () {
+            game.state.start('boot'); //Goes to menuState
+        });
+
 
 
 

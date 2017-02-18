@@ -69,9 +69,9 @@ Player.prototype.movePlayer = function(){
         }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
             this.body.velocity.y = -999;
-            this.wEmitter.x = this.x;
+            /*this.wEmitter.x = this.x;
             this.wEmitter.y = this.y-16;
-            this.wEmitter.start(true,500,null,3);
+            this.wEmitter.start(true,500,null,3);*/ //PARTICLES ARE TOO EXPENSIVE
         }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
             this.weapon.fire();

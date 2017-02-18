@@ -13,6 +13,8 @@ var loadState = {
         game.load.spritesheet('medBubble', "././Assets/img/tempGameAssets/mediumBubble.png",74,74);
         game.load.spritesheet('smallBubble',"././Assets/img/tempGameAssets/smallBubble.png",24,24);
 
+        game.load.image('powerUp', "././Assets/img/tempGameAssets/powerUp.png");
+
         game.load.image('bloodVfx', "././Assets/img/tempGameAssets/BloodFX.png");
         game.load.spritesheet('FireworkVFX', "././Assets/img/tempGameAssets/FireworkVFX.png",32,32,4);
 

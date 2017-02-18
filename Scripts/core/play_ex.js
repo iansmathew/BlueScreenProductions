@@ -25,7 +25,6 @@ playState.prototype.spawnEnemyWave = function(){
     }
     else if (this.enemies.getFirstAlive() == null) {
         this.spawnWaves = false;
-        console.log("Get ready for next wave");
         if (this.spawnWaves == false) {
             var myText = game.add.text(500, 80, 'Get ready for next wave');
             game.add.tween(myText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
@@ -116,18 +115,17 @@ playState.prototype.hitEnemy = function(bullet, enemy, player){
         this.waveProperties.active -= enemy.newWave ? enemy.points : 0;
         this.updateCounter(player);
 
-        console.log(enemy.powerUpChance);
 
         var roll = game.rnd.integerInRange(0, 100);
         if (roll <= enemy.powerUpChance) {
-            console.log("WOOHOO");
             this.spawnPowerUp(enemy.x, enemy.y);
         }
     }
 };
 
 playState.prototype.spawnPowerUp = function (x, y) {
-    var drop = game.add.sprite(x, y, 'bullet');
+    var drop = game.add.sprite(x, y, 'powerUp');
+    drop.lifespan = 4000; //powerup only lives for 4 seconds
     game.physics.arcade.enable(drop);
     this.powerUp.add(drop);
 };
@@ -161,7 +159,7 @@ playState.prototype.createEnemy = function(type, posX, posY, newWave){
     enemy.dmg = enemyProperties[type].dmg;
     enemy.newWave = newWave;
     enemy.points = enemyProperties[type].points;
-    enemy.powerUpChance = 100;
+    enemy.powerUpChance = 20;
     enemy.score = enemyProperties[type].score;
     enemy.bubbleSfx = game.add.audio('bubbleSfx');
     enemy.bubbleSfx.allowMultiple = true;
@@ -177,6 +175,5 @@ playState.prototype.createEnemy = function(type, posX, posY, newWave){
 playState.prototype.changeWeapon = function (player, powerUp) {
     powerUp.destroy();
     var gunType = game.rnd.pick(['shotgun', 'machineGun']);
-    console.log(gunType);
     this.setWeapon[gunType](player);
 };

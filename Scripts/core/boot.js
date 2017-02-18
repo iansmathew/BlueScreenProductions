@@ -2,6 +2,8 @@
 var bootState = {
     //place menu assets to be loaded here
     preload: function(){
+        game.load.image('title', "././Assets/img/tempGameAssets/gameTitle.png");
+        game.load.image('box', "././Assets/img/tempMenuAssets/bttnOutline.png")
         game.load.image('background', "././Assets/img/tempGameAssets/tempBackground.png");
         game.load.image('singleP', "././Assets/img/tempMenuAssets/singlePlayer.png");
         game.load.image('options', "././Assets/img/tempMenuAssets/btnHelp.png");

@@ -23,13 +23,6 @@ Player = function(game, x, y, p_num, group){
     this.shootSfx = this.shotgunSfx;
     this.shootSfx.allowMultiple = false;
 
-    this.wEmitter  = game.add.emitter(0,0,100);
-    this.wEmitter.makeParticles('FireworkVFX',1);
-    this.wEmitter.gravity = -1500;
-    this.wEmitter.setScale(0.5,0,0.5,0,500);
-    this.wEmitter.setYSpeed(-16,16);
-    this.wEmitter.setXSpeed(16,-16);
-
     this.pEmitter = game.add.emitter(0,0,100);
     this.pEmitter.makeParticles('bloodVfx');
     this.pEmitter.gravity = -1200;
@@ -72,9 +65,6 @@ Player.prototype.movePlayer = function(){
         }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
             this.body.velocity.y = -999;
-            /*this.wEmitter.x = this.x;
-            this.wEmitter.y = this.y-16;
-            this.wEmitter.start(true,500,null,3);*/ //PARTICLES ARE TOO EXPENSIVE
         }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
             this.weapon.fire();

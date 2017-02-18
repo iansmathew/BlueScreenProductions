@@ -1,7 +1,7 @@
 var playState = function(game){};
 playState.prototype = {
     create: function(){
-        game.input.gamepad.start();
+
 
         this.map = game.add.tilemap('tileMap');
         this.map.addTilesetImage('tileSet1');

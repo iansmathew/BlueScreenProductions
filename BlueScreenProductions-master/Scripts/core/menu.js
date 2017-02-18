@@ -97,6 +97,9 @@ var creditState = {
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
         game.add.text(275,625,'Content Lead                                Jason Lin',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+        this.btnE = game.add.button(1125, 655, 'exit',function () {
+            game.state.start('boot'); //Goes to menuState
+        });
 
 
 

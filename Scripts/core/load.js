@@ -23,6 +23,9 @@ var loadState = {
         game.load.audio('shotgunSfx',"././Assets/sound/Guns/shotgun.mp3");
         game.load.audio('machineGunSfx',"././Assets/sound/Guns/machineGun.mp3");
         game.load.audio('sniperSfx',"././Assets/sound/Guns/sniper.mp3");
+        game.load.audio('gameMusic', '././Assets/sound/music/top2.mp3');
+        game.load.audio('menuMusic', '././Assets/sound/music/bass.mp3');
+
 
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");

@@ -31,6 +31,7 @@ var menuState = {
 
     update: function () {
         game.global.moveMenu(this.box); //this function helps to navigate through menu
+
     }
 };
 
@@ -122,7 +123,8 @@ var creditState = {
 
         game.global.bttnArr = [this.btnE];
         this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
-
+        this.music = game.add.audio('menuMusic');//Play ingame Music
+        this.music.loopFull(1);
 
     },
     //code to update the assets goes here //changes are reflected in game render

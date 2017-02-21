@@ -23,6 +23,7 @@ Player = function(game, x, y, p_num, group){
     this.shootSfx = this.shotgunSfx;
     this.shootSfx.allowMultiple = false;
 
+
     this.pEmitter = game.add.emitter(0,0,100);
     this.pEmitter.makeParticles('bloodVfx');
     this.pEmitter.gravity = -1200;

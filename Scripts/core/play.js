@@ -13,6 +13,9 @@ playState.prototype = {
 
         game.physics.arcade.gravity.y = 1000;
 
+        this.music = game.add.audio('gameMusic');//Play ingame Music
+        this.music.loopFull(0.3);
+
         //creating players
         this.players = game.add.group();
         this.player1 = new Player(game, 1150, 636, 1, this.players);

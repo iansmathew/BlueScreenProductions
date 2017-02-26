@@ -153,6 +153,13 @@ var gameOverState = {
 
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + game.global.score2,
             {font: '20px Times New Roman', fill: '#ffffff' });
+
+        game.global.bttnArr = [this.btnPlayA, this.btnE];
+        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
+    },
+
+    update: function () {
+        game.global.moveMenu(this.box);
     }
 };
 

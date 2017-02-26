@@ -141,3 +141,43 @@ Weapon.ScatterShot.prototype.fire = function (source, angle) {
     this.nextFire = this.game.time.time + this.fireRate;
 
 };
+
+/////////////////////////////////////////////////////////////////
+////                          SHOTGUN                        ////
+/////////////////////////////////////////////////////////////////
+
+Weapon.Shotgun = function (game) {
+
+    Phaser.Group.call(this, game, game.world, 'Shotgun', false, true, Phaser.Physics.ARCADE);
+
+    this.nextFire = 1000;
+    this.bulletSpeed = 600;
+    this.fireRate = 1000;
+
+    for (var i = 0; i < 32; i++)
+    {
+        this.add(new Bullet(game, 'bullet', 10), true);
+    }
+
+    return this;
+
+};
+
+Weapon.Shotgun.prototype = Object.create(Phaser.Group.prototype);
+Weapon.Shotgun.prototype.constructor = Weapon.Shotgun;
+
+Weapon.Shotgun.prototype.fire = function (source, angle) {
+
+    if (this.game.time.time < this.nextFire) { return; }
+
+    var x = (source.x);
+    var y = source.y;
+
+        this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0);
+        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0);
+        this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0);
+
+
+    this.nextFire = this.game.time.time + this.fireRate;
+
+};

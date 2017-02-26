@@ -11,29 +11,21 @@ BigEnemy = function (game, x, y, newWave) {
     this.body.collideWorldBounds = true;
     this.body.bounce.set(1);
     this.body.allowGravity = false;
-    this.scale.setTo(0,0);
 
-    this.body.velocity.y = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
-    this.body.velocity.x = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
-    this.nextSize = 'MedEnemy';
+
+    this.velY = game.rnd.integerInRange(50, 80) * game.rnd.pick([-1, 1]);
+    this.velX = game.rnd.integerInRange(50, 80) * game.rnd.pick([-1, 1]);
+    this.nextSize = 'medBubble';
     this.hp = 50;
     this.dmg = 50;
     this.wavePoints = 10;
     this.powerUpChance = 20;
     this.score = 100;
     this.partOfWave = newWave;
-    //this.bubbleSfx = game.add.audio('bubbleSfx');
-    //this.bubbleSfx.allowMultiple = true;
     this.animations.add('pop', [1,2,3,4,5],30,false);
 
-    if (this.partOfWave) {
-        waveProperties.counter -= this.wavePoints;
-        waveProperties.active += this.wavePoints;
-    }
-
-    game.add.tween(this.scale).to({x: 1, y: 1}, 300).start();
-
-    game.add.existing(this);
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
 };
 
 /*--------------------------------------------------------*/
@@ -58,27 +50,19 @@ MedEnemy = function (game, x, y, newWave) {
     this.body.allowGravity = false;
     this.scale.setTo(0,0);
 
-    this.body.velocity.y = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
-    this.body.velocity.x = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
-    this.nextSize = 'SmallEnemy';
+    this.velY = game.rnd.integerInRange(80, 110) * game.rnd.pick([-1, 1]);
+    this.velX = game.rnd.integerInRange(80, 110) * game.rnd.pick([-1, 1]);
+    this.nextSize = 'smallBubble';
     this.hp = 25;
     this.dmg = 25;
     this.wavePoints = 5;
     this.powerUpChance = 20;
     this.score = 50;
     this.partOfWave = newWave;
-    //this.bubbleSfx = game.add.audio('bubbleSfx');
-    //this.bubbleSfx.allowMultiple = true;
     this.animations.add('pop', [1,2,3,4,5],30,false);
 
-    if (this.partOfWave) {
-        waveProperties.counter -= this.wavePoints;
-        waveProperties.active += this.wavePoints;
-    }
-
-    game.add.tween(this.scale).to({x: 1, y: 1}, 300).start();
-
-    game.add.existing(this);
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
 };
 
 /*--------------------------------------------------------*/
@@ -102,8 +86,8 @@ SmallEnemy = function (game, x, y, newWave) {
     this.body.allowGravity = false;
     this.scale.setTo(0,0);
 
-    this.body.velocity.y = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
-    this.body.velocity.x = game.rnd.integerInRange(80, 100) * game.rnd.pick([-1, 1]);
+    this.velY = game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.velX = game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
     this.nextSize = null;
     this.hp = 10;
     this.dmg = 10;
@@ -111,18 +95,9 @@ SmallEnemy = function (game, x, y, newWave) {
     this.powerUpChance = 20;
     this.score = 25;
     this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
     //this.bubbleSfx = game.add.audio('bubbleSfx');
     //this.bubbleSfx.allowMultiple = true;
-    this.animations.add('pop', [1,2,3,4,5],30,false);
-
-    if (this.partOfWave) {
-        waveProperties.counter -= this.wavePoints;
-        waveProperties.active += this.wavePoints;
-    }
-
-    game.add.tween(this.scale).to({x: 1, y: 1}, 300).start();
-
-    game.add.existing(this);
 };
 
 /*--------------------------------------------------------*/
@@ -132,14 +107,13 @@ SmallEnemy.prototype.constructor = SmallEnemy;
 
 
 /////////////////////////////////////////////////////////////////
-////                      ENEMY CLASS                        ////
+////                      ENEMY GROUP                        ////
 /////////////////////////////////////////////////////////////////
 var Enemies = function (game) {
     Phaser.Group.call(this, game);
     
     this.spawnWaves = true;
-    
-    //this.spawnEnemies();
+    this.createPool();
 
     game.add.existing(this);
 };
@@ -152,18 +126,17 @@ Enemies.prototype.spawnEnemies = function () {
         if (this.spawnWaves && waveProperties.active < waveProperties.max) {
             while (waveProperties.active < waveProperties.max)
             {
-                var type = Phaser.ArrayUtils.getRandomItem(["BigEnemy", "MedEnemy", "SmallEnemy"]);
-                var posX = game.rnd.integerInRange(80, 1400);
-                var posY = game.rnd.integerInRange(50, 400);
-                this.createEnemy(type, posX, posY, true);
+                this.addEnemy('bigBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
+                this.addEnemy('smallBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
+                this.addEnemy('medBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
 
             }
         }
     }
     else if (this.getFirstAlive() == null) {
         this.spawnWaves = false;
-        if (this.spawnWaves == false) {
-            var myText = game.add.text(500, 80, 'Get ready for next wave');
+        if (!this.spawnWaves) {
+            var myText = game.add.text(500, 80, 'Get ready for wave ' + ++waveProperties.level);
             game.add.tween(myText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
             game.add.tween(myText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
@@ -173,28 +146,6 @@ Enemies.prototype.spawnEnemies = function () {
             waveProperties.max *= 2;
             this.spawnWaves = true;
 
-
-        }
-    }
-};
-
-Enemies.prototype.createEnemy = function (type, x, y, newWave) {
-    var numEnem = (newWave) ? 1 : 2;
-    for (var i =0; i < numEnem; i++) {
-        switch (type) {
-            case 'BigEnemy':
-                this.add(new BigEnemy(game, x, y, newWave));
-                break;
-
-            case 'MedEnemy':
-                this.add(new MedEnemy(game, x, y, newWave));
-                break;
-
-            case 'SmallEnemy':
-                this.add(new SmallEnemy(game, x, y, newWave));
-                break;
-            default:
-                console.log("Unknown Enemy: " + type);
 
         }
     }
@@ -226,8 +177,10 @@ Enemies.prototype.splitEnemy = function (deadEnemy) {
     var nextEnemy = deadEnemy.nextSize;
     if (nextEnemy == null)
         return;
-    else
-    this.createEnemy(nextEnemy, deadEnemy.x, deadEnemy.y, false);
+    else {
+        //this.createEnemy(nextEnemy, deadEnemy.x, deadEnemy.y, false);
+        this.addEnemy(deadEnemy.nextSize, 2, deadEnemy.x +  game.rnd.integerInRange(-10, 10), deadEnemy.y, false);
+    }
 };
 
 Enemies.prototype.dropPowerUp = function (x, y, group) {
@@ -237,10 +190,53 @@ Enemies.prototype.dropPowerUp = function (x, y, group) {
     game.physics.arcade.enable(drop);
     group.add(drop);
 };
+
+Enemies.prototype.createPool = function () {
+    this.classType = BigEnemy;
+    this.createMultiple(500);
+
+    this.classType = MedEnemy;
+    this.createMultiple(500);
+
+    this.classType = SmallEnemy;
+    this.createMultiple(700);
+
+
+};
+
+Enemies.prototype.addEnemy = function (type, active, x, y, newWave) {
+    var counter = 0;
+    this.forEachDead(function (sprite) {
+        if (counter == active)
+            return;
+        else if (sprite.key == type)
+        {
+            counter++;
+            sprite.reset(x, y);
+            sprite.body.velocity.y = sprite.velY;
+            sprite.body.velocity.x = sprite.velX;
+            sprite.partOfWave = newWave || false;
+
+            sprite.scale.setTo(0,0);
+            game.add.tween(sprite.scale).to({x: 1, y: 1}, 300).start();
+
+            if (sprite.partOfWave) {
+                waveProperties.counter -= sprite.wavePoints;
+                waveProperties.active += sprite.wavePoints;
+
+                console.log(waveProperties.active);
+            }
+
+        }
+    });
+};
+
+
 /////////////////////////////////////////////////////////////////
 ////                      WAVE PROPERTIES                    ////
 /////////////////////////////////////////////////////////////////
 var waveProperties = {
+    level: 1,
     max: 12,
     active: 0,
     counter: 24,

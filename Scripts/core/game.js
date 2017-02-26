@@ -3,12 +3,13 @@
 var game = new Phaser.Game(1280, 736, Phaser.AUTO, 'gameDiv');
 
 game.global = {
-	score1: 0,
-	score2: 0,
-	bttnArr: [],
-	bttnIdx: 0,
-	pad: null,
-	moveMenu: function (boxOutline) {
+    score1: 0,
+    score2: 0,
+    bttnArr: [],
+    bttnIdx: 0,
+    pad: null,
+    instructionCheck: 0,
+    moveMenu: function (boxOutline) {
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20) && game.global.bttnIdx < game.global.bttnArr.length-1){
             game.global.bttnIdx++;
             boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y
@@ -25,6 +26,7 @@ game.global = {
     }
 };
 
+
 game.state.add('boot', bootState);
 game.state.add('menu', menuState);
 game.state.add('option', optionState);
@@ -32,6 +34,8 @@ game.state.add('credit', creditState);
 game.state.add('instruction', instructionState);
 game.state.add('gameOver', gameOverState);
 game.state.add('load', loadState);
+game.state.add('playBtn', playBtnState);
+game.state.add('pauseMenu', pauseMenu);
 game.state.add('play', playState);
 
 game.state.start('boot');

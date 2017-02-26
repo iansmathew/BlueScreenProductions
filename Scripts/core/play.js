@@ -1,30 +1,27 @@
-var playState = function(game){};
+var playState = function(game){
+    var pause;
+};
 playState.prototype = {
     create: function(){
-
-
         this.map = game.add.tilemap('tileMap');
         this.map.addTilesetImage('tileSet1');
         this.background = this.map.createLayer('Tile Layer 2');
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 1000, true, this.foreground);
 
-        this.spawnWaves = true; //bool to decide whether to spawn waves or not
-
         game.physics.arcade.gravity.y = 1000;
 
-        //creating players
+        this.player1 = new Player(game, 1150, 636, 'player1');
+        this.player2 = new Player(game, 120, 636, 'player2');
+
         this.players = game.add.group();
-        this.player1 = new Player(game, 1150, 636, 1, this.players);
-        this.player2 = new Player(game, 120, 636, 2, this.players);
-        
         this.players.add(this.player1);
         this.players.add(this.player2);
 
-        //creating enemy group
-        this.enemies = game.add.group();
-        this.enemies.enableBody = true;
-        this.enemies.physicsBodyType = Phaser.Physics.ARCADE;
+        this.powerUps = game.add.group();
+        this.powerUps.enableBody = true;
+
+        this.enemies = new Enemies(game);
 
         this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
             {font: '20px Times New Roman', fill: '#ffffff' });
@@ -32,21 +29,14 @@ playState.prototype = {
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + this.player2.score,
             {font: '20px Times New Roman', fill: '#ffffff' });
 
-        //making one emitter for all enemy deaths
-        this.bEmitter = game.add.emitter(game.world.centerX,game.world.centerY,100);
-        this.bEmitter.makeParticles('FireworkVFX',[1,2,3]);
-        this.bEmitter.gravity = -1500;
-        this.bEmitter.area = 500 * 500;
-        this.bEmitter.bounce.setTo(0.5,0.5);
-        this.bEmitter.setYSpeed(-500, 500);
-        this.bEmitter.setXSpeed(-500, 500);
-        this.bEmitter.minParticleSpeed.setTo(-200, -300);
-        this.bEmitter.maxParticleSpeed.setTo(200, 400);
-        this.bEmitter.setScale(0.5,0,0.5,0,1500);
+        game.time.events.loop(2000, this.enemies.spawnEnemies, this.enemies); //loop that spawns enemies
+        game.time.events.loop(2000, function () {
+            if(!this.players.getFirstAlive())
+                game.state.start('gameOver');
+        }, this);
 
-        game.time.events.loop(this.waveProperties.timeCheck, this.spawnEnemyWave, this); //loop that spawns enemies
-
-        this.powerUp = game.add.group();
+        puase = game.inpuut.keyboard.addKey(Phaser.keyboard.P);
+        puase.onDown.add(pause, this);
 
     },
 
@@ -54,40 +44,70 @@ playState.prototype = {
         game.physics.arcade.collide(this.players, this.foreground);
         game.physics.arcade.collide(this.enemies, this.foreground);
 
-        game.physics.arcade.collide(this.powerUp, this.foreground);
+        game.physics.arcade.collide(this.powerUps, this.foreground);
 
-        game.physics.arcade.overlap( this.player1, this.powerUp, this.changeWeapon, null, this);
-        game.physics.arcade.overlap(this.player2, this.powerUp, this.changeWeapon, null, this);
+        game.physics.arcade.overlap(this.players, this.enemies, function (player, enemy) {
+            player.damagePlayer(enemy);
+        });
 
-        game.physics.arcade.overlap(this.players, this.enemies, this.killPlayer, null, this);
-
-        game.physics.arcade.collide(this.player1.weapon.bullets, this.foreground, this.killBullet, null, this);
-        game.physics.arcade.collide(this.player2.weapon.bullets, this.foreground, this.killBullet, null, this);
-
-        game.physics.arcade.overlap(this.player1.weapon.bullets, this.enemies, function (bullets, enemy) {
-            this.hitEnemy(bullets, enemy, this.player1);
+        game.physics.arcade.collide(this.player1.weapon, this.foreground, function (bullet) {
+            bullet.kill();
         }, null, this);
-        game.physics.arcade.overlap(this.player2.weapon.bullets, this.enemies, function (bullets, enemy) {
-            this.hitEnemy(bullets, enemy, this.player2);
+        game.physics.arcade.collide(this.player2.weapon, this.foreground, function (bullet) {
+            bullet.kill();
         }, null, this);
+
+
+        game.physics.arcade.overlap(this.player1.weapon[this.player1.currentWeapon], this.enemies, function (bullet, enemy) {
+            this.enemies.takeDamage(bullet, enemy, this.powerUps, this.scoreCounter1, this.player1);
+            if (enemy.hp <=0)
+                this.enemies.splitEnemy(enemy);
+        }, null, this);
+
+        game.physics.arcade.overlap(this.player2.weapon[this.player2.currentWeapon], this.enemies, function (bullet, enemy) {
+            this.enemies.takeDamage(bullet, enemy, this.powerUps, this.scoreCounter2, this.player2);
+            if (enemy.hp <=0)
+                this.enemies.splitEnemy(enemy);
+        }, null, this);
+
+        game.physics.arcade.overlap(this.players, this.powerUps, function (player, powerUp) {
+            player.powerUp(powerUp);
+        });
+
+       /* console.log("MAX: " + waveProperties.max);
+        console.log("ACTIVE: " + waveProperties.active);
+        console.log("COUNTER: " + waveProperties.counter);*/
+
 
     },
 
-    shutdown: function () {
-        //resetting wave properties
-        this.waveProperties.timeCheck = 1500;
-        this.waveProperties.max = 12;
-        this.waveProperties.active = 0;
-        this.waveProperties.counter = 24;
-		
-		game.global.score1 = this.player1.score;
-		game.global.score2 = this.player2.score;
-    }
-}
 
-var enemyProperties = {
-    enemyLarge: {hp: 100, minV: 50, maxV: 80, img: 'bigBubble', nextSize: 'enemyMed', dmg: 50, points: 10, score: 100}, //DO NOT CHANGE POINTS!
-    enemyMed: {hp: 50, minV: 100, maxV: 80, img: 'medBubble', nextSize: 'enemySmall', dmg: 20, points: 5, score: 50},
-    enemySmall: {hp: 10, minV: 200, maxV: 80, img: 'smallBubble', nextSize: 'null', dmg: 10, points: 1, score: 25}
+    shutdown: function () {
+        waveProperties = {
+            max: 12,
+            active: 0,
+            counter: 24,
+        };
+
+        game.global.score1 = this.player1.score;
+        game.global.score2 = this.player2.score;
+    }
+};
+
+function pause() {
+    game.state.start('pauseMenu');
+
+};
+
+var paueseMenu = {
+    create: function () {
+        var pause = game.add.text(500, 80, 'Pause');
+
+
+        this.btnResume = new Button(game, 570, 600, 'exit', function () {
+            game.state.start('play'); //Switches to load state. This starts the game.
+
+        });
+    }
 };
 

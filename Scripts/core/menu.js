@@ -12,7 +12,7 @@ var menuState = {
 
         //create buttons
         this.btnP1 = new Button(game, 570, 200, 'singleP', function () {
-            game.state.start('instruction');
+            game.state.start('playBtn');
         });
         this.btnO = new Button(game, 570, 300, 'options', function () {
             game.state.start('instruction');
@@ -35,6 +35,47 @@ var menuState = {
 };
 
 /* -- States below are the different menu button states -- */
+
+var playBtnState = {
+    create: function () {
+
+            game.add.image(0, 0, 'background');
+
+            if (game.global.instructionCheck == 0) {
+                var instructions = game.add.text(500, 80, 'Instructions',
+                    {font: '50px Times New Roman', fill: '#ffffff'});
+
+                var upMoveMent = game.add.text(300, 200, 'Up Arrow Key - Jump',
+                    {font: '40px Times New Roman', fill: '#ffffff'});
+
+                var rMoveMent = game.add.text(300, 300, 'Right Arrow Key - Move right',
+                    {font: '40px Times New Roman', fill: '#ffffff'});
+
+                var lMoveMent = game.add.text(300, 400, 'Left Arrow Key - Move left',
+                    {font: '40px Times New Roman', fill: '#ffffff'});
+
+                var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
+                    {font: '40px Times New Roman', fill: '#ffffff'});
+
+                this.btnPlay = new Button(game, 570, 600, 'play', function () {
+                    game.state.start('load'); //Switches to load state. This starts the game.
+                    game.global.instructionCheck++;
+                });
+            }
+            else {
+                game.state.start('load');
+            }
+
+
+        game.global.bttnArr = [this.btnPlay]; //add all the buttons in the scene in order to the array
+        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
+
+    },
+
+    update: function () {
+        game.global.moveMenu(this.box); //this function helps to navigate through menu
+    }
+};
 
 var instructionState = {
     create: function () {

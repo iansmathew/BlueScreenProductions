@@ -27,6 +27,7 @@ playState.prototype = {
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + this.player2.score,
             {font: '20px Times New Roman', fill: '#ffffff' });
 
+
         game.time.events.loop(2000, this.enemies.spawnEnemies, this.enemies); //loop that spawns enemies
         game.time.events.loop(2000, function () {
             if(!this.players.getFirstAlive())
@@ -61,8 +62,9 @@ playState.prototype = {
 
         game.physics.arcade.overlap(this.player2.weapon[this.player2.currentWeapon], this.enemies, function (bullet, enemy) {
             this.enemies.takeDamage(bullet, enemy, this.powerUps, this.scoreCounter2, this.player2);
-            if (enemy.hp <=0)
+            if (enemy.hp <=0) {
                 this.enemies.splitEnemy(enemy);
+            }
         }, null, this);
 
         game.physics.arcade.overlap(this.players, this.powerUps, function (player, powerUp) {
@@ -76,8 +78,15 @@ playState.prototype = {
 
     },
 
+    /*render: function () {
+        this.enemies.forEachAlive(function (member) {
+            game.debug.body(member);
+        })
+    },*/
+
     shutdown: function () {
         waveProperties = {
+            level: 1,
             max: 12,
             active: 0,
             counter: 24,

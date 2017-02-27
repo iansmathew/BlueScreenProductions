@@ -27,6 +27,7 @@ Player = function (game, x, y, image) {
 
     this.weapon.push(new Weapon.SingleBullet(game));
     this.weapon.push(new Weapon.ScatterShot(game));
+    this.weapon.push(new Weapon.Shotgun(game));
 
 
     game.add.existing(this);
@@ -171,7 +172,11 @@ Player.prototype.powerUp = function (powerUp) {
         case "MachineGun":
             this.currentWeapon = 1;
             break;
+        case "Shotgun":
+            this.currentWeapon = 2;
+            break;
         default:
+            console.log("Invalid powerup");
             return;
     }
 };

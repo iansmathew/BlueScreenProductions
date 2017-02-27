@@ -15,8 +15,8 @@ game.global = {
 
             game.global.bttnArr[game.global.bttnIdx].frame = 1;
             game.global.bttnArr[game.global.bttnIdx - 1].frame = 0;
-            boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
-            boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;
+            /*boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
+            boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;*/
 
         }
         else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20) && game.global.bttnIdx > 0)
@@ -25,8 +25,8 @@ game.global = {
 
             game.global.bttnArr[game.global.bttnIdx].frame = 1;
             game.global.bttnArr[game.global.bttnIdx + 1].frame = 0;
-            boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
-            boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;
+            /*boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
+            boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;*/
 
         }
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {

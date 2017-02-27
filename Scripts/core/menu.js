@@ -16,7 +16,7 @@ var menuState = {
         },this , 1,0);
         this.btnP1.anchor.setTo(0.5,0.5);
         this.btnO = new Button(game, game.width/2, 500, 'optionsBttn', function () {
-            game.state.start('play');
+            game.state.start('instruction');
         }, this , 1,0);
         this.btnO.anchor.setTo(0.5,0.5);
         this.btnC = new Button(game, 1255, 25, 'credits', function () {
@@ -24,13 +24,13 @@ var menuState = {
         },this,1,0);
         this.btnC.anchor.setTo(0.5,0.5);
 
-        game.global.bttnArr = [this.btnP1, this.btnO, this.btnC]; //add all the buttons in the scene in order to the array
+        game.global.bttnArr = [this.btnC, this.btnP1, this.btnO]; //add all the buttons in the scene in order to the array
         //this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
 
     },
 
     update: function () {
-        game.global.moveMenu(this.box); //this function helps to navigate through menu
+        game.global.moveMenu(); //this function helps to navigate through menu
     }
 };
 

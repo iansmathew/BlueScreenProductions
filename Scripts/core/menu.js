@@ -7,25 +7,25 @@ var menuState = {
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
 
-        var nameLabel = game.add.image(game.width/2, 100, 'title');
+        var nameLabel = game.add.image(game.width/2,200 , 'title');
         nameLabel.anchor.setTo(0.5, 0.5);
 
         //create buttons
-        this.btnP1 = new Button(game, 570, 200, 'singleP', function () {
+        this.btnP1 = new Button(game, game.width/2, 400, 'playBttn', function (){
             game.state.start('instruction');
-        });
-        this.btnO = new Button(game, 570, 300, 'options', function () {
-            game.state.start('instruction');
-        });
-        this.btnC = new Button(game, 570, 400, 'credits', function () {
+        },this , 1,0);
+        this.btnP1.anchor.setTo(0.5,0.5);
+        this.btnO = new Button(game, game.width/2, 500, 'optionsBttn', function () {
+            game.state.start('play');
+        }, this , 1,0);
+        this.btnO.anchor.setTo(0.5,0.5);
+        this.btnC = new Button(game, 1255, 25, 'credits', function () {
             game.state.start('credit');
-        });
-        this.btnE = new Button(game, 570, 500, 'exit', function () {
-            game.state.start('option');
-        });
+        },this,1,0);
+        this.btnC.anchor.setTo(0.5,0.5);
 
-        game.global.bttnArr = [this.btnP1, this.btnO, this.btnC, this.btnE]; //add all the buttons in the scene in order to the array
-        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
+        game.global.bttnArr = [this.btnP1, this.btnO, this.btnC]; //add all the buttons in the scene in order to the array
+        //this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
 
     },
 

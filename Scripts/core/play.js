@@ -21,6 +21,9 @@ playState.prototype = {
 
         this.enemies = new Enemies(game);
 
+        this.gameMusic = game.add.audio("gameMusic");
+        this.gameMusic.loopFull(0.4);
+
         this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
             {font: '20px Times New Roman', fill: '#ffffff' });
 
@@ -30,8 +33,10 @@ playState.prototype = {
 
         game.time.events.loop(2000, this.enemies.spawnEnemies, this.enemies); //loop that spawns enemies
         game.time.events.loop(2000, function () {
-            if(!this.players.getFirstAlive())
+            if(!this.players.getFirstAlive()) {
+                this.gameMusic.stop();
                 game.state.start('gameOver');
+            }
         }, this);
 
     },

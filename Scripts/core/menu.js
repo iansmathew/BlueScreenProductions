@@ -26,7 +26,9 @@ var menuState = {
 
         game.global.bttnArr = [this.btnC, this.btnP1, this.btnO]; //add all the buttons in the scene in order to the array
         //this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
-
+        if (!game.global.menuMusic.isPlaying) {
+            game.global.menuMusic.loopFull(0.4);
+        }
     },
 
     update: function () {
@@ -56,6 +58,7 @@ var instructionState = {
             {font: '40px Times New Roman', fill: '#ffffff' });
 
         this.btnPlay = new Button(game, 570, 600, 'play', function () {
+            game.global.menuMusic.stop();
             game.state.start('load'); //Switches to load state. This starts the game.
         });
 
@@ -136,15 +139,19 @@ var creditState = {
 /* This is not a part of menu. State is shown when both players die*/
 var gameOverState = {
     create: function () {
+        this.gameOverMusic = game.add.audio("gameOverMusic");
+        this.gameOverMusic.play(null, null, 0.4, false, false);
         game.add.image(0, 0, 'background');
 
         var gameOver = game.add.text(550, 300, 'GAME OVER!',
             {font: '40px Times New Roman', fill: '#ffffff' });
 
         this.btnPlayA = new Button(game, 500, 600, 'playAgain', function () {
+            gameOverState.gameOverMusic.stop();
             game.state.start('play'); //Starts the game again
         });
         this.btnE = new Button(game, 700, 610, 'exit',function () {
+            gameOverState.gameOverMusic.stop();
             game.state.start('menu'); //Goes to menuState
         });
 

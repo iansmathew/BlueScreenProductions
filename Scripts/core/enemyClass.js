@@ -111,7 +111,7 @@ SmallEnemy.prototype.constructor = SmallEnemy;
 /////////////////////////////////////////////////////////////////
 var Enemies = function (game) {
     Phaser.Group.call(this, game);
-    
+
     this.spawnWaves = true;
     this.createPool();
 
@@ -157,7 +157,12 @@ Enemies.prototype.takeDamage = function (bullet, enemy, powerUpG, counter, playe
     bullet.kill();
     if (enemy.hp <= 0)
     {
-        enemy.kill();
+        enemy.body.enable = false;
+        enemy.animations.play('pop');
+        enemy.animations.currentAnim.onComplete.add(function () {
+            enemy.kill();
+        }, this);
+
         player.score += enemy.score;
         counter.text = (player.color == "red") ? "P1 Score: " + player.score : "P2 Score: " + player.score;
 
@@ -216,7 +221,8 @@ Enemies.prototype.addEnemy = function (type, active, x, y, newWave) {
             sprite.body.velocity.y = sprite.velY;
             sprite.body.velocity.x = sprite.velX;
             sprite.partOfWave = newWave || false;
-
+            sprite.body.enable = true;
+            sprite.frame = 0;
             sprite.scale.setTo(0,0);
             game.add.tween(sprite.scale).to({x: 1, y: 1}, 300).start();
 

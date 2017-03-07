@@ -20,12 +20,13 @@ Bullet = function (game, key, dmg) {
 Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 Bullet.prototype.constructor = Bullet;
 
-Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
+Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, life) {
 
     gx = gx || 0;
     gy = gy || -1000;
 
     this.reset(x, y);
+    this.lifespan = null || life;
     this.scale.set(1);
 
     this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
@@ -68,12 +69,12 @@ Weapon.SingleBullet = function (game) {
     this.bulletSpeed = 600;
     this.fireRate = 100;
     this.shotSfx = game.add.audio("bulletSfx");
-    //this.dmg = 30;
+    this.dmg = 30;
     var ammo = 64;
 
     for (var i = 0; i < ammo; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bullet', this.dmg));
     }
 
     return this;
@@ -114,11 +115,12 @@ Weapon.ScatterShot = function (game) {
     this.nextFire = 0;
     this.bulletSpeed = 600;
     this.fireRate = 40;
+    this.dmg = 10;
     this.shotSfx = game.add.audio("machineGunSfx");
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bullet', this.dmg));
     }
 
     return this;
@@ -155,10 +157,11 @@ Weapon.Shotgun = function (game) {
     this.nextFire = 1000;
     this.bulletSpeed = 600;
     this.fireRate = 1000;
+    this.dmg = 10;
     this.shotSfx = game.add.audio("shotgunSfx");
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bullet', this.dmg));
     }
 
     return this;
@@ -175,9 +178,9 @@ Weapon.Shotgun.prototype.fire = function (source, angle) {
     var x = (source.x);
     var y = source.y;
 
-        this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0);
-        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0);
-        this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0);
+        this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0, 1000);
+        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0, 1000);
+        this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0, 1000);
 
 
     this.nextFire = this.game.time.time + this.fireRate;

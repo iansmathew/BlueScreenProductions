@@ -42,20 +42,22 @@ var instructionState = {
     create: function () {
         game.add.image(0, 0, 'background');
 
-        var instructions = game.add.text(500, 80, 'Instructions',
-            {font: '50px Times New Roman', fill: '#ffffff' });
+        // var instructions = game.add.text(500, 80, 'Instructions',
+        //     {font: '50px Times New Roman', fill: '#ffffff' });
 
-        var upMoveMent = game.add.text(300, 200, 'Up Arrow Key - Jump',
-            {font: '40px Times New Roman', fill: '#ffffff' });
+        // var upMoveMent = game.add.text(300, 200, 'Up Arrow Key - Jump',
+        //     {font: '40px Times New Roman', fill: '#ffffff' });
 
-        var rMoveMent = game.add.text(300, 300, 'Right Arrow Key - Move right',
-            {font: '40px Times New Roman', fill: '#ffffff' });
+        // var rMoveMent = game.add.text(300, 300, 'Right Arrow Key - Move right',
+        //     {font: '40px Times New Roman', fill: '#ffffff' });
 
-        var lMoveMent = game.add.text(300, 400, 'Left Arrow Key - Move left',
-            {font: '40px Times New Roman', fill: '#ffffff' });
+        // var lMoveMent = game.add.text(300, 400, 'Left Arrow Key - Move left',
+        //     {font: '40px Times New Roman', fill: '#ffffff' });
 
-        var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
-            {font: '40px Times New Roman', fill: '#ffffff' });
+        // var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
+        //     {font: '40px Times New Roman', fill: '#ffffff' });
+
+        game.add.image(0, 0, 'controllerInstruction');
 
         this.btnPlay = new Button(game, 570, 600, 'play', function () {
             game.global.menuMusic.stop();

@@ -67,6 +67,7 @@ Weapon.SingleBullet = function (game) {
     this.nextFire = 0;
     this.bulletSpeed = 600;
     this.fireRate = 100;
+    this.shotSfx = game.add.audio("bulletSfx");
     //this.dmg = 30;
     var ammo = 64;
 
@@ -95,7 +96,7 @@ Weapon.SingleBullet.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 Weapon.SingleBullet.prototype.collide = function (weapon, enemy) {
@@ -113,6 +114,7 @@ Weapon.ScatterShot = function (game) {
     this.nextFire = 0;
     this.bulletSpeed = 600;
     this.fireRate = 40;
+    this.shotSfx = game.add.audio("machineGunSfx");
 
     for (var i = 0; i < 32; i++)
     {
@@ -139,7 +141,7 @@ Weapon.ScatterShot.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -153,7 +155,7 @@ Weapon.Shotgun = function (game) {
     this.nextFire = 1000;
     this.bulletSpeed = 600;
     this.fireRate = 1000;
-
+    this.shotSfx = game.add.audio("shotgunSfx");
     for (var i = 0; i < 32; i++)
     {
         this.add(new Bullet(game, 'bullet', 10), true);
@@ -179,5 +181,5 @@ Weapon.Shotgun.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    this.shotSfx.play(false,false,0.1,false);
 };

@@ -74,7 +74,7 @@ Weapon.SingleBullet = function (game) {
 
     for (var i = 0; i < ammo; i++)
     {
-        this.add(new Bullet(game, 'bullet', this.dmg));
+        this.add(new Bullet(game, 'bPistol', this.dmg));
     }
 
     return this;
@@ -120,7 +120,7 @@ Weapon.ScatterShot = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', this.dmg));
+        this.add(new Bullet(game, 'bMachineGun', this.dmg));
     }
 
     return this;
@@ -161,7 +161,7 @@ Weapon.Shotgun = function (game) {
     this.shotSfx = game.add.audio("shotgunSfx");
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', this.dmg));
+        this.add(new Bullet(game, 'bShotgun', this.dmg));
     }
 
     return this;

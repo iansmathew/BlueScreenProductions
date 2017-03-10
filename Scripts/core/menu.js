@@ -3,7 +3,6 @@ var menuState = {
     //code to make assets goes here
     create: function(){
         game.add.image(0, 0, 'background'); //adding the background
-
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
 
@@ -12,20 +11,24 @@ var menuState = {
 
         //create buttons
         this.btnP1 = new Button(game, game.width/2, 400, 'playBttn', function (){
-            game.state.start('instruction');
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
         },this , 1,0);
         this.btnP1.anchor.setTo(0.5,0.5);
+
         this.btnO = new Button(game, game.width/2, 500, 'optionsBttn', function () {
-            game.state.start('instruction');
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
         }, this , 1,0);
         this.btnO.anchor.setTo(0.5,0.5);
+
         this.btnC = new Button(game, 1255, 25, 'credits', function () {
-            game.state.start('credit');
+            game.state.start('credit', Phaser.Plugin.StateTransition.Out.SlideBottom, Phaser.Plugin.StateTransition.In.SlideBottom);
         },this,1,0);
         this.btnC.anchor.setTo(0.5,0.5);
 
+
+
         game.global.bttnArr = [this.btnC, this.btnP1, this.btnO]; //add all the buttons in the scene in order to the array
-        //this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
         if (!game.global.menuMusic.isPlaying) {
             game.global.menuMusic.loopFull(0.4);
         }
@@ -41,28 +44,18 @@ var menuState = {
 var instructionState = {
     create: function () {
         game.add.image(0, 0, 'background');
+        game.add.image(0, 0, 'controllerInstruction');
 
-        var instructions = game.add.text(500, 80, 'Instructions',
-            {font: '50px Times New Roman', fill: '#ffffff' });
-
-        var upMoveMent = game.add.text(300, 200, 'Up Arrow Key - Jump',
-            {font: '40px Times New Roman', fill: '#ffffff' });
-
-        var rMoveMent = game.add.text(300, 300, 'Right Arrow Key - Move right',
-            {font: '40px Times New Roman', fill: '#ffffff' });
-
-        var lMoveMent = game.add.text(300, 400, 'Left Arrow Key - Move left',
-            {font: '40px Times New Roman', fill: '#ffffff' });
-
-        var shoot = game.add.text(300, 500, 'Space Bar - Shoot!',
-            {font: '40px Times New Roman', fill: '#ffffff' });
-
-        this.btnPlay = new Button(game, 570, 600, 'play', function () {
+        this.btnPlay = new Button(game, 420, 600, 'play', function () {
             game.global.menuMusic.stop();
             game.state.start('load'); //Switches to load state. This starts the game.
         });
 
-        game.global.bttnArr = [this.btnPlay]; //add all the buttons in the scene in order to the array
+        this.btnE = new Button(game, 600, 600, 'exit',function () {
+            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
+        });
+
+        game.global.bttnArr = [this.btnPlay, this.btnE]; //add all the buttons in the scene in order to the array
         this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
 
     },
@@ -78,14 +71,14 @@ var optionState = {
     create: function () {
         game.add.image(0, 0, 'background');
         this.bttn = new Button(game, 570, 600, 'exit', function () {
-            game.state.start('menu');
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
         });
 
         game.global.bttnArr = [this.bttn]; //add all the buttons in the scene in order to the array
         this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
     },
 
-    //code to update the assets goes here //changes are reflected in game render
+    
     update: function () {
         game.global.moveMenu(this.box); //this function helps to navigate through menu
     }
@@ -93,7 +86,7 @@ var optionState = {
 
 
 var creditState = {
-    //code to create the buttons and text
+    
     create: function(){
         game.add.image(0,0,'background');
          game.add.text(300,50,'                      PEW PEW\n               ' +
@@ -119,8 +112,10 @@ var creditState = {
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
         game.add.text(275,625,'Content Lead                                Jason Lin',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
+
+
         this.btnE = new Button(game, 1125, 655, 'exit',function () {
-            game.state.start('menu'); //Goes to menuState
+            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
         });
 
         game.global.bttnArr = [this.btnE];
@@ -152,7 +147,7 @@ var gameOverState = {
         });
         this.btnE = new Button(game, 700, 610, 'exit',function () {
             gameOverState.gameOverMusic.stop();
-            game.state.start('menu'); //Goes to menuState
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.ScaleUp, Phaser.Plugin.StateTransition.In.ScaleUp);
         });
 
 		 this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + game.global.score1,

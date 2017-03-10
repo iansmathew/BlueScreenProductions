@@ -20,12 +20,13 @@ Bullet = function (game, key, dmg) {
 Bullet.prototype = Object.create(Phaser.Sprite.prototype);
 Bullet.prototype.constructor = Bullet;
 
-Bullet.prototype.fire = function (x, y, angle, speed, gx, gy) {
+Bullet.prototype.fire = function (x, y, angle, speed, gx, gy, life) {
 
     gx = gx || 0;
     gy = gy || -1000;
 
     this.reset(x, y);
+    this.lifespan = null || life;
     this.scale.set(1);
 
     this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
@@ -66,13 +67,15 @@ Weapon.SingleBullet = function (game) {
 
     this.nextFire = 0;
     this.bulletSpeed = 600;
+
     this.fireRate = 300;
-    //this.dmg = 30;
+    this.shotSfx = game.add.audio("bulletSfx");
+    this.dmg = 30;
     var ammo = 64;
 
     for (var i = 0; i < ammo; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bPistol', this.dmg));
     }
 
     return this;
@@ -95,7 +98,7 @@ Weapon.SingleBullet.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 Weapon.SingleBullet.prototype.collide = function (weapon, enemy) {
@@ -111,12 +114,16 @@ Weapon.ScatterShot = function (game) {
     Phaser.Group.call(this, game, game.world, 'Scatter Shot', false, true, Phaser.Physics.ARCADE);
 
     this.nextFire = 0;
+
     this.bulletSpeed = 900;
     this.fireRate = 80;
+    this.dmg = 10;
+    this.shotSfx = game.add.audio("machineGunSfx");
+
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bMachineGun', this.dmg));
     }
 
     return this;
@@ -139,7 +146,7 @@ Weapon.ScatterShot.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -153,10 +160,12 @@ Weapon.Shotgun = function (game) {
     this.nextFire = 1000;
     this.bulletSpeed = 600;
     this.fireRate = 500;
+    this.dmg = 10;
+    this.shotSfx = game.add.audio("shotgunSfx");
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bShotgun', this.dmg));
     }
 
     return this;
@@ -172,6 +181,7 @@ Weapon.Shotgun.prototype.fire = function (source, angle) {
 
     var x = (source.x);
     var y = source.y;
+
 
         this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0);
 		this.getFirstExists(false).fire(x, y, angle - 5, this.bulletSpeed, 0, 0);
@@ -200,7 +210,7 @@ Weapon.Spreader = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bullet', 10));
     }
 
     return this;
@@ -242,7 +252,7 @@ Weapon.Splitter = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bullet', 10), true);
+        this.add(new Bullet(game, 'bullet', 10));
     }
 
     return this;
@@ -268,6 +278,12 @@ Weapon.Splitter.prototype.fire = function (source, angle) {
         
 
 
-    this.nextFire = this.game.time.time + this.fireRate;
+        this.nextFire = this.game.time.time + this.fireRate;
+        this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0, 1000);
+        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0, 1000);
+        this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0, 1000);
 
+
+    this.nextFire = this.game.time.time + this.fireRate;
+    this.shotSfx.play(false,false,0.1,false);
 };

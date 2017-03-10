@@ -189,7 +189,7 @@ Weapon.Shotgun.prototype.fire = function (source, angle) {
 		this.getFirstExists(false).fire(x, y, angle + 5, this.bulletSpeed, 0, 0);
         this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0);
 
-
+    this.shotSfx.play(false,false,0.1,false);
     this.nextFire = this.game.time.time + this.fireRate;
 
 };
@@ -210,7 +210,7 @@ Weapon.Spreader = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'pBullet', 10));
+        this.add(new Bullet(game, 'bPistol', 10));
     }
 
     return this;
@@ -252,7 +252,7 @@ Weapon.Splitter = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'pBullet', 10));
+        this.add(new Bullet(game, 'bPistol', 10));
     }
 
     return this;

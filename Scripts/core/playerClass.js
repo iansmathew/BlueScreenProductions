@@ -47,6 +47,7 @@ Player.prototype.constructor = Player;
 //Player update automatically called by PHASER
 Player.prototype.update = function () {
     this.movePlayer();
+    this.facingRight = (this.fireAngle >= -90);
 };
 
 //Moves the player
@@ -54,25 +55,27 @@ Player.prototype.movePlayer = function () {
     if (!this.alive || !this.isWalking)
         return;
 
+    var anim = (this.fireAngle < -90) ? "left" : "right";
+
     this.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
     this.gun.angle = this.fireAngle;
     this.gun.scale.y = (this.fireAngle < -90) ? -1 : 1;
 
     if (this.cursor.left.isDown || this.pad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)< -0.1){ //move left
         this.body.velocity.x = -300;
-        this.animations.play('left');
+        this.animations.play(anim);
     }
     else if (this.cursor.right.isDown || this.pad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)>0.1){ //move right
         this.body.velocity.x = 300;
-        this.animations.play('right');
+        this.animations.play(anim);
     }
     else {
         this.body.velocity.x = 0;
         this.animations.stop();
-        this.frame = 2;
+        this.frame = this.facingRight ? 2 : 8;
     }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
-        this.body.velocity.y = -999;
+        this.body.velocity.y = -990;
     }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
         this.weapon[this.currentWeapon].fire(this, this.fireAngle);

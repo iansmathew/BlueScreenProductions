@@ -229,8 +229,6 @@ Enemies.prototype.addEnemy = function (type, active, x, y, newWave) {
             if (sprite.partOfWave) {
                 waveProperties.counter -= sprite.wavePoints;
                 waveProperties.active += sprite.wavePoints;
-
-                console.log(waveProperties.active);
             }
 
         }

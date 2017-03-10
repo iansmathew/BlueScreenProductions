@@ -20,10 +20,14 @@ Player = function (game, x, y, image) {
     this.currentWeapon = 0;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
+    this.facingRight = false;
+
+    this.fireAngle = 0;
+    this.gun = this.addChild(game.make.sprite(-2, 10, 'gun'));
+    this.gun.anchor.setTo(0.3, 0);
 
     /*--CONSTRUCTOR FUNCTIONS--*/
     this.createKeys();
-    //this.setPistol();
 
     this.weapon.push(new Weapon.SingleBullet(game));
     this.weapon.push(new Weapon.ScatterShot(game));
@@ -50,7 +54,9 @@ Player.prototype.movePlayer = function () {
     if (!this.alive || !this.isWalking)
         return;
 
-     this.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+    this.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+    this.gun.angle = this.fireAngle;
+    this.gun.scale.y = (this.fireAngle < -90) ? -1 : 1;
 
     if (this.cursor.left.isDown || this.pad.axis(Phaser.Gamepad.XBOX360_STICK_LEFT_X)< -0.1){ //move left
         this.body.velocity.x = -300;
@@ -70,22 +76,17 @@ Player.prototype.movePlayer = function () {
     }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
         this.weapon[this.currentWeapon].fire(this, this.fireAngle);
-        //this.shootSfx.play(null, null, 0.1, false, false);
     }
     if (this.fireButton.isDown && this.cursor.left.isDown){
-        //this.weapon.fireAngle = -135;
         this.weapon[this.currentWeapon].fire(this, -180);
-        //this.shootSfx.play(null, null, 0.1, false, false);
     }
     else if (this.fireButton.isDown && this.cursor.right.isDown){
         this.weapon.fireAngle = -45;
         this.weapon[this.currentWeapon].fire(this, 0);
-       // this.shootSfx.play(null, null, 0.1, false, false);
     }
     else if (this.fireButton.isDown) { //firing straight up
         this.weapon.fireAngle = Phaser.ANGLE_UP;
         this.weapon[this.currentWeapon].fire(this, -90);
-        //this.shootSfx.play(null, null, 0.1, false, false);
     }
 };
 

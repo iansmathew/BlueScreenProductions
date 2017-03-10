@@ -7,6 +7,7 @@ var loadState = {
 
         game.load.spritesheet('player1', "Assets/img/tempGameAssets/Player1.png", 60, 83);
         game.load.spritesheet('player2', "Assets/img/tempGameAssets/Player2.png", 60, 83);
+        game.load.image('gun', "././Assets/img/tempGameAssets/gun.png");
         game.load.image('bLaser', "././Assets/img/tempGameAssets/bulletLaser.png");
         game.load.image('bPistol', "././Assets/img/tempGameAssets/bulletPistol.png");
         game.load.image('bMachineGun', "././Assets/img/tempGameAssets/bulletMachineGun.png");

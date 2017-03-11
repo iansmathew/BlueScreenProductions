@@ -191,7 +191,7 @@ Enemies.prototype.splitEnemy = function (deadEnemy) {
 Enemies.prototype.dropPowerUp = function (x, y, group) {
     var drop = game.add.sprite(x, y, 'powerUp');
     drop.lifespan = 4000; //powerup only lives for 4 seconds
-    drop.item = Phaser.ArrayUtils.getRandomItem(["MachineGun", "Shotgun","Spreader","Splitter", "FlameThrower"]);
+    drop.item = Phaser.ArrayUtils.getRandomItem(["MachineGun", "Shotgun", "FlameThrower", "Spreader", "Splitter"]);
     game.physics.arcade.enable(drop);
     group.add(drop);
 };

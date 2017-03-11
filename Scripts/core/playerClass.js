@@ -75,7 +75,7 @@ Player.prototype.movePlayer = function () {
         this.frame = this.facingRight ? 2 : 8;
     }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
-        this.body.velocity.y = -990;
+        this.body.velocity.y = -920;
     }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
         this.weapon[this.currentWeapon].fire(this, this.fireAngle);

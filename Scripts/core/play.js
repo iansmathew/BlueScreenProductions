@@ -76,11 +76,13 @@ playState.prototype = {
             player.powerUp(powerUp);
         });
 
+        if (game.input.keyboard.addKey(Phaser.Keyboard.P).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
+            game.paused = !game.paused;
+
+
        /* console.log("MAX: " + waveProperties.max);
         console.log("ACTIVE: " + waveProperties.active);
         console.log("COUNTER: " + waveProperties.counter);*/
-
-
     },
 
     /*render: function () {
@@ -88,6 +90,21 @@ playState.prototype = {
             game.debug.body(member);
         })
     },*/
+
+    paused: function () {
+        this.pauseText1 = game.add.text(500, 80, 'GAME PAUSED ');
+        this.pauseText2 = game.add.text(470, 120, 'Press ESC to Unpause ');
+
+    },
+
+    pauseUpdate: function () {
+        var pauseButton = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        if (pauseButton.justDown) {
+            this.pauseText1.destroy();
+            this.pauseText2.destroy();
+            game.paused = !game.paused;
+        }
+    },
 
     shutdown: function () {
         waveProperties = {

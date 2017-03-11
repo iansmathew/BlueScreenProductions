@@ -89,7 +89,18 @@ var creditState = {
     
     create: function(){
         game.add.image(0,0,'background');
-         game.add.text(300,50,'                      PEW PEW\n               ' +
+
+        this.cImage = game.add.image(0, 200, 'creditMenu');
+
+        this.btnE = new Button(game, 1125, 655, 'exit',function () {
+            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
+        });
+
+        game.global.bttnArr = [this.btnE];
+        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
+
+
+        /* game.add.text(300,50,'                      PEW PEW\n               ' +
             '              BY\n     BLUE SCREEN PRODUCTIONS',
             {font: '40px Times New Roman',fontWeight: 'bold',fill: '#000000'});
         game.add.text(275,265,'Producer                                       Cory Ronald',
@@ -113,18 +124,13 @@ var creditState = {
         game.add.text(275,625,'Content Lead                                Jason Lin',
             {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
 
-
-        this.btnE = new Button(game, 1125, 655, 'exit',function () {
-            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
-        });
-
-        game.global.bttnArr = [this.btnE];
-        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
+         */
 
 
     },
     //code to update the assets goes here //changes are reflected in game render
     update: function(){
+        this.cImage.y--;
         game.global.moveMenu(this.box);
     }
 };

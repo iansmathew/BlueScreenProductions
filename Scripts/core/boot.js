@@ -10,6 +10,7 @@ var bootState = {
         game.load.spritesheet('optionsBttn', "././Assets/img/tempMenuAssets/Options.png",268,60,2);
         game.load.spritesheet('credits', "././Assets/img/tempMenuAssets/creditBttn.png",50,50,2);
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");
+        game.load.image('creditMenu', "././Assets/img/tempMenuAssets/creditMenu.png");
         game.load.image('play', "././Assets/img/tempMenuAssets/btnStart.png");
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgain.png");
         game.load.audio('menuMusic',"././Assets/sound/Music/MenuMusic.wav");

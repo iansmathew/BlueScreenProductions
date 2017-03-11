@@ -34,7 +34,7 @@ Player = function (game, x, y, image) {
     this.weapon.push(new Weapon.Shotgun(game));
 	this.weapon.push(new Weapon.Spreader(game));
 	this.weapon.push(new Weapon.Splitter(game));
-
+    this.weapon.push(new Weapon.FlameThrower(game));
 
     game.add.existing(this);
 };
@@ -187,6 +187,8 @@ Player.prototype.powerUp = function (powerUp) {
 		case "Splitter":
 			this.currentWeapon = 4;
 			break;
+        case "FlameThrower":
+            this.currentWeapon = 5;
         default:
             console.log("Invalid powerup");
             return;

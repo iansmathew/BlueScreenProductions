@@ -270,17 +270,55 @@ Weapon.Splitter.prototype.fire = function (source, angle) {
     var y = source.y;
 
         
-		this.getFirstExists(false).fire(x, y, angle - 90, this.bulletSpeed, 0, 0);
-        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0);
-		this.getFirstExists(false).fire(x, y, angle + 90, this.bulletSpeed, 0, 0);
-        this.getFirstExists(false).fire(x, y, angle -180, this.bulletSpeed, 0, 0);
-		
-        
+    this.getFirstExists(false).fire(x, y, angle - 90, this.bulletSpeed, 0, 0);
+    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0);
+    this.getFirstExists(false).fire(x, y, angle + 90, this.bulletSpeed, 0, 0);
+    this.getFirstExists(false).fire(x, y, angle -180, this.bulletSpeed, 0, 0);
+
+    this.nextFire = this.game.time.time + this.fireRate;
+    //this.shotSfx.play(false,false,0.1,false);
+};
+
+/////////////////////////////////////////////////////////////////
+////                      LASER GUN                          ////
+/////////////////////////////////////////////////////////////////
+
+Weapon.FlameThrower = function (game) {
+
+    Phaser.Group.call(this, game, game.world, 'FlameThrower', false, true, Phaser.Physics.ARCADE);
+
+    this.nextFire = 0;
+    this.bulletSpeed = 400;
+    this.fireRate = 0;
+
+    for (var i = 0; i < 150; i++)
+    {
+        this.add(new Bullet(game, 'bFlame', 1));
+    }
+    this.setAll("scaleSpeed", 0.10);
+
+    return this;
+
+};
+
+Weapon.FlameThrower.prototype = Object.create(Phaser.Group.prototype);
+Weapon.FlameThrower.prototype.constructor = Weapon.FlameThrower;
+
+Weapon.FlameThrower.prototype.fire = function (source, angle) {
+
+    if (this.game.time.time < this.nextFire) { return; }
+
+    var x = (source.x);
+    var y = source.y;
 
 
-        this.nextFire = this.game.time.time + this.fireRate;
+    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0, 400);
+
+
+
 
 
     this.nextFire = this.game.time.time + this.fireRate;
     //this.shotSfx.play(false,false,0.1,false);
 };
+

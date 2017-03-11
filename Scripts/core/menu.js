@@ -17,7 +17,7 @@ var menuState = {
         this.btnP1.anchor.setTo(0.5,0.5);
 
         this.btnO = new Button(game, game.width/2, 500, 'optionsBttn', function () {
-            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+            game.state.start('gameOver', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
         }, this , 1,0);
         this.btnO.anchor.setTo(0.5,0.5);
 
@@ -44,20 +44,20 @@ var menuState = {
 var instructionState = {
     create: function () {
         game.add.image(0, 0, 'background');
-        game.add.image(0, 0, 'controllerInstruction');
+        game.add.image(0, -50, 'controllerInstruction');
 
-        this.btnPlay = new Button(game, 420, 600, 'play', function () {
+        this.btnPlay = new Button(game, 550, 650, 'play', function () {
             game.global.menuMusic.stop();
             game.state.start('load'); //Switches to load state. This starts the game.
-        });
+        },this,1,0);
+        this.btnPlay.anchor.setTo(0.5,0.5);
 
-        this.btnE = new Button(game, 600, 600, 'exit',function () {
+        this.btnE = new Button(game, 750, 650, 'exit',function () {
             game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
-        });
+        },this,1,0);
+        this.btnE.anchor.setTo(0.5,0.5);
 
         game.global.bttnArr = [this.btnPlay, this.btnE]; //add all the buttons in the scene in order to the array
-        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
-
     },
 
     update: function () {

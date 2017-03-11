@@ -1,11 +1,11 @@
 var playState = function(game){};
 playState.prototype = {
     create: function(){
+        game.add.image(0, 0, 'backgroundmap1');
         this.map = game.add.tilemap('tileMap');
-        this.map.addTilesetImage('tileSet1');
-        this.background = this.map.createLayer('Tile Layer 2');
+        this.map.addTilesetImage('Tileset12');
         this.foreground = this.map.createLayer('Tile Layer 1');
-        this.map.setCollisionBetween(1, 1000, true, this.foreground);
+        this.map.setCollisionBetween(1, 10000, true, this.foreground);
 
         game.physics.arcade.gravity.y = 1000;
 

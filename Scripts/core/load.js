@@ -2,8 +2,9 @@
 var loadState = {
     //place assets to be loaded here
     preload: function(){
-        game.load.image('tileSet1', "Assets/TileMaps/tileSet1.png");
+        game.load.image('Tileset12', "Assets/TileMaps/Spritesheet.png");
         game.load.tilemap('tileMap', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('backgroundmap1', "Assets/TileMaps/BackgroundMap1.png");
 
         game.load.spritesheet('player1', "Assets/img/tempGameAssets/Player1.png", 60, 83);
         game.load.spritesheet('player2', "Assets/img/tempGameAssets/Player2.png", 60, 83);

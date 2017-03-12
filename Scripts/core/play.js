@@ -1,12 +1,15 @@
 var playState = function(game){};
 playState.prototype = {
     create: function(){
-        game.add.image(0, 0, 'backgroundmap1');
-        this.map = game.add.tilemap('tileMap');
-        this.map.addTilesetImage('Tileset12');
+       //Leave Background Color this for second stage.
+        //Keep Alpha for all images.
+        //TO CHANGE MAP change the Number of backgroundmap,tileMap and TileSet to either 1 or 2 atm
+        game.stage.backgroundColor = "#ffffff";
+        this.background = game.add.image(0, 0, 'backgroundmap2');
+        this.map = game.add.tilemap('tileMap2');
+        this.map.addTilesetImage('TileSet2');
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 10000, true, this.foreground);
-
         game.physics.arcade.gravity.y = 1000;
 
         this.player1 = new Player(game, 1150, 636, 'player1');

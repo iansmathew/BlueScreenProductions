@@ -3,17 +3,18 @@
 
 ## CURRENT BUILD INFO:
 ######Current game build includes:
- - Menu with play button active
+ - Menu and Credit Screen (Options screen pending)
  - Temporary instructions screen
  - Gameplay Mechanincs:-
   - Two player movement
   - Controller Support
   - Collisions
   - Basic animations for players and enemies
-  - Particle Systems
   - Bullet firing and deaths
   - Basic Wave System
-  - Basic placeholder sounds
-  - Basic Powerups (Shotgun/MachineGun)
+  - Background Music
+  - Basic Powerups (Shotgun/MachineGun/Pistol/FlameThrower/Splitter)
+  - Heart System
+  
   
   

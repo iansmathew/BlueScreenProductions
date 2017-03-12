@@ -4,7 +4,6 @@ playState.prototype = {
        //Leave Background Color this for second stage.
         //Keep Alpha for all images.
         //TO CHANGE MAP change the Number of backgroundmap,tileMap and TileSet to either 1 or 2 atm
-        game.stage.backgroundColor = "#ffffff";
         this.background = game.add.image(0, 0, 'backgroundmap2');
         this.map = game.add.tilemap('tileMap2');
         this.map.addTilesetImage('TileSet2');

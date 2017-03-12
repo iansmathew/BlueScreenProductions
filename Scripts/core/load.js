@@ -2,9 +2,13 @@
 var loadState = {
     //place assets to be loaded here
     preload: function(){
-        game.load.image('Tileset12', "Assets/TileMaps/Spritesheet.png");
-        game.load.tilemap('tileMap', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('TileSet1', "Assets/TileMaps/BrownRed.png");
+        game.load.tilemap('tileMap1', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('backgroundmap1', "Assets/TileMaps/BackgroundMap1.png");
+
+        game.load.image('TileSet2', "Assets/TileMaps/SnowPack.png");
+        game.load.tilemap('tileMap2', "Assets/TileMaps/map2.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('backgroundmap2', "Assets/TileMaps/BackgroundMap2.png");
 
         game.load.spritesheet('player1', "Assets/img/tempGameAssets/Player1.png", 60, 83);
         game.load.spritesheet('player2', "Assets/img/tempGameAssets/Player2.png", 60, 83);

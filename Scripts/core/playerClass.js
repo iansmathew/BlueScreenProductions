@@ -9,6 +9,8 @@ Player = function (game, x, y, image) {
 
     /*---PROPERTIES---*/
     this.hp = 100;
+    this.hearts = [];
+    this.currHeart = 4;
     this.weapon = [];
     this.invulnerable = false;
     this.cursor = null;
@@ -28,6 +30,7 @@ Player = function (game, x, y, image) {
 
     /*--CONSTRUCTOR FUNCTIONS--*/
     this.createKeys();
+    this.createHearts();
 
     this.weapon.push(new Weapon.SingleBullet(game));
     this.weapon.push(new Weapon.ScatterShot(game));
@@ -47,6 +50,18 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function () {
     this.movePlayer();
     this.facingRight = (this.fireAngle >= -90);
+};
+
+Player.prototype.createHearts = function () {
+    var heartX = (this.color == "red") ? 6 : 1220;
+    var heartY = 120;
+    for (var i = 0; i < 5; i++) {
+        if (i >= 1) {
+            heartY = heartY + 50;
+        }
+        this.hearts[i] = new Heart(game, heartX, heartY, 'heart');
+
+    }
 };
 
 //Moves the player
@@ -140,7 +155,7 @@ Player.prototype.damagePlayer = function (enemy) {
         /*this.pEmitter.x = this.x;
         this.pEmitter.y = this.y;
         this.pEmitter.start(true,300,null,10);*/
-
+        this.damageHearts(enemy.dmg);
         this.invulnerable = true;
         this.setInvulnerable(this);
 
@@ -153,6 +168,23 @@ Player.prototype.damagePlayer = function (enemy) {
             this.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
             this.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
 
+        }
+    }
+};
+
+Player.prototype.damageHearts = function (eDamage) {
+    while(eDamage > 0)
+    {
+        var abDamage = this.hearts[this.currHeart].hitHeart(eDamage);
+        eDamage -= abDamage; //reduces eDamage by the damage absorbed by previous heart
+
+        if(this.hearts[0].hp <= 0) //this line could be replaced with if (this.currHeart == 0)
+        {
+            break; //break the while loop if last heart is 0
+        }
+
+        if (this.hearts[this.currHeart].hp <= 0 && this.currHeart > 0){ //only i-- the curr heart  if the previous heart is dead and if currHeart is between 2 & 4
+            this.currHeart--;
         }
     }
 };
@@ -185,6 +217,7 @@ Player.prototype.powerUp = function (powerUp) {
 			break;
         case "FlameThrower":
             this.currentWeapon = 4;
+            break;
         default:
             console.log("Invalid powerup");
             return;

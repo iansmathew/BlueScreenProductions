@@ -195,50 +195,6 @@ Weapon.Shotgun.prototype.fire = function (source, angle) {
 };
 
 /////////////////////////////////////////////////////////////////
-////                          SPREADER GUN                   ////
-/////////////////////////////////////////////////////////////////
-
-//needs a lifetime on bullet
-
-Weapon.Spreader = function (game) {
-
-    Phaser.Group.call(this, game, game.world, 'Spreader', false, true, Phaser.Physics.ARCADE);
-
-    this.nextFire = 0;
-    this.bulletSpeed = 800;
-    this.fireRate = 200;
-
-    for (var i = 0; i < 32; i++)
-    {
-        this.add(new Bullet(game, 'bPistol', 10));
-    }
-
-    return this;
-
-};
-
-Weapon.Spreader.prototype = Object.create(Phaser.Group.prototype);
-Weapon.Spreader.prototype.constructor = Weapon.Spreader;
-
-Weapon.Spreader.prototype.fire = function (source, angle) {
-
-    if (this.game.time.time < this.nextFire) { return; }
-
-    var x = (source.x);
-    var y = source.y;
-
-        
-		this.getFirstExists(false).fire(x, y, angle - 10, this.bulletSpeed, 0, 0);
-        this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0, 0);
-		this.getFirstExists(false).fire(x, y, angle + 10, this.bulletSpeed, 0, 0);
-        
-
-
-    this.nextFire = this.game.time.time + this.fireRate;
-
-};
-
-/////////////////////////////////////////////////////////////////
 ////                          SPLITTER GUN                   ////
 /////////////////////////////////////////////////////////////////
 

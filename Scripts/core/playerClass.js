@@ -53,7 +53,7 @@ Player.prototype.update = function () {
 };
 
 Player.prototype.createHearts = function () {
-    var heartX = (this.color == "red") ? 6 : 1220;
+    var heartX = (this.color == "red") ? 6 : 1250;
     var heartY = 120;
     for (var i = 0; i < 5; i++) {
         if (i >= 1) {

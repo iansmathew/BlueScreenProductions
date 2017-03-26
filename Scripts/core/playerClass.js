@@ -66,7 +66,7 @@ Player.prototype.createHearts = function () {
 
 //Moves the player
 Player.prototype.movePlayer = function () {
-    if (!this.alive || !this.isWalking)
+    if (!this.alive || !this.isWalking || this.cursor == false)
         return;
 
     var anim = (this.fireAngle < -90) ? "left" : "right";
@@ -204,17 +204,16 @@ Player.prototype.setInvulnerable =  function (player) {
 
 Player.prototype.powerUp = function (powerUp) {
     powerUp.destroy();
-    console.log(powerUp.item);
-    switch (powerUp.item){
+    switch (powerUp.item) {
         case "MachineGun":
             this.currentWeapon = 1;
             break;
         case "Shotgun":
             this.currentWeapon = 2;
             break;
-		case "Splitter":
-			this.currentWeapon = 3;
-			break;
+        case "Splitter":
+            this.currentWeapon = 3;
+            break;
         case "FlameThrower":
             this.currentWeapon = 4;
             break;
@@ -222,5 +221,27 @@ Player.prototype.powerUp = function (powerUp) {
             console.log("Invalid powerup");
             return;
     }
+};
+
+Player.prototype.increaseHealth = function () {
+    this.hp = 100;
+    this.currHeart = 4;
+
+    for(var i = 0; i < this.hearts.length; i++)
+    {
+        this.hearts[i].hp = 20;
+        this.hearts[i].frame = 0;
+
+    }
+
+};
+
+Player.prototype.mercyRevive = function () {
+    this.cursor = false;
+
+    this.reset(game.width/2, 636);
+    this.increaseHealth();
+
+    this.createKeys();
 };
 

@@ -109,11 +109,13 @@ SmallEnemy.prototype.constructor = SmallEnemy;
 /////////////////////////////////////////////////////////////////
 ////                      ENEMY GROUP                        ////
 /////////////////////////////////////////////////////////////////
-var Enemies = function (game) {
+var Enemies = function (game, playerGroup) {
     Phaser.Group.call(this, game);
 
     this.spawnWaves = true;
     this.createPool();
+
+    this.pGroup = playerGroup;
 
     game.add.existing(this);
 };
@@ -144,6 +146,15 @@ Enemies.prototype.spawnEnemies = function () {
             waveProperties.active = 0;
             waveProperties.counter = waveProperties.max * 4;
             waveProperties.max *= 2;
+
+            this.pGroup.forEachAlive(function (item) {
+                item.increaseHealth();
+            });
+
+            this.pGroup.forEachDead(function (item) {
+                item.mercyRevive();
+            });
+
             this.spawnWaves = true;
 
 
@@ -182,6 +193,7 @@ Enemies.prototype.splitEnemy = function (deadEnemy) {
     var nextEnemy = deadEnemy.nextSize;
     if (nextEnemy == null)
         return;
+
     else {
         //this.createEnemy(nextEnemy, deadEnemy.x, deadEnemy.y, false);
         this.addEnemy(deadEnemy.nextSize, 2, deadEnemy.x +  game.rnd.integerInRange(-10, 10), deadEnemy.y, false);

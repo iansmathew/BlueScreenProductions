@@ -19,7 +19,6 @@ Heart.prototype.hitHeart = function (damage) {
     var absorbedDmg = damage - (damage-this.hp); //how much damage does the heart absorb?
 
     this.hp -= damage;
-    console.log(this.hp);
 
     if (this.hp > 10)
     {
@@ -36,8 +35,7 @@ Heart.prototype.hitHeart = function (damage) {
         this.frame = 2;
         this.hp = 0;
     }
-
-
-
     return absorbedDmg;
 };
+
+

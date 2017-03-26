@@ -12,8 +12,8 @@ playState.prototype = {
         this.map.setCollisionBetween(1, 10000, true, this.foreground);
         game.physics.arcade.gravity.y = 1000;
 
-        this.player1 = new Player(game, 1150, 636, 'player1');
-        this.player2 = new Player(game, 120, 636, 'player2');
+        this.player1 = new Player(game, 120, 636, 'player1');
+        this.player2 = new Player(game, 1150, 636, 'player2');
 
         this.players = game.add.group();
         this.players.add(this.player1);
@@ -22,7 +22,7 @@ playState.prototype = {
         this.powerUps = game.add.group();
         this.powerUps.enableBody = true;
 
-        this.enemies = new Enemies(game);
+        this.enemies = new Enemies(game, this.players);
 
         this.gameMusic = game.add.audio("gameMusic");
         this.gameMusic.loopFull(0.4);
@@ -41,7 +41,6 @@ playState.prototype = {
                 game.state.start('gameOver');
             }
         }, this);
-
     },
 
     update: function(){
@@ -81,6 +80,7 @@ playState.prototype = {
 
         if (game.input.keyboard.addKey(Phaser.Keyboard.P).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
             game.paused = !game.paused;
+
 
 
        /* console.log("MAX: " + waveProperties.max);

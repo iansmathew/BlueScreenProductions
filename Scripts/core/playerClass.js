@@ -1,4 +1,4 @@
-Player = function (game, x, y, image) {
+Player = function (game, x, y, image, playerNum) {
     Phaser.Sprite.call(this, game, x, y, image); //calls constructor
 
     this.anchor.setTo(0.5, 0.5);
@@ -16,7 +16,7 @@ Player = function (game, x, y, image) {
     this.cursor = null;
     this.fireButton = null;
     this.pad = null;
-    this.color = (image == 'player1') ? "red" : "blue";
+    this.color = (playerNum == 1) ? "red" : "blue";
     this.isWalking = true;
     this.score = 0;
     this.currentWeapon = 0;

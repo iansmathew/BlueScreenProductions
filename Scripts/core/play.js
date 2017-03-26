@@ -12,8 +12,8 @@ playState.prototype = {
         this.map.setCollisionBetween(1, 10000, true, this.foreground);
         game.physics.arcade.gravity.y = 1000;
 
-        this.player1 = new Player(game, 120, 636, 'player1');
-        this.player2 = new Player(game, 1150, 636, 'player2');
+        this.player1 = new Player(game, 120, 636, 'player1', 1); // first player == 1
+        this.player2 = new Player(game, 1150, 636, 'player2', 2);//second player == 2
 
         this.players = game.add.group();
         this.players.add(this.player1);

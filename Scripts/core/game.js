@@ -8,6 +8,7 @@ game.global = {
     bttnArr: [],
     bttnIdx: 0,
     pad: null,
+    pad2: null,
     Player1Select:[0,0],
     Player2Select: [0,0],
     MapSelect : 0,
@@ -15,7 +16,7 @@ game.global = {
     CharacterArray : [[['AdventureSprite'],['AdventurerBlond'],['AdventurerDark'],['AdventurerGrey'],['AdventurerOrange']],
                        [['DankPewPew'],['DankBald'], ['DankBlack'],['DankPurple'],['DankRed']]],
 
-    MapArray: [[['backgroundmap1'],['backgroundmap2']],
+    MapArray: [[['Level-1'],['Level-2'],['Level-3'],['Level-4'],['Level-5'],['Level-6']],
         [['tileMap1'],['tileMap2']]],
     TileSetArray: ["TileSet1","TileSet2"],
     moveMenu: function () {
@@ -50,6 +51,7 @@ game.global = {
 game.state.add('boot', bootState);
 game.state.add('menu', menuState);
 game.state.add('characterselect' , characterSelect);
+game.state.add('levelSelect', LevelSelect);
 game.state.add('option', optionState);
 game.state.add('credit', creditState);
 game.state.add('instruction', instructionState);

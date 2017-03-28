@@ -8,6 +8,16 @@ game.global = {
     bttnArr: [],
     bttnIdx: 0,
     pad: null,
+    Player1Select:[0,0],
+    Player2Select: [0,0],
+    MapSelect : 0,
+    SplashArray: ['AdventureSplash','SoldierSplash'],
+    CharacterArray : [[['AdventureSprite'],['AdventurerBlond'],['AdventurerDark'],['AdventurerGrey'],['AdventurerOrange']],
+                       [['DankPewPew'],['DankBald'], ['DankBlack'],['DankPurple'],['DankRed']]],
+
+    MapArray: [[['backgroundmap1'],['backgroundmap2']],
+        [['tileMap1'],['tileMap2']]],
+    TileSetArray: ["TileSet1","TileSet2"],
     moveMenu: function () {
         game.global.bttnArr[game.global.bttnIdx].frame = 1;
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20) && game.global.bttnIdx < game.global.bttnArr.length-1){
@@ -39,6 +49,7 @@ game.global = {
 
 game.state.add('boot', bootState);
 game.state.add('menu', menuState);
+game.state.add('characterselect' , characterSelect);
 game.state.add('option', optionState);
 game.state.add('credit', creditState);
 game.state.add('instruction', instructionState);

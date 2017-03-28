@@ -11,7 +11,7 @@ var menuState = {
 
         //create buttons
         this.btnP1 = new Button(game, game.width/2, 400, 'playBttn', function (){
-            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+            game.state.start('characterselect', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
 
         },this , 1,0);
         this.btnP1.anchor.setTo(0.5,0.5);
@@ -44,7 +44,7 @@ var menuState = {
 var instructionState = {
     create: function () {
         game.add.image(0, 0, 'background');
-        game.add.image(0, -50, 'controllerInstruction');
+        game.add.image(30, -50, 'controllerInstruction');
 
         this.btnPlay = new Button(game, 550, 650, 'play', function () {
             game.global.menuMusic.stop();
@@ -97,34 +97,7 @@ var creditState = {
         });
 
         game.global.bttnArr = [this.btnE];
-        this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
 
-
-        /* game.add.text(300,50,'                      PEW PEW\n               ' +
-            '              BY\n     BLUE SCREEN PRODUCTIONS',
-            {font: '40px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,265,'Producer                                       Cory Ronald',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,305,'Design Lead                                  Diego Camacho',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,345,'Engineer Lead                              Ian Sebastion Mathew',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,385,'Assets Lead                                   Jonathan Baker',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,425,'UI Lead                                         Chris Lee',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,465,'Sound Lead                                   Matthew Gordon',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,505,'QA Lead                                       Terry Humber',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,545,'Development Lead                       Colin Pugh',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,585,'Gameplay Lead                            Antonio Yumbla',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-        game.add.text(275,625,'Content Lead                                Jason Lin',
-            {font: '30px Times New Roman',fontWeight: 'bold',fill: '#000000'});
-
-         */
 
 
     },
@@ -168,6 +141,64 @@ var gameOverState = {
 
     update: function () {
         game.global.moveMenu(this.box);
+    }
+};
+
+var characterSelect = {
+    create: function(){
+        game.add.image(0,0, 'background');
+        game.add.image(320, 0 ,'CharacterSelectText');
+        Player1Index = 0;
+        player1box = game.add.sprite(200,70,game.global.SplashArray[Player1Index]);
+        player2box = game.add.sprite(700,70,game.global.SplashArray[0]);
+      
+        //Box2.graphicsData[0].fillColor = 0xFFFF00;
+    },
+    update: function(){
+        if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)){
+            if(player1box.frame === 0) {
+                player1box.frame = 4;
+                game.global.Player1Select[1] = player1box.frame;
+            }
+            else{
+                player1box.frame--;
+                game.global.Player1Select[1] = player1box.frame;
+            }
+        }
+        else if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)){
+            player1box.frame++;
+            game.global.Player1Select[1] =  player1box.frame;
+        }
+        if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20)){
+            if(Player1Index === 0){
+                Player1Index = game.global.SplashArray.length - 1;
+                player1box = game.add.sprite(200,70,game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+            else {
+                Player1Index--;
+                player1box = game.add.sprite(200, 70, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+
+        }
+        else if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20)){
+            if (Player1Index === game.global.SplashArray.length - 1 ) {
+                Player1Index = 0;
+                player1box = game.add.sprite(200, 70, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+            else {
+                Player1Index++;
+                player1box = game.add.sprite(200, 70, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+
+        }
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)){
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+        }
     }
 };
 

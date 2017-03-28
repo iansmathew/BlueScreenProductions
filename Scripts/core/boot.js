@@ -13,8 +13,12 @@ var bootState = {
         game.load.spritesheet('exit', "././Assets/img/tempMenuAssets/exitSprite.png",165,65,2);
         game.load.image('creditMenu', "././Assets/img/tempMenuAssets/creditMenu.png");
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgain.png");
-        game.load.audio('menuMusic',"././Assets/sound/Music/MenuMusic.wav");
+        game.load.image('CharacterSelectText', "././Assets/img/tempMenuAssets/CharacterSelectText.png");
         game.load.audio('gameOverMusic',"././Assets/sound/Music/Die.wav");
+        game.load.spritesheet('AdventureSplash', "Assets/img/Character/AdventurerSplash.png", 398 ,586);
+        game.load.spritesheet('SoldierSplash', "Assets/img/Character/SoldierSplash.png", 398 ,586);
+
+        
     },
     //code to make assets goes here
     create: function(){

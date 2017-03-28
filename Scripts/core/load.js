@@ -9,9 +9,8 @@ var loadState = {
         game.load.image('TileSet2', "Assets/TileMaps/SnowPack.png");
         game.load.tilemap('tileMap2', "Assets/TileMaps/map2.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('backgroundmap2', "Assets/TileMaps/BackgroundMap2.png");
-        
-        game.load.spritesheet('player1', "Assets/img/tempGameAssets/Player1.png", 60, 83);
-        game.load.spritesheet('player2', "Assets/img/tempGameAssets/Player2.png", 60, 83);
+
+
         game.load.spritesheet('heart', "Assets/img/tempGameAssets/heartSprite.png", 22, 22);
         game.load.image('gun', "././Assets/img/tempGameAssets/gun.png");
         game.load.image('bFlame', "././Assets/img/tempGameAssets/bulletFlame.png");
@@ -38,6 +37,19 @@ var loadState = {
 
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");
+
+        game.load.spritesheet('AdventureSprite', "Assets/img/Character/AdventureSprite.png", 60, 83);
+        game.load.spritesheet('AdventurerBlond', "Assets/img/Character/AdventurerBlond.png", 60, 83);
+        game.load.spritesheet('AdventurerDark', "Assets/img/Character/AdventurerDark.png", 60, 83);
+        game.load.spritesheet('AdventurerGrey', "Assets/img/Character/AdventurerGrey.png", 60, 83);
+        game.load.spritesheet('AdventurerOrange', "Assets/img/Character/AdventurerOrange.png", 60, 83);
+        game.load.spritesheet('DankPewPew', "Assets/img/Character/DankPewPew.png", 60, 83);
+        game.load.spritesheet('DankBald', "Assets/img/Character/DankBald.png", 60, 83);
+        game.load.spritesheet('DankBlack', "Assets/img/Character/DankBlack.png", 60, 83);
+        game.load.spritesheet('DankPurple', "Assets/img/Character/DankPurple.png", 60, 83);
+        game.load.spritesheet('DankRed', "Assets/img/Character/DankRed.png", 60, 83);
+
+
 
     },
     //code to make assets goes here

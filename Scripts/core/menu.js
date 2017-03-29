@@ -146,15 +146,22 @@ var gameOverState = {
 
 var characterSelect = {
     create: function(){
+        game.global.pad2 = game.input.gamepad.pad2;
         game.add.image(0,0, 'background');
         game.add.image(320, 0 ,'CharacterSelectText');
         Player1Index = 0;
+        Player2Index = 0;
         player1box = game.add.sprite(200,70,game.global.SplashArray[Player1Index]);
         player2box = game.add.sprite(700,70,game.global.SplashArray[0]);
-      
+        Ready = false;
+
         //Box2.graphicsData[0].fillColor = 0xFFFF00;
     },
     update: function(){
+        this.Select1();
+        this.Select2();
+    },
+    Select1: function(){
         if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)){
             if(player1box.frame === 0) {
                 player1box.frame = 4;
@@ -195,10 +202,140 @@ var characterSelect = {
             }
 
         }
-        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)){
-            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) { //&& Ready === true
+            game.state.start('levelSelect', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+        }
+    },
+    Select2: function () {
+        if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+            if (player2box.frame === 0) {
+                player2box.frame = 4;
+                game.global.Player2Select[1] = player2box.frame;
+            }
+            else {
+                player2box.frame--;
+                game.global.Player2Select[1] = player2box.frame;
+            }
+        }
+        else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
+            player2box.frame++;
+            game.global.Player2Select[1] = player2box.frame;
+        }
+        if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20)) {
+            if (Player2Index === 0) {
+                Player2Index = game.global.SplashArray.length - 1;
+                player2box = game.add.sprite(700, 70, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+            else {
+                Player2Index--;
+                player1box = game.add.sprite(700, 70, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+
+        }
+        else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20)) {
+            if (Player2Index === game.global.SplashArray.length - 1) {
+                Player2Index = 0;
+                player2box = game.add.sprite(700, 70, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+            else {
+                Player2Index++;
+                player2box = game.add.sprite(700, 70, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+
+        }
+        if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
+            Ready = true;
 
         }
     }
 };
+    var LevelSelect = {
+        create: function () {
+            game.add.image(0, 0, 'background');
+            CurrentImage = game.add.sprite(256, 147, "LevelSplash");
+            //PlayerPick = Math.floor((Math.random() * 2)+ 1);
+            // console.log(PlayerPick);
+
+        },
+        update: function () {
+            // if(PlayerPick === 1){
+            this.Select1();
+            //}
+            //else{
+            this.Select2();
+            //}
+        },
+
+        Select1: function () {
+            if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
+                if (game.global.MapSelect === 5) {
+                    game.global.MapSelect = 0;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+
+                }
+                else {
+                    game.global.MapSelect++;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+                }
+            }
+            else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+                if (game.global.MapSelect === 0) {
+                    game.global.MapSelect = 5;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+                }
+                else {
+                    game.global.MapSelect--;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+
+                }
+
+            }
+            if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
+                game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+            }
+        },
+        Select2: function () {
+            if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
+                if (game.global.MapSelect === 5) {
+                    game.global.MapSelect = 0;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+
+                }
+                else {
+                    game.global.MapSelect++;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+                }
+            }
+            else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+                if (game.global.MapSelect === 0) {
+                    game.global.MapSelect = 5;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+                }
+                else {
+                    game.global.MapSelect--;
+                    console.log(game.global.MapSelect);
+                    CurrentImage.frame = game.global.MapSelect;
+
+                }
+
+            }
+            if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
+                game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+            }
+        }
+    };
 

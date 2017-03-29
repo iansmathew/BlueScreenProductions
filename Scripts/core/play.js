@@ -5,9 +5,10 @@ playState.prototype = {
         //Keep Alpha for all images.
         //TO CHANGE MAP change the Number of backgroundmap,tileMap and TileSet to either 1 or 2 atm
 
-        this.background = game.add.image(0, 0, game.global.MapArray[0][1]);
-        this.map = game.add.tilemap(game.global.MapArray[1][1]);
-        this.map.addTilesetImage(game.global.TileSetArray[1]);
+
+        this.background = game.add.image(0, 0, game.global.MapArray[0][game.global.MapSelect]);
+        this.map = game.add.tilemap(game.global.MapArray[1][game.global.MapSelect]);
+        this.map.addTilesetImage(game.global.TileSetArray[game.global.MapSelect]);
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 10000, true, this.foreground);
         game.physics.arcade.gravity.y = 1000;

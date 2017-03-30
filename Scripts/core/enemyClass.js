@@ -1,4 +1,173 @@
 /////////////////////////////////////////////////////////////////
+////                     MINE ENEMY                          ////
+/////////////////////////////////////////////////////////////////
+
+MineEnemy = function (game, x, y, newWave) {
+    Phaser.Sprite.call(this, game, x, y, 'mineBubble');
+
+    this.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(0);
+    this.body.allowGravity = true;
+    this.scale.setTo(0,0);
+
+    this.velY = 0 // game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.velX = 0 // game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.nextSize = null;
+    this.hp = 10;
+    this.dmg = 10;
+    //this.wavePoints = 10;
+    this.powerUpChance = 20;
+    this.score = 25;
+    //this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
+};
+
+/*--------------------------------------------------------*/
+MineEnemy.prototype = Object.create(Phaser.Sprite.prototype);
+MineEnemy.prototype.constructor = MineEnemy;
+/*--------------------------------------------------------*/
+
+/////////////////////////////////////////////////////////////////
+////                     MINELAYER ENEMY                     ////
+/////////////////////////////////////////////////////////////////
+
+MineLayerEnemy = function (game, x, y, newWave) {
+    Phaser.Sprite.call(this, game, x, y, 'mineLayerBubble');
+
+    this.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(1);
+    this.body.allowGravity = false;
+
+    this.velY = 0// game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.velX =  game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.nextSize = 'mineBubble';
+    this.hp = 150;
+    this.dmg = 50;
+    this.wavePoints = 10;
+    this.powerUpChance = 20;
+    this.score = 25;
+    this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
+};
+
+/*--------------------------------------------------------*/
+MineLayerEnemy.prototype = Object.create(Phaser.Sprite.prototype);
+MineLayerEnemy.prototype.constructor = MineLayerEnemy;
+/*--------------------------------------------------------*/
+
+/////////////////////////////////////////////////////////////////
+////                     MINI RUBBER ENEMY                   ////
+/////////////////////////////////////////////////////////////////
+
+MiniRubberEnemy = function (game, x, y, newWave) {
+    Phaser.Sprite.call(this, game, x, y, 'miniRubberBubble');
+
+    this.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(1);
+    this.body.allowGravity = true;
+    this.scale.setTo(0,0);
+
+    this.velY =  game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.velX =  game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.nextSize = null;
+    this.hp = 10;
+    this.dmg = 25;
+    //this.wavePoints = 10;
+    this.powerUpChance = 20;
+    this.score = 25;
+    //this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
+};
+
+/*--------------------------------------------------------*/
+MiniRubberEnemy.prototype = Object.create(Phaser.Sprite.prototype);
+MiniRubberEnemy.prototype.constructor = MiniRubberEnemy;
+/*--------------------------------------------------------*/
+
+/////////////////////////////////////////////////////////////////
+////                       RUBBER ENEMY                      ////
+/////////////////////////////////////////////////////////////////
+
+
+RubberEnemy = function (game, x, y, newWave) {
+    Phaser.Sprite.call(this, game, x, y, 'rubberBubble');
+
+    this.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(1);
+    this.body.allowGravity = true;
+
+
+    this.velY = game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.velX = game.rnd.integerInRange(100, 140) * game.rnd.pick([-1, 1]);
+    this.nextSize = 'miniRubberBubble';
+    this.hp = 50;
+    this.dmg = 50;
+    this.wavePoints = 40;
+    this.powerUpChance = 20;
+    this.score = 500;
+    this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
+
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
+};
+
+/*--------------------------------------------------------*/
+RubberEnemy.prototype = Object.create(Phaser.Sprite.prototype);
+RubberEnemy.prototype.constructor = RubberEnemy;
+/*--------------------------------------------------------*/
+
+
+/////////////////////////////////////////////////////////////////
+////                       METAL ENEMY                       ////
+/////////////////////////////////////////////////////////////////
+
+
+MetalEnemy = function (game, x, y, newWave) {
+    Phaser.Sprite.call(this, game, x, y, 'metalBubble');
+
+    this.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(this);
+    this.body.collideWorldBounds = true;
+    this.body.bounce.set(1);
+    this.body.allowGravity = false;
+
+
+    this.velY = game.rnd.integerInRange(140, 200) * game.rnd.pick([-1, 1]);
+    this.velX = game.rnd.integerInRange(140, 200) * game.rnd.pick([-1, 1]);
+    this.nextSize = 'bigBubble';
+    this.hp = 100;
+    this.dmg = 50;
+    this.wavePoints = 60;
+    this.powerUpChance = 20;
+    this.score = 250;
+    this.partOfWave = newWave;
+    this.animations.add('pop', [1,2,3,4,5],30,false);
+
+    //this.bubbleSfx = game.add.audio('bubbleSfx');
+    //this.bubbleSfx.allowMultiple = true;
+};
+
+/*--------------------------------------------------------*/
+MetalEnemy.prototype = Object.create(Phaser.Sprite.prototype);
+MetalEnemy.prototype.constructor = MetalEnemy;
+/*--------------------------------------------------------*/
+
+/////////////////////////////////////////////////////////////////
 ////                       BIG ENEMY                         ////
 /////////////////////////////////////////////////////////////////
 
@@ -131,7 +300,12 @@ Enemies.prototype.spawnEnemies = function () {
                 this.addEnemy('bigBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
                 this.addEnemy('smallBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
                 this.addEnemy('medBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
-
+                if(waveProperties.level >= 3)
+                    this.addEnemy('rubberBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
+                if(waveProperties.level >=5) {
+                    this.addEnemy('metalBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
+                    this.addEnemy('mineLayerBubble', 1, game.rnd.integerInRange(80, 1400), game.rnd.integerInRange(50, 400), true);
+                }
             }
         }
     }
@@ -193,7 +367,9 @@ Enemies.prototype.splitEnemy = function (deadEnemy) {
     var nextEnemy = deadEnemy.nextSize;
     if (nextEnemy == null)
         return;
-
+    else if(nextEnemy == 'mineBubble'){
+        this.addEnemy(deadEnemy.nextSize, 1, deadEnemy.x +  game.rnd.integerInRange(-10, 10), deadEnemy.y, false);
+    }
     else {
         //this.createEnemy(nextEnemy, deadEnemy.x, deadEnemy.y, false);
         this.addEnemy(deadEnemy.nextSize, 2, deadEnemy.x +  game.rnd.integerInRange(-10, 10), deadEnemy.y, false);
@@ -217,6 +393,23 @@ Enemies.prototype.createPool = function () {
 
     this.classType = SmallEnemy;
     this.createMultiple(700);
+
+    this.classType = MetalEnemy;
+    this.createMultiple(500);
+
+    this.classType = RubberEnemy;
+    this.createMultiple(500);
+
+    this.classType = MiniRubberEnemy;
+    this.createMultiple(700);
+
+    this.classType = MineLayerEnemy;
+    this.createMultiple(700);
+
+    this.classType = MineEnemy;
+    this.createMultiple(700);
+
+
 
 
 };

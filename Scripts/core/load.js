@@ -27,11 +27,17 @@ var loadState = {
         game.load.spritesheet('bigBubble', "././Assets/img/tempGameAssets/largeBubble.png",120,120);
         game.load.spritesheet('medBubble', "././Assets/img/tempGameAssets/mediumBubble.png",74,74);
         game.load.spritesheet('smallBubble',"././Assets/img/tempGameAssets/smallBubble.png",24,24);
+        game.load.spritesheet('metalBubble',"././Assets/img/tempGameAssets/metalBubble.png",24,24);
+        game.load.spritesheet('rubberBubble',"././Assets/img/tempGameAssets/rubberBubble.png",74,74);
+        game.load.spritesheet('miniRubberBubble',"././Assets/img/tempGameAssets/miniRubberBubble.png",24,24);
+        game.load.spritesheet('mineLayerBubble',"././Assets/img/tempGameAssets/mineLayerBubble.png",120,120);
+        game.load.spritesheet('mineBubble',"././Assets/img/tempGameAssets/mineBubble.png",24,24);
 
         game.load.image('powerUp', "././Assets/img/tempGameAssets/powerUp.png");
 
         game.load.image('bloodVfx', "././Assets/img/tempGameAssets/BloodFX.png");
         game.load.spritesheet('FireworkVFX', "././Assets/img/tempGameAssets/FireworkVFX.png",32,32,4);
+        game.load.image('whitePuff', "././Assets/img/tempGameAssets/whitePuff.png");
 
         game.load.audio('bulletSfx', "././Assets/sound/Guns/blaster.mp3");
         game.load.audio('bubbleSfx', "././Assets/sound/Blorp/Blorp.mp3");

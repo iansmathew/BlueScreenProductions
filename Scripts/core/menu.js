@@ -135,6 +135,10 @@ var gameOverState = {
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + game.global.score2,
             {font: '20px Times New Roman', fill: '#ffffff' });
 
+        var winner = (game.global.score1 > game.global.score2) ? "PLAYER 1" : "PLAYER 2";
+
+        var winnerText = game.add.text(500, 100, winner + "WINS!");
+
         game.global.bttnArr = [this.btnPlayA, this.btnE];
         this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box');
     },

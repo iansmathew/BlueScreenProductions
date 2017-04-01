@@ -19,7 +19,7 @@ Player = function (game, x, y, image, playerNum) {
     this.color = (playerNum == 1) ? "red" : "blue";
     this.isWalking = true;
     this.score = 0;
-    this.currentWeapon = 0;
+    this.currentWeapon = 6;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
     this.facingRight = false;
@@ -31,12 +31,17 @@ Player = function (game, x, y, image, playerNum) {
     /*--CONSTRUCTOR FUNCTIONS--*/
     this.createKeys();
     this.createHearts();
+    this.JumpEmitterCreate();
+    this.DeathEmitterCreate();
 
     this.weapon.push(new Weapon.SingleBullet(game));
     this.weapon.push(new Weapon.ScatterShot(game));
     this.weapon.push(new Weapon.Shotgun(game));
 	this.weapon.push(new Weapon.Splitter(game));
     this.weapon.push(new Weapon.FlameThrower(game));
+    this.weapon.push(new Weapon.Blaster(game));
+    this.weapon.push(new Weapon.Rocket(game));
+
 
     game.add.existing(this);
 };
@@ -62,6 +67,24 @@ Player.prototype.createHearts = function () {
         this.hearts[i] = new Heart(game, heartX, heartY, 'heart');
 
     }
+};
+
+Player.prototype.JumpEmitterCreate = function(){
+    this.JumpEmitter  = game.add.emitter(0,0,100);
+    this.JumpEmitter.makeParticles('whitePuff');
+    this.JumpEmitter.gravity = -1200;
+    this.JumpEmitter.setScale(0.1,0,0.1,0,500);
+    this.JumpEmitter.setYSpeed(-16,16);
+    this.JumpEmitter.setXSpeed(16,-16);
+};
+
+Player.prototype.DeathEmitterCreate = function(){
+    this.DeathEmitter = game.add.emitter(0,0,100);
+    this.DeathEmitter.makeParticles('bloodVfx');
+    this.DeathEmitter.gravity = -1000;
+    this.DeathEmitter.setYSpeed(-500, 500);
+    this.DeathEmitter.setXSpeed(-500, 500);
+    this.DeathEmitter.setScale(0.5,0,0.5,0,300);
 };
 
 //Moves the player
@@ -90,6 +113,9 @@ Player.prototype.movePlayer = function () {
     }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
         this.body.velocity.y = -920;
+        this.JumpEmitter.x = this.x;
+        this.JumpEmitter.y = this.y;
+        this.JumpEmitter.start(true,500,null,3);
     }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
         this.weapon[this.currentWeapon].fire(this, this.fireAngle);
@@ -152,18 +178,15 @@ Player.prototype.damagePlayer = function (enemy) {
         this.body.velocity.y = -300;
 
         this.hp -= enemy.dmg;
-        /*this.pEmitter.x = this.x;
-        this.pEmitter.y = this.y;
-        this.pEmitter.start(true,300,null,10);*/
         this.damageHearts(enemy.dmg);
         this.invulnerable = true;
         this.setInvulnerable(this);
 
         if (this.hp <= 0)
         {
-            /*this.pEmitter.x = this.x;
-            this.pEmitter.y = this.y;
-            this.pEmitter.start(true,2000,null,50);*/
+            this.DeathEmitter.x = this.x;
+            this.DeathEmitter.y = this.y;
+            this.DeathEmitter.start(true,2000,null,50);
             this.kill();
             this.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
             this.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
@@ -216,6 +239,13 @@ Player.prototype.powerUp = function (powerUp) {
             break;
         case "FlameThrower":
             this.currentWeapon = 4;
+            break;
+        case "Blaster":
+            this.currentWeapon = 5;
+            console.log("Blaster");
+            break;
+        case "Rocket":
+            this.currentWeapon = 6;
             break;
         default:
             console.log("Invalid powerup");

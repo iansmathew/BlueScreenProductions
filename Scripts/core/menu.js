@@ -5,6 +5,10 @@ var menuState = {
         game.add.image(0, 0, 'background'); //adding the background
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
+        if (game.global.isPlaying && !game.global.menuMusic.isPlaying) {
+            game.global.menuMusic.loopFull(0.4);
+        }
+
 
         var nameLabel = game.add.image(game.width/2,200 , 'title');
         nameLabel.anchor.setTo(0.5, 0.5);
@@ -26,16 +30,29 @@ var menuState = {
         },this,1,0);
         this.btnC.anchor.setTo(0.5,0.5);
 
+        this.btnM = new Button(game, 50, 30, 'soundIcons', function() {
+            if (game.global.isPlaying) {
+                game.global.menuMusic.stop();
+                game.global.isPlaying = !game.global.isPlaying;
+            }
+            else {
+                game.global.menuMusic.play();
+                game.global.isPlaying = !game.global.isPlaying;
+            }
+        });
+
+
+
 
 
         game.global.bttnArr = [this.btnC, this.btnP1, this.btnO]; //add all the buttons in the scene in order to the array
-        if (!game.global.menuMusic.isPlaying) {
-            game.global.menuMusic.loopFull(0.4);
-        }
+
     },
 
     update: function () {
-        game.global.moveMenu(); //this function helps to navigate through menu
+        game.global.moveMenu(this.box); //this function helps to navigate through menu
+        this.btnM.frame = (game.global.menuMusic.isPlaying) ? 0 : 1;
+
     }
 };
 
@@ -78,25 +95,70 @@ var optionState = {
       var options = game.add.text(550, 50, 'Options',
           {font: '60px Times New Roman', fill: '#000000' });
 
-      this.btnM = new Button(game, 50, 30, 'box', function() {
-          if (isPlaying) {
+      var mute = game.add.text(300, 280, 'Mute',
+          {font: '40px Times New Roman', fill: '#000000' });
+
+      this.btnM = new Button(game, 930, 250, 'soundIcons', function() {
+          if (game.global.isPlaying) {
               game.global.menuMusic.stop();
-              isPlaying = !isPlaying;
+              game.global.isPlaying = !game.global.isPlaying;
           }
           else {
               game.global.menuMusic.play();
-              isPlaying = !isPlaying;
+              game.global.isPlaying = !game.global.isPlaying;
           }
       });
 
-      game.global.bttnArr = [this.bttn, this.btnM]; //add all the buttons in the scene in order to the array
-      this.box = game.add.image(game.global.bttnArr[game.global.bttnIdx].x, game.global.bttnArr[game.global.bttnIdx].y, 'box'); //this is the box that highlights the selected option
+      var volume = game.add.text(300,380, 'Volume',
+          {font: '40px Times New Roman', fill: '#000000'});
+
+    this.moveC = false;
+    this.currPoint = game.global.menuMusic.volume* 10;
+
+      this.createVolumeSlider();
+
+      game.global.bttnArr = [this.bttn]; //add all the buttons in the scene in order to the array
   },
 
-
   update: function () {
-      game.global.moveMenu(this.btnM, this.box); //this function helps to navigate through menu
-  }
+      game.global.moveMenu(); //this function helps to navigate through menu
+      this.btnM.frame = (game.global.menuMusic.isPlaying) ? 0 : 1;
+
+      if (this.moveC)
+      {
+          if (game.input.mousePointer.x > this.circle.x + this.circle.width/2  && this.currPoint <=9) {
+              this.circle.x = this.volPoints[++this.currPoint];
+              game.global.menuMusic.volume = this.currPoint/10;
+          }
+          if(game.input.mousePointer.x < this.circle.x - this.circle.width && this.currPoint > 0)
+          {
+              this.circle.x = this.volPoints[--this.currPoint];
+              game.global.menuMusic.volume = this.currPoint/10;
+
+          }
+
+      }
+
+  },
+
+  createVolumeSlider: function () {
+      this.bar = this.add.image(500, 400, 'sliderBar');
+      this.bar.anchor.setTo(0, 0.5);
+      var vw = this.bar.x;
+      var xw = this.bar.width/10;
+      this.volPoints = [vw, vw+xw, vw + xw*2, vw+ xw*3, vw+ xw * 4, vw+ xw* 5, vw+ xw * 6, vw+ xw * 7, vw+ xw * 8, vw + xw * 9, vw + xw * 10];
+      this.circle = this.add.image(this.volPoints[this.currPoint], this.bar.y,'sliderCircle');
+      this.circle.anchor.setTo(0.5, 0.5);
+      this.circle.inputEnabled = true;
+      this.circle.events.onInputDown.add(listener, this);
+      this.circle.events.onInputUp.add(listener, this);
+        
+      function listener() {
+          this.moveC = !this.moveC;
+      }
+
+  },
+    
 };
 
 

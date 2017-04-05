@@ -19,8 +19,11 @@ var bootState = {
         game.load.spritesheet('AdventureSplash', "Assets/img/Character/AdventurerSplash.png", 398 ,586);
         game.load.spritesheet('SoldierSplash', "Assets/img/Character/SoldierSplash.png", 398 ,586);
         game.load.spritesheet('LevelSplash', "././Assets/img/tempMenuAssets/MapSelect.png", 768 ,422);
+        game.load.spritesheet('soundIcons', "././Assets/img/tempMenuAssets/sound_icon.png", 100, 100);
+        game.load.image('sliderBar', "././Assets/img/tempMenuAssets/sliderBar.png");
+        game.load.image('sliderCircle', "././Assets/img/tempMenuAssets/sliderCircle.png");
 
-        
+
     },
     //code to make assets goes here
     create: function(){

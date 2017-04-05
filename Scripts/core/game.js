@@ -12,6 +12,7 @@ game.global = {
     Player1Select:[0,0],
     Player2Select: [0,0],
     MapSelect : 0,
+    isPlaying: true,
     SplashArray: ['AdventureSplash','SoldierSplash'],
     CharacterArray : [[['AdventureSprite'],['AdventurerBlond'],['AdventurerDark'],['AdventurerGrey'],['AdventurerOrange']],
                        [['DankPewPew'],['DankBald'], ['DankBlack'],['DankPurple'],['DankRed']]],

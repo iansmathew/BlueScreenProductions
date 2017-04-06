@@ -1,7 +1,7 @@
 var playState = function(game){};
 playState.prototype = {
-    create: function(){
-       //Leave Background Color this for second stage.
+    create: function() {
+        //Leave Background Color this for second stage.
         //Keep Alpha for all images.
         //TO CHANGE MAP change the Number of backgroundmap,tileMap and TileSet to either 1 or 2 atm
 
@@ -12,10 +12,23 @@ playState.prototype = {
         this.foreground = this.map.createLayer('Tile Layer 1');
         this.map.setCollisionBetween(1, 10000, true, this.foreground);
         game.physics.arcade.gravity.y = 1000;
-        console.log(game.global.Player1Select[0]);
-        console.log(game.global.Player1Select[1]);
-        this.player1 = new Player(game, 120, 636, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]],1); // first player == 1
-        this.player2 = new Player(game, 1150, 636, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+        if (game.global.MapSelect === 2){
+            this.player1 = new Player(game, 80, 636, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player2 = new Player(game, 1200, 636, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+        }
+        else if (game.global.MapSelect === 3){
+            this.player1 = new Player(game, 60, 400, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player2 = new Player(game, 1210, 400, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+        }
+
+        else if (game.global.MapSelect === 5){
+            this.player1 = new Player(game, 60, 400, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player2 = new Player(game, 1200, 400, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+        }
+        else{
+            this.player1 = new Player(game, 80, 636, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player2 = new Player(game, 1200, 636, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+        }
 
         this.players = game.add.group();
         this.players.add(this.player1);
@@ -82,6 +95,8 @@ playState.prototype = {
 
         if (game.input.keyboard.addKey(Phaser.Keyboard.P).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
             game.paused = !game.paused;
+
+
 
 
 

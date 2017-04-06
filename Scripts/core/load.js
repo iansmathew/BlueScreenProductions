@@ -10,6 +10,22 @@ var loadState = {
         game.load.tilemap('tileMap2', "Assets/TileMaps/map2.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Level-2',"Assets/TileMaps/Level-2.png");
 
+        game.load.image('TileSet3', "Assets/TileMaps/CityPack.png");
+        game.load.tilemap('tileMap3', "Assets/TileMaps/map3.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Level-3',"Assets/TileMaps/Level-3.png");
+
+        game.load.image('TileSet4', "Assets/TileMaps/SandPack.png");
+        game.load.tilemap('tileMap4', "Assets/TileMaps/map4.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Level-4',"Assets/TileMaps/Level-4.png");
+
+        game.load.image('TileSet5', "Assets/TileMaps/CandyPack.png");
+        game.load.tilemap('tileMap5', "Assets/TileMaps/map5.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Level-5',"Assets/TileMaps/Level-5.png");
+
+        game.load.image('TileSet6', "Assets/TileMaps/GrassPack.png");
+        game.load.tilemap('tileMap6', "Assets/TileMaps/map6.json", null, Phaser.Tilemap.TILED_JSON);
+        game.load.image('Level-6',"Assets/TileMaps/Level-6.png");
+
         game.load.image('Level-3',"Assets/TileMaps/Level-3.png");
         game.load.image('Level-4',"Assets/TileMaps/Level-4.png");
         game.load.image('Level-5',"Assets/TileMaps/Level-5.png");

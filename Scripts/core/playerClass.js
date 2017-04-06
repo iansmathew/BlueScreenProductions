@@ -3,7 +3,7 @@ Player = function (game, x, y, image, playerNum) {
 
     this.anchor.setTo(0.5, 0.5);
     game.physics.arcade.enable(this);
-    this.body.gravity.y = 1500;
+    this.body.gravity.y = 1000;
     this.body.setSize(50, 70, 5, 13); //reducing the player collision box
     this.body.collideWorldBounds = true;
 
@@ -94,7 +94,7 @@ Player.prototype.movePlayer = function () {
 
     var anim = (this.fireAngle < -90) ? "left" : "right";
 
-    this.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+    this.fireAngle = ( 90 - 90 * this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
     this.gun.angle = this.fireAngle;
     this.gun.scale.y = (this.fireAngle < -90) ? -1 : 1;
 
@@ -112,7 +112,7 @@ Player.prototype.movePlayer = function () {
         this.frame = this.facingRight ? 2 : 8;
     }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
-        this.body.velocity.y = -920;
+        this.body.velocity.y = -980;
         this.JumpEmitter.x = this.x;
         this.JumpEmitter.y = this.y;
         this.JumpEmitter.start(true,500,null,3);

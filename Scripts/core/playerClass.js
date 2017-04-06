@@ -93,8 +93,15 @@ Player.prototype.movePlayer = function () {
         return;
 
     var anim = (this.fireAngle < -90) ? "left" : "right";
+    var AngleCheck = 90 - 90 * this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y);
+    if (AngleCheck > 90){
+        this.fireAngle = -( 90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+    }
+    if (AngleCheck < 90) {
+        this.fireAngle = (90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+    }
 
-    this.fireAngle = ( 90 - 90 * this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+
     this.gun.angle = this.fireAngle;
     this.gun.scale.y = (this.fireAngle < -90) ? -1 : 1;
 
@@ -192,6 +199,10 @@ Player.prototype.damagePlayer = function (enemy) {
             this.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
 
         }
+    }
+    else if(this.y + 100  === 736){
+        Console.log("Kill Me");
+        this.kill();
     }
 };
 

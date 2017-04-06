@@ -40,16 +40,12 @@ var menuState = {
                 game.global.isPlaying = !game.global.isPlaying;
             }
         });
-
-
-
-
-
         game.global.bttnArr = [this.btnC, this.btnP1, this.btnO]; //add all the buttons in the scene in order to the array
 
     },
 
     update: function () {
+
         game.global.moveMenu(this.box); //this function helps to navigate through menu
         this.btnM.frame = (game.global.menuMusic.isPlaying) ? 0 : 1;
 

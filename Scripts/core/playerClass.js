@@ -200,10 +200,6 @@ Player.prototype.damagePlayer = function (enemy) {
 
         }
     }
-    else if(this.y + 100  === 736){
-        Console.log("Kill Me");
-        this.kill();
-    }
 };
 
 Player.prototype.damageHearts = function (eDamage) {

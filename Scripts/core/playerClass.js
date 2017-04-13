@@ -22,7 +22,7 @@ Player = function (game, x, y, image, playerNum) {
     this.color = (playerNum == 1) ? "red" : "blue";
     this.isWalking = true;
     this.score = 0;
-    this.currentWeapon = 6;
+    this.currentWeapon = 0;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
     this.facingRight = false;
@@ -100,6 +100,9 @@ Player.prototype.DeathEmitterCreate = function(){
 Player.prototype.movePlayer = function () {
     if (!this.alive || !this.isWalking || this.cursor == false)
         return;
+
+    console.log(this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
+
 
     var anim = (this.fireAngle < -90) ? "left" : "right";
     var AngleCheck = 90 - 90 * this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y);
@@ -200,6 +203,7 @@ Player.prototype.damagePlayer = function (enemy) {
 
         if (this.hp <= 0)
         {
+            game.camera.shake(0.01, 500);
             this.DeathEmitter.x = this.x;
             this.DeathEmitter.y = this.y;
             this.DeathEmitter.start(true,2000,null,50);
@@ -296,7 +300,8 @@ Player.prototype.mercyRevive = function () {
 };
 
 Player.prototype.onWorldOutBounds = function () {
-    console.log("Out of world");
+
+    game.camera.shake(0.01, 500);
     var currHp = this.hp;
     this.hp -= this.hp;
     this.damageHearts(currHp);

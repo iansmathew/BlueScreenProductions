@@ -46,7 +46,8 @@ playState.prototype = {
 
         this.enemies = new Enemies(game, this.players);
 
-        this.gameMusic = game.add.audio("gameMusic");
+        this.music = game.global.LevelMusicArray[game.global.MusicSelect];
+        this.gameMusic = game.add.audio(this.music);
         this.gameMusic.loopFull(0.4);
 
         this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,

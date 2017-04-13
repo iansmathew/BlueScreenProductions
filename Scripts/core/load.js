@@ -60,10 +60,9 @@ var loadState = {
         game.load.audio('shotgunSfx',"././Assets/sound/Guns/shotgun.wav");
         game.load.audio('machineGunSfx',"././Assets/sound/Guns/machineGun.wav");
         game.load.audio('ShockSfx',"././Assets/sound/Guns/Shock.wav");
-        game.load.audio('gameMusic', "././Assets/sound/Music/GameMusic.wav");
-        game.load.audio('RocketSfx', "././Assets/sound/Music/Rocket.mp4");
-        game.load.audio('FlameSfx', "././Assets/sound/Music/Flame.aiff");
-        game.load.audio('LaserSfx', "././Assets/sound/Music/LaserCannon.wav");
+        game.load.audio('RocketSfx', "././Assets/sound/Guns/Rocket.mp3");
+        game.load.audio('FlameSfx', "././Assets/sound/Guns/NewFlame.wav");
+        game.load.audio('LaserSfx', "././Assets/sound/Guns/LaserCannon.wav");
 
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");

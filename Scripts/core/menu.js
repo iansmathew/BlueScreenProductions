@@ -427,21 +427,25 @@ var LevelSelect = {
         this.P1Right = new Button(game, 1050, 300, 'ArrowRight', function () {
             if (game.global.MapSelect === 5) {
                 game.global.MapSelect = 0;
+                game.global.MusicSelect = 0;
                 CurrentImage.frame = game.global.MapSelect;
 
             }
             else {
                 game.global.MapSelect++;
+                game.global.MusicSelect++;
                 CurrentImage.frame = game.global.MapSelect;
             }
         }, this, 1, 0);
         this.P1Left = new Button(game, 150, 300, 'ArrowLeft', function () {
             if (game.global.MapSelect === 0) {
                 game.global.MapSelect = 5;
+                game.global.MusicSelect = 5;
                 CurrentImage.frame = game.global.MapSelect;
             }
             else {
                 game.global.MapSelect--;
+                game.global.MusicSelect--;
                 CurrentImage.frame = game.global.MapSelect;
 
             }
@@ -463,21 +467,25 @@ var LevelSelect = {
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
             if (game.global.MapSelect === 5) {
                 game.global.MapSelect = 0;
+                game.global.MusicSelect = 0;
                 CurrentImage.frame = game.global.MapSelect;
 
             }
             else {
                 game.global.MapSelect++;
+                game.global.MusicSelect++;
                 CurrentImage.frame = game.global.MapSelect;
             }
         }
         else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
             if (game.global.MapSelect === 0) {
                 game.global.MapSelect = 5;
+                game.global.MusicSelect = 5;
                 CurrentImage.frame = game.global.MapSelect;
             }
             else {
                 game.global.MapSelect--;
+                game.global.MusicSelect--;
                 CurrentImage.frame = game.global.MapSelect;
 
             }
@@ -492,21 +500,25 @@ var LevelSelect = {
         if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
             if (game.global.MapSelect === 5) {
                 game.global.MapSelect = 0;
+                game.global.MusicSelect = 0;
                 CurrentImage.frame = game.global.MapSelect;
 
             }
             else {
                 game.global.MapSelect++;
+                game.global.MusicSelect++;
                 CurrentImage.frame = game.global.MapSelect;
             }
         }
         else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
             if (game.global.MapSelect === 0) {
                 game.global.MapSelect = 5;
+                game.global.MusicSelect = 5;
                 CurrentImage.frame = game.global.MapSelect;
             }
             else {
                 game.global.MapSelect--;
+                game.global.MusicSelect --;
                 CurrentImage.frame = game.global.MapSelect;
 
             }

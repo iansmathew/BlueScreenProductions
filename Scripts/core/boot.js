@@ -17,7 +17,13 @@ var bootState = {
         game.load.audio('menuMusic',"././Assets/sound/Music/MenuMusic.wav");
         game.load.audio('gameOverMusic',"././Assets/sound/Music/GameOver.ogg");
         game.load.audio('buttonSwitch',"././Assets/sound/Misc/ButtonSwitch.wav")
-        game.load.audio('buttonForward',"././Assets/sound/Misc/ButtonForwardAss.wav")
+        game.load.audio('buttonForward',"././Assets/sound/Misc/ButtonForward.wav");
+        game.load.audio('DefaultMusic', "././Assets/sound/Music/GameMusic.wav");
+        game.load.audio('CityMusic',"././Assets/sound/Music/City.wav");
+        game.load.audio('CandyLandMusic',"././Assets/sound/Music/CandyLand.wav");
+        game.load.audio('DesertMusic',"././Assets/sound/Music/Desert.wav");
+        game.load.audio('GrasslandMusic',"././Assets/sound/Music/GrassLand.wav");
+        game.load.audio('SnowMusic',"././Assets/sound/Music/Snow.wav");
         game.load.spritesheet('AdventureSplash', "Assets/img/Character/AdventurerSplash.png", 398 ,586);
         game.load.spritesheet('SoldierSplash', "Assets/img/Character/SoldierSplash.png", 398 ,586);
         game.load.spritesheet('LevelSplash', "././Assets/img/tempMenuAssets/MapSelect.png", 768 ,422);

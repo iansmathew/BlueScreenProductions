@@ -12,6 +12,7 @@ game.global = {
     Player1Select:[0,0],
     Player2Select: [0,0],
     MapSelect : 0,
+    MusicSelect : 0,
     isPlaying: true,
     SplashArray: ['AdventureSplash','SoldierSplash'],
     CharacterArray : [[['AdventureSprite'],['AdventurerBlond'],['AdventurerDark'],['AdventurerGrey'],['AdventurerOrange']],
@@ -20,6 +21,7 @@ game.global = {
     MapArray: [[['Level-1'],['Level-2'],['Level-3'],['Level-4'],['Level-5'],['Level-6']],
         [['tileMap1'],['tileMap2'],['tileMap3'],['tileMap4'],['tileMap5'],['tileMap6']]],
     TileSetArray: ["TileSet1","TileSet2","TileSet3","TileSet4","TileSet5","TileSet6"],
+    LevelMusicArray: ["DefaultMusic","SnowMusic","CityMusic","DesertMusic","CandyLandMusic","GrasslandMusic"],
     moveMenu: function () {
         game.global.bttnArr[game.global.bttnIdx].frame = 1;
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20) && game.global.bttnIdx < game.global.bttnArr.length-1){

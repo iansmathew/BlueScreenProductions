@@ -24,6 +24,10 @@ var bootState = {
         game.load.spritesheet('soundIcons', "././Assets/img/tempMenuAssets/sound_icon.png", 100, 100);
         game.load.image('sliderBar', "././Assets/img/tempMenuAssets/sliderBar.png");
         game.load.image('sliderCircle', "././Assets/img/tempMenuAssets/sliderCircle.png");
+        game.load.image("ArrowUp", "././Assets/img/tempMenuAssets/UpArrow.png");
+        game.load.image("ArrowDown", "././Assets/img/tempMenuAssets/DownArrow.png");
+        game.load.image("ArrowLeft", "././Assets/img/tempMenuAssets/LeftArrow.png");
+        game.load.image("ArrowRight", "././Assets/img/tempMenuAssets/RightArrow.png");
 
 
     },

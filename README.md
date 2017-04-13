@@ -3,7 +3,7 @@
 
 ## CURRENT BUILD INFO:
 ######Current game build includes:
- - Menu and Credit Screen (Options screen pending)
+ - Menu, Credit Screen and Option Screen
  - Temporary instructions screen
  - Gameplay Mechanincs:-
   - Two player movement

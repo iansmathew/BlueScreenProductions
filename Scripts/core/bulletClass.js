@@ -207,6 +207,7 @@ Weapon.Splitter = function (game) {
     this.dmg = 10;
     this.fireRate = 350;
     this.life = 300;
+    this.shotSfx = game.add.audio("ShockSfx")
 
     for (var i = 0; i < 32; i++)
     {
@@ -235,7 +236,7 @@ Weapon.Splitter.prototype.fire = function (source, angle) {
     this.getFirstExists(false).fire(x, y, angle + 45, this.bulletSpeed, 0, 0,this.life);
 
     this.nextFire = this.game.time.time + this.fireRate;
-    //this.shotSfx.play(false,false,0.1,false);
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -250,6 +251,7 @@ Weapon.FlameThrower = function (game) {
     this.bulletSpeed = 400;
     this.fireRate = 0;
     this.dmg = 5;
+    this.shotSfx = game.add.audio("FlameSfx");
 
     for (var i = 0; i < 150; i++)
     {
@@ -279,7 +281,7 @@ Weapon.FlameThrower.prototype.fire = function (source, angle) {
 
 
     this.nextFire = this.game.time.time + this.fireRate;
-    //this.shotSfx.play(false,false,0.1,false);
+    this.shotSfx.play(false,false,0.1,false);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -341,7 +343,7 @@ Weapon.Rocket = function (game) {
     this.fireRate = 500;
     this.dmg = 100;
     this.life = 450;
-    //this.shotSfx = game.add.audio("shotgunSfx");
+    this.shotSfx = game.add.audio("RocketSfx");
 
     for (var i = 0; i < 32; i++)
     {

@@ -101,18 +101,8 @@ Player.prototype.movePlayer = function () {
     if (!this.alive || !this.isWalking || this.cursor == false)
         return;
 
-    console.log(this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
-
-
-    var anim = (this.fireAngle < -90) ? "left" : "right";
-    var AngleCheck = 90 - 90 * this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_Y);
-    if (AngleCheck > 90){
-        this.fireAngle = -( 90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
-    }
-    if (AngleCheck < 90) {
-        this.fireAngle = (90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
-    }
-
+    var anim = (Math.abs(this.fireAngle) > 90) ? "left" : "right";
+    this.fireAngle = -(90 + 90 * -this.pad.axis(Phaser.Gamepad.XBOX360_STICK_RIGHT_X));
 
     this.gun.angle = this.fireAngle;
     this.gun.scale.y = (this.fireAngle < -90) ? -1 : 1;
@@ -128,7 +118,7 @@ Player.prototype.movePlayer = function () {
     else {
         this.body.velocity.x = 0;
         this.animations.stop();
-        this.frame = this.facingRight ? 2 : 8;
+        this.frame = 2;
     }
     if ((this.cursor.up.isDown || this.pad.justPressed(Phaser.Gamepad.XBOX360_A)) && this.body.onFloor()){ //jump
         this.body.velocity.y = -980;

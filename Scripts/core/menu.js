@@ -352,25 +352,21 @@ var characterSelect = {
             if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
                 if (game.global.MapSelect === 5) {
                     game.global.MapSelect = 0;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
 
                 }
                 else {
                     game.global.MapSelect++;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
                 }
             }
             else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
                 if (game.global.MapSelect === 0) {
                     game.global.MapSelect = 5;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
                 }
                 else {
                     game.global.MapSelect--;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
 
                 }
@@ -385,25 +381,21 @@ var characterSelect = {
             if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
                 if (game.global.MapSelect === 5) {
                     game.global.MapSelect = 0;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
 
                 }
                 else {
                     game.global.MapSelect++;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
                 }
             }
             else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
                 if (game.global.MapSelect === 0) {
                     game.global.MapSelect = 5;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
                 }
                 else {
                     game.global.MapSelect--;
-                    console.log(game.global.MapSelect);
                     CurrentImage.frame = game.global.MapSelect;
 
                 }

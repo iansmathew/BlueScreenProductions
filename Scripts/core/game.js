@@ -29,6 +29,9 @@ game.global = {
             game.global.bttnArr[game.global.bttnIdx - 1].frame = 0;
             /*boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
             boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;*/
+            game.buttonSwitch = game.add.audio("buttonSwitch");
+            game.buttonSwitch.play(false,false,0.5,false);
+
 
         }
         else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20) && game.global.bttnIdx > 0)
@@ -39,13 +42,18 @@ game.global = {
             game.global.bttnArr[game.global.bttnIdx + 1].frame = 0;
             /*boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
             boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;*/
+            game.buttonSwitch.play(false,false,0.5,false);
+
 
         }
         if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
             game.global.bttnArr[game.global.bttnIdx].onPress();
             game.global.bttnIdx = 0; //resetting index back to first button
+            game.buttonForward = game.add.audio("buttonForward");
+            game.buttonForward.play(false,false,0.5,false);
+
         }
-    }
+    },
 };
 
 

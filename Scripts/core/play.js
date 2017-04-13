@@ -34,6 +34,13 @@ playState.prototype = {
         this.players.add(this.player1);
         this.players.add(this.player2);
 
+        this.player1.checkWorldBounds = true;
+        this.player2.checkWorldBounds = true;
+
+        this.player1.events.onOutOfBounds.add(this.player1.onWorldOutBounds, this.player1);
+
+        this.player2.events.onOutOfBounds.add(this.player2.onWorldOutBounds, this.player2);
+
         this.powerUps = game.add.group();
         this.powerUps.enableBody = true;
 

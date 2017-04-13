@@ -53,7 +53,7 @@ game.global = {
             game.buttonForward.play(false,false,0.5,false);
 
         }
-    }
+    },
 };
 
 

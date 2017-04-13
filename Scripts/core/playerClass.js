@@ -5,7 +5,10 @@ Player = function (game, x, y, image, playerNum) {
     game.physics.arcade.enable(this);
     this.body.gravity.y = 1000;
     this.body.setSize(50, 70, 5, 13); //reducing the player collision box
-    this.body.collideWorldBounds = true;
+    //this.body.outOfBoundsKill = true;
+    //this.body.checkWorldBounds = true;
+    //this.body.collideWorldBounds = true;
+
 
     /*---PROPERTIES---*/
     this.hp = 100;
@@ -23,6 +26,10 @@ Player = function (game, x, y, image, playerNum) {
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
     this.facingRight = false;
+    this.initialPos = {
+        x: x,
+        y: y
+    };
 
     this.fireAngle = 0;
     this.gun = this.addChild(game.make.sprite(-2, 10, 'gun'));
@@ -33,6 +40,8 @@ Player = function (game, x, y, image, playerNum) {
     this.createHearts();
     this.JumpEmitterCreate();
     this.DeathEmitterCreate();
+
+
 
     this.weapon.push(new Weapon.SingleBullet(game));
     this.weapon.push(new Weapon.ScatterShot(game));
@@ -280,9 +289,28 @@ Player.prototype.increaseHealth = function () {
 Player.prototype.mercyRevive = function () {
     this.cursor = false;
 
-    this.reset(game.width/2, 636);
+    this.reset(this.initialPos.x, this.initialPos.y);
     this.increaseHealth();
 
     this.createKeys();
 };
 
+Player.prototype.onWorldOutBounds = function () {
+    console.log("Out of world");
+    var currHp = this.hp;
+    this.hp -= this.hp;
+    this.damageHearts(currHp);
+    this.invulnerable = true;
+    this.setInvulnerable(this);
+
+    if (this.hp <= 0)
+    {
+        this.DeathEmitter.x = this.x;
+        this.DeathEmitter.y = this.y;
+        this.DeathEmitter.start(true,2000,null,50);
+        this.kill();
+        this.cursor = game.input.keyboard.disable = false; //deleting window.eventListeneres
+        this.fireButton = game.input.keyboard.disable = false; //deleting window.eventListeneres
+
+    }
+};

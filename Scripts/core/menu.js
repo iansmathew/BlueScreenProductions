@@ -1,7 +1,7 @@
-//state is the main menu state
+﻿//state is the main menu state
 var menuState = {
     //code to make assets goes here
-    create: function(){
+    create: function () {
         game.add.image(0, 0, 'background'); //adding the background
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
@@ -10,27 +10,27 @@ var menuState = {
         }
 
 
-        var nameLabel = game.add.image(game.width/2,200 , 'title');
+        var nameLabel = game.add.image(game.width / 2, 200, 'title');
         nameLabel.anchor.setTo(0.5, 0.5);
 
         //create buttons
-        this.btnP1 = new Button(game, game.width/2, 400, 'playBttn', function (){
+        this.btnP1 = new Button(game, game.width / 2, 400, 'playBttn', function () {
             game.state.start('characterselect', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
 
-        },this , 1,0);
-        this.btnP1.anchor.setTo(0.5,0.5);
+        }, this, 1, 0);
+        this.btnP1.anchor.setTo(0.5, 0.5);
 
-        this.btnO = new Button(game, game.width/2, 500, 'optionsBttn', function () {
+        this.btnO = new Button(game, game.width / 2, 500, 'optionsBttn', function () {
             game.state.start('option', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
-        }, this , 1,0);
-        this.btnO.anchor.setTo(0.5,0.5);
+        }, this, 1, 0);
+        this.btnO.anchor.setTo(0.5, 0.5);
 
         this.btnC = new Button(game, 1255, 25, 'credits', function () {
             game.state.start('credit', Phaser.Plugin.StateTransition.Out.SlideBottom, Phaser.Plugin.StateTransition.In.SlideBottom);
-        },this,1,0);
-        this.btnC.anchor.setTo(0.5,0.5);
+        }, this, 1, 0);
+        this.btnC.anchor.setTo(0.5, 0.5);
 
-        this.btnM = new Button(game, 50, 30, 'soundIcons', function() {
+        this.btnM = new Button(game, 50, 30, 'soundIcons', function () {
             if (game.global.isPlaying) {
                 game.global.menuMusic.stop();
                 game.global.isPlaying = !game.global.isPlaying;
@@ -62,13 +62,13 @@ var instructionState = {
         this.btnPlay = new Button(game, 550, 650, 'play', function () {
             game.global.menuMusic.stop();
             game.state.start('load'); //Switches to load state. This starts the game.
-        },this,1,0);
-        this.btnPlay.anchor.setTo(0.5,0.5);
+        }, this, 1, 0);
+        this.btnPlay.anchor.setTo(0.5, 0.5);
 
-        this.btnE = new Button(game, 750, 650, 'exit',function () {
-            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
-        },this,1,0);
-        this.btnE.anchor.setTo(0.5,0.5);
+        this.btnE = new Button(game, 750, 650, 'exit', function () {
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
+        }, this, 1, 0);
+        this.btnE.anchor.setTo(0.5, 0.5);
 
         game.global.bttnArr = [this.btnPlay, this.btnE]; //add all the buttons in the scene in order to the array
     },
@@ -80,93 +80,91 @@ var instructionState = {
 
 
 var optionState = {
-  //code to create the buttons and text
-  create: function () {
-      var isPlaying = true;
-      game.add.image(0, 0, 'background');
-      this.bttn = new Button(game, 1100, 650, 'exit', function () {
-          game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
-      });
+    //code to create the buttons and text
+    create: function () {
+        var isPlaying = true;
+        game.add.image(0, 0, 'background');
+        this.bttn = new Button(game, 1100, 650, 'exit', function () {
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
+        });
 
-      var options = game.add.text(550, 50, 'Options',
-          {font: '60px Times New Roman', fill: '#000000' });
+        var options = game.add.text(550, 50, 'Options',
+            { font: '60px Times New Roman', fill: '#000000' });
 
-      var mute = game.add.text(300, 280, 'Mute',
-          {font: '40px Times New Roman', fill: '#000000' });
+        var mute = game.add.text(300, 280, 'Mute',
+            { font: '40px Times New Roman', fill: '#000000' });
 
-      this.btnM = new Button(game, 930, 250, 'soundIcons', function() {
-          if (game.global.isPlaying) {
-              game.global.menuMusic.stop();
-              game.global.isPlaying = !game.global.isPlaying;
-          }
-          else {
-              game.global.menuMusic.play();
-              game.global.isPlaying = !game.global.isPlaying;
-          }
-      });
+        this.btnM = new Button(game, 930, 250, 'soundIcons', function () {
+            if (game.global.isPlaying) {
+                game.global.menuMusic.stop();
+                game.global.isPlaying = !game.global.isPlaying;
+            }
+            else {
+                game.global.menuMusic.play();
+                game.global.isPlaying = !game.global.isPlaying;
+            }
+        });
 
-      var volume = game.add.text(300,380, 'Volume',
-          {font: '40px Times New Roman', fill: '#000000'});
+        var volume = game.add.text(300, 380, 'Volume',
+            { font: '40px Times New Roman', fill: '#000000' });
 
-    this.moveC = false;
-    this.currPoint = game.global.menuMusic.volume* 10;
+        this.moveC = false;
+        this.currPoint = game.global.menuMusic.volume * 10;
 
-      this.createVolumeSlider();
+        this.createVolumeSlider();
 
-      game.global.bttnArr = [this.bttn]; //add all the buttons in the scene in order to the array
-  },
+        game.global.bttnArr = [this.bttn]; //add all the buttons in the scene in order to the array
+    },
 
-  update: function () {
-      game.global.moveMenu(); //this function helps to navigate through menu
-      this.btnM.frame = (game.global.menuMusic.isPlaying) ? 0 : 1;
+    update: function () {
+        game.global.moveMenu(); //this function helps to navigate through menu
+        this.btnM.frame = (game.global.menuMusic.isPlaying) ? 0 : 1;
 
-      if (this.moveC)
-      {
-          if (game.input.mousePointer.x > this.circle.x + this.circle.width/2  && this.currPoint <=9) {
-              this.circle.x = this.volPoints[++this.currPoint];
-              game.global.menuMusic.volume = this.currPoint/10;
-          }
-          if(game.input.mousePointer.x < this.circle.x - this.circle.width && this.currPoint > 0)
-          {
-              this.circle.x = this.volPoints[--this.currPoint];
-              game.global.menuMusic.volume = this.currPoint/10;
+        if (this.moveC) {
+            if (game.input.mousePointer.x > this.circle.x + this.circle.width / 2 && this.currPoint <= 9) {
+                this.circle.x = this.volPoints[++this.currPoint];
+                game.global.menuMusic.volume = this.currPoint / 10;
+            }
+            if (game.input.mousePointer.x < this.circle.x - this.circle.width && this.currPoint > 0) {
+                this.circle.x = this.volPoints[--this.currPoint];
+                game.global.menuMusic.volume = this.currPoint / 10;
 
-          }
+            }
 
-      }
+        }
 
-  },
+    },
 
-  createVolumeSlider: function () {
-      this.bar = this.add.image(500, 400, 'sliderBar');
-      this.bar.anchor.setTo(0, 0.5);
-      var vw = this.bar.x;
-      var xw = this.bar.width/10;
-      this.volPoints = [vw, vw+xw, vw + xw*2, vw+ xw*3, vw+ xw * 4, vw+ xw* 5, vw+ xw * 6, vw+ xw * 7, vw+ xw * 8, vw + xw * 9, vw + xw * 10];
-      this.circle = this.add.image(this.volPoints[this.currPoint], this.bar.y,'sliderCircle');
-      this.circle.anchor.setTo(0.5, 0.5);
-      this.circle.inputEnabled = true;
-      this.circle.events.onInputDown.add(listener, this);
-      this.circle.events.onInputUp.add(listener, this);
-        
-      function listener() {
-          this.moveC = !this.moveC;
-      }
+    createVolumeSlider: function () {
+        this.bar = this.add.image(500, 400, 'sliderBar');
+        this.bar.anchor.setTo(0, 0.5);
+        var vw = this.bar.x;
+        var xw = this.bar.width / 10;
+        this.volPoints = [vw, vw + xw, vw + xw * 2, vw + xw * 3, vw + xw * 4, vw + xw * 5, vw + xw * 6, vw + xw * 7, vw + xw * 8, vw + xw * 9, vw + xw * 10];
+        this.circle = this.add.image(this.volPoints[this.currPoint], this.bar.y, 'sliderCircle');
+        this.circle.anchor.setTo(0.5, 0.5);
+        this.circle.inputEnabled = true;
+        this.circle.events.onInputDown.add(listener, this);
+        this.circle.events.onInputUp.add(listener, this);
 
-  },
-    
+        function listener() {
+            this.moveC = !this.moveC;
+        }
+
+    },
+
 };
 
 
 var creditState = {
 
-    create: function(){
-        game.add.image(0,0,'background');
+    create: function () {
+        game.add.image(0, 0, 'background');
 
         this.cImage = game.add.image(0, 200, 'creditMenu');
 
-        this.btnE = new Button(game, 1125, 655, 'exit',function () {
-            game.state.start('menu',Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
+        this.btnE = new Button(game, 1125, 655, 'exit', function () {
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
         });
 
         game.global.bttnArr = [this.btnE];
@@ -175,7 +173,7 @@ var creditState = {
 
     },
     //code to update the assets goes here //changes are reflected in game render
-    update: function(){
+    update: function () {
         this.cImage.y--;
         game.global.moveMenu(this.box);
     }
@@ -191,22 +189,22 @@ var gameOverState = {
         game.add.image(0, 0, 'background');
 
         var gameOver = game.add.text(550, 300, 'GAME OVER!',
-            {font: '40px Times New Roman', fill: '#ffffff' });
+            { font: '40px Times New Roman', fill: '#ffffff' });
 
         this.btnPlayA = new Button(game, 500, 600, 'playAgain', function () {
             gameOverState.gameOverMusic.stop();
             game.state.start('play'); //Starts the game again
         });
-        this.btnE = new Button(game, 700, 610, 'exit',function () {
+        this.btnE = new Button(game, 700, 610, 'exit', function () {
             gameOverState.gameOverMusic.stop();
             game.state.start('menu', Phaser.Plugin.StateTransition.Out.ScaleUp, Phaser.Plugin.StateTransition.In.ScaleUp);
         });
 
-		 this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + game.global.score1,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+        this.scoreCounter1 = game.add.text(70, 10, 'P1 Score: ' + game.global.score1,
+            { font: '20px Times New Roman', fill: '#ffffff' });
 
-        this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + game.global.score2,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+        this.scoreCounter2 = game.add.text(1120, 10, 'P2 Score: ' + game.global.score2,
+            { font: '20px Times New Roman', fill: '#ffffff' });
 
         var winner = (game.global.score1 > game.global.score2) ? "PLAYER 1" : "PLAYER 2";
 
@@ -222,41 +220,125 @@ var gameOverState = {
 };
 
 var characterSelect = {
-    create: function(){
+    create: function () {
         game.global.pad2 = game.input.gamepad.pad2;
-        game.add.image(0,0, 'background');
-        game.add.image(320, 0 ,'CharacterSelectText');
+        game.add.image(0, 0, 'background');
+        game.add.image(320, 0, 'CharacterSelectText');
         Player1Index = 0;
         Player2Index = 0;
-        player1box = game.add.sprite(200,70,game.global.SplashArray[Player1Index]);
-        player2box = game.add.sprite(700,70,game.global.SplashArray[0]);
+        this.btnE = new Button(game, 0, game.height - 70, 'exit', function () {
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
+        }, this, 1, 0);
+        this.btnP1 = new Button(game, game.width - 180, game.height - 70, 'playBttn', function () {
+            game.state.start('levelSelect', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+        }, this, 1, 0);
+        this.P1Down = new Button(game, 300, 660, 'ArrowDown', function () {
+            if (Player1Index === game.global.SplashArray.length - 1) {
+                Player1Index = 0;
+                player1box = game.add.sprite(200, 100, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+            else {
+                Player1Index++;
+                player1box = game.add.sprite(200, 100, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+        }, this, 1, 0);
+        this.P1UP = new Button(game, 300, 50, 'ArrowUp', function () {
+            if (Player1Index === 0) {
+                Player1Index = game.global.SplashArray.length - 1;
+                player1box = game.add.sprite(200, 100, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+            else {
+                Player1Index--;
+                player1box = game.add.sprite(200, 100, game.global.SplashArray[Player1Index]);
+                game.global.Player1Select[0] = Player1Index;
+            }
+        }, this, 1, 0);
+        this.P1Right = new Button(game, 570, 300, 'ArrowRight', function () {
+            player1box.frame++;
+            game.global.Player1Select[1] = player1box.frame;
+        }, this, 1, 0);
+        this.P1Left = new Button(game, 150, 300, 'ArrowLeft', function () {
+            if (player1box.frame === 0) {
+                player1box.frame = 4;
+                game.global.Player1Select[1] = player1box.frame;
+            }
+            else {
+                player1box.frame--;
+                game.global.Player1Select[1] = player1box.frame;
+            }
+        }, this, 1, 0);
+        this.P2Down = new Button(game, 800, 650, 'ArrowDown', function () {
+            if (Player2Index === game.global.SplashArray.length - 1) {
+                Player2Index = 0;
+                player2box = game.add.sprite(700, 100, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+            else {
+                Player2Index++;
+                player2box = game.add.sprite(700, 100, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+
+        }, this, 1, 0);
+        this.P2UP = new Button(game, 800, 50, 'ArrowUp', function () {
+            if (Player2Index === 0) {
+                Player2Index = game.global.SplashArray.length - 1;
+                player2box = game.add.sprite(700, 100, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+            else {
+                Player2Index--;
+                player1box = game.add.sprite(700, 100, game.global.SplashArray[Player2Index]);
+                game.global.Player2Select[0] = Player2Index;
+            }
+        }, this, 1, 0);
+        this.P2Right = new Button(game, 1070, 300, 'ArrowRight', function () {
+            player2box.frame++;
+            game.global.Player2Select[1] = player2box.frame;
+        }, this, 1, 0);
+        this.P1Left = new Button(game, 650, 300, 'ArrowLeft', function () {
+            if (player2box.frame === 0) {
+                player2box.frame = 4;
+                game.global.Player2Select[1] = player2box.frame;
+            }
+            else {
+                player2box.frame--;
+                game.global.Player2Select[1] = player2box.frame;
+            }
+        }, this, 1, 0);
+        player1box = game.add.sprite(200, 100, game.global.SplashArray[Player1Index]);
+        player2box = game.add.sprite(700, 100, game.global.SplashArray[0]);
         Ready = false;
 
         //Box2.graphicsData[0].fillColor = 0xFFFF00;
     },
-    update: function(){
+    update: function () {
         this.Select1();
         this.Select2();
     },
-    Select1: function(){
-        if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)){
-            if(player1box.frame === 0) {
+    Select1: function () {
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+            if (player1box.frame === 0) {
                 player1box.frame = 4;
                 game.global.Player1Select[1] = player1box.frame;
             }
-            else{
+            else {
                 player1box.frame--;
                 game.global.Player1Select[1] = player1box.frame;
             }
         }
-        else if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)){
+        else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
             player1box.frame++;
-            game.global.Player1Select[1] =  player1box.frame;
+            game.global.Player1Select[1] = player1box.frame;
         }
-        if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20)){
-            if(Player1Index === 0){
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_UP, 20)) {
+            if (Player1Index === 0) {
                 Player1Index = game.global.SplashArray.length - 1;
-                player1box = game.add.sprite(200,70,game.global.SplashArray[Player1Index]);
+                player1box = game.add.sprite(200, 70, game.global.SplashArray[Player1Index]);
                 game.global.Player1Select[0] = Player1Index;
             }
             else {
@@ -266,8 +348,8 @@ var characterSelect = {
             }
 
         }
-        else if(game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20)){
-            if (Player1Index === game.global.SplashArray.length - 1 ) {
+        else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_DOWN, 20)) {
+            if (Player1Index === game.global.SplashArray.length - 1) {
                 Player1Index = 0;
                 player1box = game.add.sprite(200, 70, game.global.SplashArray[Player1Index]);
                 game.global.Player1Select[0] = Player1Index;
@@ -331,79 +413,108 @@ var characterSelect = {
         }
     }
 };
-    var LevelSelect = {
-        create: function () {
-            game.add.image(0, 0, 'background');
-            CurrentImage = game.add.sprite(256, 147, "LevelSplash");
-            //PlayerPick = Math.floor((Math.random() * 2)+ 1);
-            // console.log(PlayerPick);
+var LevelSelect = {
+    create: function () {
+        game.add.image(0, 0, 'background');
+        CurrentImage = game.add.sprite(256, 147, "LevelSplash");
+        this.btnE = new Button(game, 0, game.height - 70, 'exit', function () {
+            game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideRight, Phaser.Plugin.StateTransition.In.SlideRight);
+        }, this, 1, 0);
+        this.btnP1 = new Button(game, game.width - 180, game.height - 70, 'playBttn', function () {
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
 
-        },
-        update: function () {
-            // if(PlayerPick === 1){
-            this.Select1();
-            //}
-            //else{
-            this.Select2();
-            //}
-        },
-
-        Select1: function () {
-            if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
-                if (game.global.MapSelect === 5) {
-                    game.global.MapSelect = 0;
-                    CurrentImage.frame = game.global.MapSelect;
-
-                }
-                else {
-                    game.global.MapSelect++;
-                    CurrentImage.frame = game.global.MapSelect;
-                }
-            }
-            else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
-                if (game.global.MapSelect === 0) {
-                    game.global.MapSelect = 5;
-                    CurrentImage.frame = game.global.MapSelect;
-                }
-                else {
-                    game.global.MapSelect--;
-                    CurrentImage.frame = game.global.MapSelect;
-
-                }
+        }, this, 1, 0);
+        this.P1Right = new Button(game, 1050, 300, 'ArrowRight', function () {
+            if (game.global.MapSelect === 5) {
+                game.global.MapSelect = 0;
+                CurrentImage.frame = game.global.MapSelect;
 
             }
-            if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
-                game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+            else {
+                game.global.MapSelect++;
+                CurrentImage.frame = game.global.MapSelect;
+            }
+        }, this, 1, 0);
+        this.P1Left = new Button(game, 150, 300, 'ArrowLeft', function () {
+            if (game.global.MapSelect === 0) {
+                game.global.MapSelect = 5;
+                CurrentImage.frame = game.global.MapSelect;
+            }
+            else {
+                game.global.MapSelect--;
+                CurrentImage.frame = game.global.MapSelect;
 
             }
-        },
-        Select2: function () {
-            if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
-                if (game.global.MapSelect === 5) {
-                    game.global.MapSelect = 0;
-                    CurrentImage.frame = game.global.MapSelect;
+        }, this, 1, 0);
+        //PlayerPick = Math.floor((Math.random() * 2)+ 1);
+        // console.log(PlayerPick);
 
-                }
-                else {
-                    game.global.MapSelect++;
-                    CurrentImage.frame = game.global.MapSelect;
-                }
-            }
-            else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
-                if (game.global.MapSelect === 0) {
-                    game.global.MapSelect = 5;
-                    CurrentImage.frame = game.global.MapSelect;
-                }
-                else {
-                    game.global.MapSelect--;
-                    CurrentImage.frame = game.global.MapSelect;
+    },
+    update: function () {
+        // if(PlayerPick === 1){
+        this.Select1();
+        //}
+        //else{
+        this.Select2();
+        //}
+    },
 
-                }
+    Select1: function () {
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
+            if (game.global.MapSelect === 5) {
+                game.global.MapSelect = 0;
+                CurrentImage.frame = game.global.MapSelect;
 
             }
-            if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
-                game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
-
+            else {
+                game.global.MapSelect++;
+                CurrentImage.frame = game.global.MapSelect;
             }
         }
-    };
+        else if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+            if (game.global.MapSelect === 0) {
+                game.global.MapSelect = 5;
+                CurrentImage.frame = game.global.MapSelect;
+            }
+            else {
+                game.global.MapSelect--;
+                CurrentImage.frame = game.global.MapSelect;
+
+            }
+
+        }
+        if (game.global.pad.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+        }
+    },
+    Select2: function () {
+        if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_RIGHT, 20)) {
+            if (game.global.MapSelect === 5) {
+                game.global.MapSelect = 0;
+                CurrentImage.frame = game.global.MapSelect;
+
+            }
+            else {
+                game.global.MapSelect++;
+                CurrentImage.frame = game.global.MapSelect;
+            }
+        }
+        else if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_DPAD_LEFT, 20)) {
+            if (game.global.MapSelect === 0) {
+                game.global.MapSelect = 5;
+                CurrentImage.frame = game.global.MapSelect;
+            }
+            else {
+                game.global.MapSelect--;
+                CurrentImage.frame = game.global.MapSelect;
+
+            }
+
+        }
+        if (game.global.pad2.justPressed(Phaser.Gamepad.XBOX360_A, 20)) {
+            game.state.start('instruction', Phaser.Plugin.StateTransition.Out.SlideLeft, Phaser.Plugin.StateTransition.In.SlideLeft);
+
+        }
+    }
+};

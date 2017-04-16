@@ -18,16 +18,16 @@ playState.prototype = {
         }
         else if (game.global.MapSelect === 3){
             this.player1 = new Player(game, 60, 400, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
-            this.player2 = new Player(game, 1210, 400, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+            this.player2 = new Player(game,  1210, 400,game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
         }
 
         else if (game.global.MapSelect === 5){
-            this.player1 = new Player(game, 60, 400, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player1 = new Player(game,  60, 400,game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
             this.player2 = new Player(game, 1200, 400, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
         }
         else{
-            this.player1 = new Player(game, 80, 636, game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
-            this.player2 = new Player(game, 1200, 636, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
+            this.player1 = new Player(game, 80, 636,game.global.CharacterArray[game.global.Player1Select[0]][game.global.Player1Select[1]], 1); // first player == 1
+            this.player2 = new Player(game,  1200, 636, game.global.CharacterArray[game.global.Player2Select[0]][game.global.Player2Select[1]], 2);//second player == 2
         }
 
         this.players = game.add.group();

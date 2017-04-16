@@ -14,9 +14,12 @@ game.global = {
     MapSelect : 0,
     MusicSelect : 0,
     isPlaying: true,
-    SplashArray: ['AdventureSplash','SoldierSplash'],
+    SplashArray: ['AdventureSplash','SoldierSplash','GuySplash','GirlSplash','ZombieSplash'],
     CharacterArray : [[['AdventureSprite'],['AdventurerBlond'],['AdventurerDark'],['AdventurerGrey'],['AdventurerOrange']],
-                       [['DankPewPew'],['DankBald'], ['DankBlack'],['DankPurple'],['DankRed']]],
+                       [['DankPewPew'],['DankBlack'],['DankPurple'],['DankBald'],['DankRed']],
+                        [['GuySprite'],['GuyBlue'],['GuyRed'],['GuyBlack'],['GuyPurple']],
+                        [['GirlSprite'],['GirlDark'],['GirlDBlond'],['GirlBlond'],['GirlPurple']],
+                        [['ZombieSprite'],['ZombieGrop'],['ZombieDark'],['ZombieGrey'],['ZombieGreen']]],
 
     MapArray: [[['Level-1'],['Level-2'],['Level-3'],['Level-4'],['Level-5'],['Level-6']],
         [['tileMap1'],['tileMap2'],['tileMap3'],['tileMap4'],['tileMap5'],['tileMap6']]],
@@ -29,8 +32,6 @@ game.global = {
 
             game.global.bttnArr[game.global.bttnIdx].frame = 1;
             game.global.bttnArr[game.global.bttnIdx - 1].frame = 0;
-            /*boxOutline.x = game.global.bttnArr[game.global.bttnIdx].x;
-            boxOutline.y = game.global.bttnArr[game.global.bttnIdx].y;*/
             game.buttonSwitch = game.add.audio("buttonSwitch");
             game.buttonSwitch.play(false,false,0.5,false);
 

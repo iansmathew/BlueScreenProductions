@@ -4,7 +4,7 @@ var loadState = {
     preload: function(){
          game.load.image('TileSet1', "Assets/TileMaps/BrownRed.png");
         game.load.tilemap('tileMap1', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
-        game.load.image('Level-1',"Assets/TileMaps/Level-1.png");
+        game.load.image('Level-1', "Assets/TileMaps/Level-1.png");
 
         game.load.image('TileSet2', "Assets/TileMaps/SnowPack.png");
         game.load.tilemap('tileMap2', "Assets/TileMaps/map2.json", null, Phaser.Tilemap.TILED_JSON);
@@ -77,6 +77,21 @@ var loadState = {
         game.load.spritesheet('DankBlack', "Assets/img/Character/DankBlack.png", 60, 83);
         game.load.spritesheet('DankPurple', "Assets/img/Character/DankPurple.png", 60, 83);
         game.load.spritesheet('DankRed', "Assets/img/Character/DankRed.png", 60, 83);
+        game.load.spritesheet('GirlSprite', "Assets/img/Character/GirlSprite.png", 60, 83);
+        game.load.spritesheet('GirlBlond', "Assets/img/Character/GirlBlond.png", 60, 83);
+        game.load.spritesheet('GirlDark', "Assets/img/Character/GirlDark.png", 60, 83);
+        game.load.spritesheet('GirlDBlond', "Assets/img/Character/GirlDBlond.png", 60, 83);
+        game.load.spritesheet('GirlPurple', "Assets/img/Character/GirlPurple.png", 60, 83);
+        game.load.spritesheet('GuySprite', "Assets/img/Character/GuySprite.png", 60, 83);
+        game.load.spritesheet('GuyBlack', "Assets/img/Character/GuyBlack.png", 60, 83);
+        game.load.spritesheet('GuyBlue', "Assets/img/Character/GuyBlue.png", 60, 83);
+        game.load.spritesheet('GuyPurple', "Assets/img/Character/GuyPurple.png", 60, 83);
+        game.load.spritesheet('GuyRed', "Assets/img/Character/GuyRed.png", 60, 83);
+        game.load.spritesheet('ZombieSprite', "Assets/img/Character/ZombiePewPew.png", 60, 83);
+        game.load.spritesheet('ZombieGreen', "Assets/img/Character/ZombieGreen.png", 60, 83);
+        game.load.spritesheet('ZombieGrey', "Assets/img/Character/ZombieGrey.png", 60, 83);
+        game.load.spritesheet('ZombieGrop', "Assets/img/Character/ZombieGrop.png", 60, 83);
+        game.load.spritesheet('ZombieDark', "Assets/img/Character/ZombieDark.png", 60, 83);
 
 
 

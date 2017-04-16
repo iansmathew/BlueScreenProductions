@@ -144,10 +144,10 @@ Player.prototype.movePlayer = function () {
 
 //Creates cursor keys for player
 Player.prototype.createKeys = function(){
-    if (this.color == "red") {
+    if (this.color === "blue") {
 
         this.cursor = game.input.keyboard.createCursorKeys();
-        this.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
         this.pad = game.input.gamepad.pad1;
     }
     else {
@@ -159,7 +159,7 @@ Player.prototype.createKeys = function(){
                 right: game.input.keyboard.addKey(Phaser.Keyboard.D)
             };
         this.cursor = wasd;
-        this.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SHIFT);
+        this.fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.pad = game.input.gamepad.pad2;
     }
 };

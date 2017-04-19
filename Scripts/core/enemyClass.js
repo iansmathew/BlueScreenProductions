@@ -310,11 +310,22 @@ Enemies.prototype.spawnEnemies = function () {
         }
     }
     else if (this.getFirstAlive() == null) {
+        var Num;
         this.spawnWaves = false;
         if (!this.spawnWaves) {
-            var myText = game.add.text(500, 80, 'Get ready for wave ' + ++waveProperties.level);
+            var myText = game.add.image(500, 100, 'Wavy');
+            if (waveProperties.level > 9) {
+                Num.alpha = 0;
+                var Next = game.add.image(700, 80, 'Next');
+            }
+            else {
+                Num = game.add.image(700, 80, 'Numbers');
+            }
+            Num.frame = waveProperties.level++;
             game.add.tween(myText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
             game.add.tween(myText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
+            game.add.tween(Num).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
+            game.add.tween(Num).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
 
 
             waveProperties.active = 0;
@@ -448,5 +459,5 @@ var waveProperties = {
     level: 1,
     max: 12,
     active: 0,
-    counter: 24,
+    counter: 24
 };

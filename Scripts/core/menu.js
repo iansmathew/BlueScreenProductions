@@ -2,13 +2,13 @@
 var menuState = {
     //code to make assets goes here
     create: function () {
+
         this.backimage = game.add.image(0, 0, 'background'); //adding the background
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
         if (game.global.isPlaying && !game.global.menuMusic.isPlaying) {
             game.global.menuMusic.loopFull(0.4);
         }
-
 
         var nameLabel = game.add.image(game.width / 2, 230, 'title');
         nameLabel.anchor.setTo(0.5, 0.5);
@@ -192,6 +192,7 @@ var creditState = {
 /* This is not a part of menu. State is shown when both players die*/
 var gameOverState = {
     create: function () {
+        game.global.MapSelect = 0;
         this.gameOverMusic = game.add.audio("gameOverMusic");
         this.gameOverMusic.play(null, null, 0.4, false, false);
         game.add.image(0, 0, 'background');

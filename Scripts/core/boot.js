@@ -68,6 +68,10 @@ var bootState = {
         game.load.audio('GrasslandMusic',"././Assets/sound/Music/Grassland.wav");
         game.load.audio('SnowMusic',"././Assets/sound/Music/Snow.wav");
 
+        game.load.image('Wavy', "././Assets/img/tempGameAssets/Wave.png");
+        game.load.image('Next', "././Assets/img/tempGameAssets/Next.png");
+        game.load.spritesheet('Numbers', "././Assets/img/tempGameAssets/Numbers.png", 55, 79);
+
 
         
 

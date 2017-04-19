@@ -494,14 +494,12 @@ var LevelSelect = {
             }
         }, this, 1, 0);
         this.PlayerPick = Math.floor((Math.random() * 2)+ 1);
-        console.log(this.PlayerPick);
         if(this.PlayerPick === 1){
             this.Picker = game.add.image(0,0,'Player1Pick');
         }
         else{
             this.Picker = game.add.image(0,0,'Player2Pick');
         }
-        console.log(this.PlayerPick);
         this.timer=0;
         this.runcount =0;
         this.continue1 = false;
@@ -510,7 +508,6 @@ var LevelSelect = {
     },
     update: function () {
         this.timer++;
-        console.log(this.timer);
         if (this.timer++ >= 200){
             if (this.runcount === 0){
                 this.Picker.destroy();

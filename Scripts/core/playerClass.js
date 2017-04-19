@@ -22,7 +22,7 @@ Player = function (game, x, y, image, playerNum) {
     this.color = (playerNum == 1) ? "red" : "blue";
     this.isWalking = true;
     this.score = 0;
-    this.currentWeapon = 0;
+    this.currentWeapon = 4;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
     this.facingRight = false;
@@ -31,9 +31,37 @@ Player = function (game, x, y, image, playerNum) {
         y: y
     };
 
+    this.gunProp = [    {x: 0.3, y:0, pX: -2, pY: 10, fRate: 60}, //pistol
+                        {x: 0.3, y:0, pX: -2, pY: 5, fRate: 60}, //machinegun
+                        {x: 0.3, y:0, pX: -2, pY: 5, fRate: 3}, //shotgun
+                        {x: 0.5, y:0.5, pX: 0, pY: 15, fRate: 60}, //electric
+                        {x: 0.3, y:0, pX: -2, pY: 5, fRate: 60}, //flamethrower
+                        {x: 0.3, y:0, pX: -2, pY: 10, fRate: 60}, //null
+                        {x: 0.3, y:0, pX: -2, pY: 10, fRate: 60}]; //null
+
+    this.gunImages = [this.addChild(game.make.sprite(this.gunProp[0].pX, this.gunProp[0].pY, 'pistol')),
+                      this.addChild(game.make.sprite(this.gunProp[1].pX, this.gunProp[1].pY, 'machineGun')),
+                      this.addChild(game.make.sprite(this.gunProp[2].pX, this.gunProp[2].pY, 'shotgun')),
+                      this.addChild(game.make.sprite(this.gunProp[3].pX, this.gunProp[3].pY, 'orb')),
+                      this.addChild(game.make.sprite(this.gunProp[4].pX, this.gunProp[4].pY, 'flamethrower')),
+                      this.addChild(game.make.sprite(this.gunProp[5].pX, this.gunProp[5].pY, 'machineGun')), //this gun will never be used
+                      this.addChild(game.make.sprite(this.gunProp[6].pX, this.gunProp[6].pY, 'machineGun'))]; //this gun will never be used
+
+
+
+    for(var i=0; i < this.gunImages.length; i++)
+    {
+        this.gunImages[i].visible = false;
+        this.gunImages[i].animations.add('fire', [1, 0], this.gunProp[i].fRate, true);
+    }
+
+    this.gunImages[this.currentWeapon].visible = true;
+
     this.fireAngle = 0;
-    this.gun = this.addChild(game.make.sprite(-2, 10, 'gun'));
-    this.gun.anchor.setTo(0.3, 0);
+    this.gun = this.gunImages[this.currentWeapon]; //this.gunImages[0];
+    this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
+
+    //pistol set achor to 0.2, 0.5
 
     /*--CONSTRUCTOR FUNCTIONS--*/
     this.createKeys();
@@ -44,13 +72,15 @@ Player = function (game, x, y, image, playerNum) {
 
 
     this.weapon.push(new Weapon.SingleBullet(game));
-    this.weapon.push(new Weapon.ScatterShot(game));
+    this.weapon.push(new Weapon.ScatterShot(game)); //machine gun
     this.weapon.push(new Weapon.Shotgun(game));
-	this.weapon.push(new Weapon.Splitter(game));
+	this.weapon.push(new Weapon.Splitter(game)); //electric ball
     this.weapon.push(new Weapon.FlameThrower(game));
     this.weapon.push(new Weapon.Blaster(game));
     this.weapon.push(new Weapon.Rocket(game));
 
+
+    this.gunImages[0].animations.add('fire', [0, 1], 60, true);
 
     game.add.existing(this);
 };
@@ -128,6 +158,12 @@ Player.prototype.movePlayer = function () {
     }
     if(this.pad.isDown(Phaser.Gamepad.XBOX360_RIGHT_TRIGGER)|| this.pad.justPressed(Phaser.Gamepad.XBOX360_RIGHT_BUMPER)){
         this.weapon[this.currentWeapon].fire(this, this.fireAngle);
+        this.gunImages[this.currentWeapon].animations.play('fire');
+    }
+
+    else {
+        this.gunImages[this.currentWeapon].animations.stop();
+        this.gunImages[this.currentWeapon].frame = 0;
     }
     if (this.fireButton.isDown && this.cursor.left.isDown){
         this.weapon[this.currentWeapon].fire(this, -180);
@@ -243,24 +279,40 @@ Player.prototype.powerUp = function (powerUp) {
     powerUp.destroy();
     switch (powerUp.item) {
         case "MachineGun":
+            this.gunImages[this.currentWeapon].visible = false;
             this.currentWeapon = 1;
+            this.gunImages[this.currentWeapon].visible = true;
+            this.gun = this.gunImages[this.currentWeapon];
+            this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
             break;
+
         case "Shotgun":
+            this.gunImages[this.currentWeapon].visible = false;
             this.currentWeapon = 2;
+            this.gunImages[this.currentWeapon].visible = true;
+            this.gun = this.gunImages[this.currentWeapon];
+            this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
+
             break;
+
         case "Splitter":
+            this.gunImages[this.currentWeapon].visible = false;
             this.currentWeapon = 3;
+            this.gunImages[this.currentWeapon].visible = true;
+            this.gun = this.gunImages[this.currentWeapon];
+            this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
+
             break;
+
         case "FlameThrower":
+            this.gunImages[this.currentWeapon].visible = false;
             this.currentWeapon = 4;
+            this.gunImages[this.currentWeapon].visible = true;
+            this.gun = this.gunImages[this.currentWeapon];
+            this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
+
             break;
-        case "Blaster":
-            this.currentWeapon = 5;
-            console.log("Blaster");
-            break;
-        case "Rocket":
-            this.currentWeapon = 6;
-            break;
+
         default:
             console.log("Invalid powerup");
             return;
@@ -287,6 +339,12 @@ Player.prototype.mercyRevive = function () {
     this.increaseHealth();
 
     this.createKeys();
+
+    this.gunImages[this.currentWeapon].visible = false;
+    this.currentWeapon = 0;
+    this.gunImages[this.currentWeapon].visible = true;
+    this.gun = this.gunImages[this.currentWeapon];
+    this.gun.anchor.setTo(this.gunProp[this.currentWeapon].x, this.gunProp[this.currentWeapon].y);
 };
 
 Player.prototype.onWorldOutBounds = function () {

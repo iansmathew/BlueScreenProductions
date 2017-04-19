@@ -33,11 +33,18 @@ var loadState = {
 
 
         game.load.spritesheet('heart', "Assets/img/tempGameAssets/heartSprite.png", 22, 22);
-        game.load.image('gun', "././Assets/img/tempGameAssets/gun.png");
+        game.load.spritesheet('pistol', "././Assets/img/tempGameAssets/pistol.png", 70, 35);
+        game.load.spritesheet('machineGun', "././Assets/img/tempGameAssets/machineGun.png", 113, 30);
+        game.load.spritesheet('orb', "././Assets/img/tempGameAssets/orb.png", 26, 28);
+        game.load.spritesheet('shotgun', "././Assets/img/tempGameAssets/shotgun.png", 110, 40);
+        game.load.spritesheet('flamethrower', "././Assets/img/tempGameAssets/flamethrower.png", 100, 35);
+
         game.load.image('bFlame', "././Assets/img/tempGameAssets/bulletFlame.png");
         game.load.image('bPistol', "././Assets/img/tempGameAssets/bulletPistol.png");
         game.load.image('bMachineGun', "././Assets/img/tempGameAssets/bulletMachineGun.png");
         game.load.image('bShotgun', "././Assets/img/tempGameAssets/bulletShotgun.png");
+        game.load.image('bElectric', "././Assets/img/tempGameAssets/bulletLightning.png");
+
 
 
 

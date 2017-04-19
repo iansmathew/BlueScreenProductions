@@ -211,7 +211,7 @@ Weapon.Splitter = function (game) {
 
     for (var i = 0; i < 32; i++)
     {
-        this.add(new Bullet(game, 'bPistol', 10));
+        this.add(new Bullet(game, 'bElectric', 10));
     }
 
     return this;

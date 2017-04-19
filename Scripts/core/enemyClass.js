@@ -321,7 +321,7 @@ Enemies.prototype.spawnEnemies = function () {
             else {
                 Num = game.add.image(700, 80, 'Numbers');
             }
-            Num.frame = ++waveProperties.level;
+            Num.frame = waveProperties.level++;
             game.add.tween(myText).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);
             game.add.tween(myText).to({alpha: 0}, 1500, Phaser.Easing.Linear.None, true);
             game.add.tween(Num).to({y: 0}, 1500, Phaser.Easing.Linear.None, true);

@@ -22,7 +22,7 @@ Player = function (game, x, y, image, playerNum) {
     this.color = (playerNum == 1) ? "red" : "blue";
     this.isWalking = true;
     this.score = 0;
-    this.currentWeapon = 4;
+    this.currentWeapon = 0;
     this.animations.add('right', [0, 1], 8, true);
     this.animations.add('left', [3, 4], 8, true);
     this.facingRight = false;

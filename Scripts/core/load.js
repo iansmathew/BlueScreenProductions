@@ -2,7 +2,25 @@
 var loadState = {
     //place assets to be loaded here
     preload: function(){
-         game.load.image('TileSet1', "Assets/TileMaps/BrownRed.png");
+
+        this.backimage = game.add.image(0, 0, 'background');
+        this.preloadBar = this.add.sprite(game.width/2, 690, 'loadBar');
+        this.preloadBar.scale.setTo(0.8, 0.8);
+        this.preloadBar.anchor.setTo(0.5, 0.5);
+
+        this.load.setPreloadSprite(this.preloadBar);
+
+
+        game.load.audio('bulletSfx', "././Assets/sound/Guns/blaster.mp3");
+        game.load.audio('bubbleSfx', "././Assets/sound/Blorp/Blorp.mp3");
+        game.load.audio('shotgunSfx',"././Assets/sound/Guns/shotgun.wav");
+        game.load.audio('machineGunSfx',"././Assets/sound/Guns/machineGun.wav");
+        game.load.audio('ShockSfx',"././Assets/sound/Guns/Shock.wav");
+        game.load.audio('RocketSfx', "././Assets/sound/Guns/Rocket.mp3");
+        game.load.audio('FlameSfx', "././Assets/sound/Guns/NewFlame.wav");
+        game.load.audio('LaserSfx', "././Assets/sound/Guns/LaserCannon.wav");
+
+        game.load.image('TileSet1', "Assets/TileMaps/BrownRed.png");
         game.load.tilemap('tileMap1', "Assets/TileMaps/map.json", null, Phaser.Tilemap.TILED_JSON);
         game.load.image('Level-1', "Assets/TileMaps/Level-1.png");
 
@@ -63,14 +81,7 @@ var loadState = {
         game.load.spritesheet('FireworkVFX', "././Assets/img/tempGameAssets/FireworkVFX.png",32,32,4);
         game.load.image('whitePuff', "././Assets/img/tempGameAssets/whitePuff.png");
 
-        game.load.audio('bulletSfx', "././Assets/sound/Guns/blaster.mp3");
-        game.load.audio('bubbleSfx', "././Assets/sound/Blorp/Blorp.mp3");
-        game.load.audio('shotgunSfx',"././Assets/sound/Guns/shotgun.wav");
-        game.load.audio('machineGunSfx',"././Assets/sound/Guns/machineGun.wav");
-        game.load.audio('ShockSfx',"././Assets/sound/Guns/Shock.wav");
-        game.load.audio('RocketSfx', "././Assets/sound/Guns/Rocket.mp3");
-        game.load.audio('FlameSfx', "././Assets/sound/Guns/NewFlame.wav");
-        game.load.audio('LaserSfx', "././Assets/sound/Guns/LaserCannon.wav");
+
 
         game.load.image('playAgain', "././Assets/img/tempMenuAssets/playAgainO.png");
         game.load.image('exit', "././Assets/img/tempMenuAssets/btnExit.png");

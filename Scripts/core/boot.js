@@ -72,6 +72,8 @@ var bootState = {
         game.load.image('Next', "././Assets/img/tempGameAssets/Next.png");
         game.load.spritesheet('Numbers', "././Assets/img/tempGameAssets/Numbers.png", 55, 79);
 
+        game.load.image('loadBar', "././Assets/img/tempMenuAssets/loadBar.png");
+
         game.load.bitmapFont("KennyFont", "././Assets/font/font.png", "././Assets/font/font.fnt");
 
 

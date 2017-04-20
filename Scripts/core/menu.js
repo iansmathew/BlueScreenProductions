@@ -4,6 +4,7 @@ var menuState = {
     create: function () {
 
         this.backimage = game.add.image(0, 0, 'background'); //adding the background
+
         game.input.gamepad.start(); // start gamepad
         game.global.pad = game.input.gamepad.pad1; //allowing first player to navigate UI
         if (game.global.isPlaying && !game.global.menuMusic.isPlaying) {

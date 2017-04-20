@@ -102,7 +102,7 @@ playState.prototype = {
             player.powerUp(powerUp);
         });
 
-        if (game.input.keyboard.addKey(Phaser.Keyboard.P).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
+        if (game.input.keyboard.addKey(Phaser.Keyboard.ESC).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
             game.paused = !game.paused;
 
     },

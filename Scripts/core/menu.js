@@ -173,7 +173,7 @@ var creditState = {
             game.state.start('menu', Phaser.Plugin.StateTransition.Out.SlideTop, Phaser.Plugin.StateTransition.In.SlideTop);
         });
 
-        game.global.bttnArr = [this.btnE];
+        game.global.bttnArr = [this.btnE]; //add all the buttons in the scene in order to the array
 
 
 

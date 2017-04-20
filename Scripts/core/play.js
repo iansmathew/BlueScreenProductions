@@ -50,11 +50,15 @@ playState.prototype = {
         this.gameMusic = game.add.audio(this.music);
         this.gameMusic.loopFull(0.4);
 
-        this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+        this.scoreCounter1 = game.add.bitmapText(70, 10, "KennyFont",  'P1 Score: ' + this.player1.score, 20);
+        this.scoreCounter2 = game.add.bitmapText(950, 10, "KennyFont",  'P2 Score: ' + this.player2.score, 20);
 
+
+        /*this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
+            {font: '20px Times New Roman', fill: '#ffffff' });*/
+/*
         this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + this.player2.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });
+            {font: '20px Times New Roman', fill: '#ffffff' });*/
 
 
         game.time.events.loop(2000, this.enemies.spawnEnemies, this.enemies); //loop that spawns enemies

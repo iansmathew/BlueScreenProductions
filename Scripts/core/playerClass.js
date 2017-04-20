@@ -166,10 +166,11 @@ Player.prototype.movePlayer = function () {
         this.gunImages[this.currentWeapon].frame = 0;
     }
     if (this.fireButton.isDown && this.cursor.left.isDown){
+        this.fireAngle = -180;
         this.weapon[this.currentWeapon].fire(this, -180);
     }
     else if (this.fireButton.isDown && this.cursor.right.isDown){
-        this.weapon.fireAngle = -45;
+        this.weapon.fireAngle = 0;
         this.weapon[this.currentWeapon].fire(this, 0);
     }
     else if (this.fireButton.isDown) { //firing straight up

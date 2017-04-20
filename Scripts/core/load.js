@@ -4,8 +4,9 @@ var loadState = {
     preload: function(){
 
         this.backimage = game.add.image(0, 0, 'background');
-        this.preloadBar = this.add.sprite(game.width/2, 690, 'loadBar');
-        this.preloadBar.scale.setTo(0.8, 0.8);
+        this.Loading = game.add.image(game.width/2,game.height/2-50, "loading");
+        this.preloadBar = this.add.sprite(game.width/2, 600, 'loadBar');
+        this.Loading.anchor.setTo(0.5, 0.5);
         this.preloadBar.anchor.setTo(0.5, 0.5);
 
         this.load.setPreloadSprite(this.preloadBar);

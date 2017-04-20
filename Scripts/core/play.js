@@ -53,18 +53,10 @@ playState.prototype = {
         if (!game.global.gameMusicPlay)
             this.gameMusic.stop();
 
-        this.scoreCounter1 = game.add.bitmapText(130, 20, "KennyFont",  'P1 Score: ' + this.player1.score, 20);
-        this.scoreCounter2 = game.add.bitmapText(1010, 20, "KennyFont",  'P2 Score: ' + this.player2.score, 20);
+        this.scoreCounter1 = game.add.bitmapText(130, 20, "KennyFont",  '' + this.player1.score, 20);
+        this.scoreCounter2 = game.add.bitmapText(1050, 20, "KennyFont",  '' + this.player2.score, 20);
         this.scoreCounter1.anchor.setTo(0.5, 0.5);
         this.scoreCounter2.anchor.setTo(0.5, 0.5);
-
-
-        /*this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });*/
-/*
-        this.scoreCounter2 = game.add.text(1120, 10,'P2 Score: ' + this.player2.score,
-            {font: '20px Times New Roman', fill: '#ffffff' });*/
-
 
         game.time.events.loop(2000, this.enemies.spawnEnemies, this.enemies); //loop that spawns enemies
         game.time.events.loop(2000, function () {
@@ -113,24 +105,11 @@ playState.prototype = {
         if (game.input.keyboard.addKey(Phaser.Keyboard.P).isDown || game.input.gamepad.pad1.justPressed(Phaser.Gamepad.BUTTON_9) || game.input.gamepad.pad2.justPressed(Phaser.Gamepad.BUTTON_9))
             game.paused = !game.paused;
 
-
-
-
-
-       /* console.log("MAX: " + waveProperties.max);
-        console.log("ACTIVE: " + waveProperties.active);
-        console.log("COUNTER: " + waveProperties.counter);*/
     },
 
-    /*render: function () {
-        this.enemies.forEachAlive(function (member) {
-            game.debug.body(member);
-        })
-    },*/
 
     paused: function () {
-        this.pauseText1 = game.add.text(500, 80, 'GAME PAUSED ');
-        this.pauseText2 = game.add.text(470, 120, 'Press ESC to Unpause ');
+        this.pauseText1 = game.add.image(0,0,'Pause');
 
     },
 
@@ -138,7 +117,6 @@ playState.prototype = {
         var pauseButton = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
         if (pauseButton.justDown) {
             this.pauseText1.destroy();
-            this.pauseText2.destroy();
             game.paused = !game.paused;
         }
     },
@@ -148,7 +126,7 @@ playState.prototype = {
             level: 1,
             max: 12,
             active: 0,
-            counter: 24,
+            counter: 24
         };
 
         game.global.score1 = this.player1.score;

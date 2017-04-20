@@ -71,8 +71,10 @@ var bootState = {
         game.load.image('Wavy', "././Assets/img/tempGameAssets/Wave.png");
         game.load.image('Next', "././Assets/img/tempGameAssets/Next.png");
         game.load.spritesheet('Numbers', "././Assets/img/tempGameAssets/Numbers.png", 55, 79);
+        game.load.image('Pause', "././Assets/img/tempMenuAssets/PauseScreen.png");
 
         game.load.image('loadBar', "././Assets/img/tempMenuAssets/loadBar.png");
+        game.load.image('loading', "././Assets/img/tempMenuAssets/Loading.png");
 
         game.load.bitmapFont("KennyFont", "././Assets/font/font.png", "././Assets/font/font.fnt");
 

@@ -360,7 +360,7 @@ Enemies.prototype.takeDamage = function (bullet, enemy, powerUpG, counter, playe
         }, this);
 
         player.score += enemy.score;
-        counter.text = (player.color == "red") ? "P1 Score: " + player.score : "P2 Score: " + player.score;
+        counter.text = player.score;//(player.color == "red") ? player.score : player.score;
         if (counter.scale.x <= 1)
             game.add.tween(counter.scale).to({x: 1.3, y: 1.3}, 100).yoyo(true).start();
 

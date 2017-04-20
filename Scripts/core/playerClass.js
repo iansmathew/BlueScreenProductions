@@ -219,6 +219,8 @@ Player.prototype.setPistol = function() {
 //Damages the player on collision with enemy
 Player.prototype.damagePlayer = function (enemy) {
     if (this.invulnerable == false) {
+        game.add.tween(this.scale).to({x: 1.2, y: 1.2}, 100).yoyo(true).start();
+
         this.isWalking = false;
         this.body.velocity.x = (this.body.touching.right) ? -500 : 500;
         this.body.velocity.y = -300;

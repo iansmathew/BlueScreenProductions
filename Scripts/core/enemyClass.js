@@ -361,6 +361,8 @@ Enemies.prototype.takeDamage = function (bullet, enemy, powerUpG, counter, playe
 
         player.score += enemy.score;
         counter.text = (player.color == "red") ? "P1 Score: " + player.score : "P2 Score: " + player.score;
+        if (counter.scale.x <= 1)
+            game.add.tween(counter.scale).to({x: 1.3, y: 1.3}, 100).yoyo(true).start();
 
         var roll = game.rnd.integerInRange(0, 100);
         if (roll <= enemy.powerUpChance && enemy.partOfWave) {

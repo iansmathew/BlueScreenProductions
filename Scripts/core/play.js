@@ -50,8 +50,10 @@ playState.prototype = {
         this.gameMusic = game.add.audio(this.music);
         this.gameMusic.loopFull(0.4);
 
-        this.scoreCounter1 = game.add.bitmapText(70, 10, "KennyFont",  'P1 Score: ' + this.player1.score, 20);
-        this.scoreCounter2 = game.add.bitmapText(950, 10, "KennyFont",  'P2 Score: ' + this.player2.score, 20);
+        this.scoreCounter1 = game.add.bitmapText(130, 20, "KennyFont",  'P1 Score: ' + this.player1.score, 20);
+        this.scoreCounter2 = game.add.bitmapText(1010, 20, "KennyFont",  'P2 Score: ' + this.player2.score, 20);
+        this.scoreCounter1.anchor.setTo(0.5, 0.5);
+        this.scoreCounter2.anchor.setTo(0.5, 0.5);
 
 
         /*this.scoreCounter1 = game.add.text(70, 10,'P1 Score: ' + this.player1.score,

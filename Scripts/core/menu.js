@@ -34,10 +34,12 @@ var menuState = {
         this.btnM = new Button(game, 50, 30, 'soundIcons', function () {
             if (game.global.isPlaying) {
                 game.global.menuMusic.stop();
+                game.global.gameMusicPlay = false;
                 game.global.isPlaying = !game.global.isPlaying;
             }
             else {
                 game.global.menuMusic.play();
+                game.global.gameMusicPlay = true;
                 game.global.isPlaying = !game.global.isPlaying;
             }
         });
@@ -100,10 +102,12 @@ var optionState = {
         this.btnM = new Button(game, 700, 360, 'soundIcons', function () {
             if (game.global.isPlaying) {
                 game.global.menuMusic.stop();
+                game.global.gameMusicPlay = false;
                 game.global.isPlaying = !game.global.isPlaying;
             }
             else {
                 game.global.menuMusic.play();
+                game.global.gameMusicPlay = false;
                 game.global.isPlaying = !game.global.isPlaying;
             }
         });
@@ -131,10 +135,13 @@ var optionState = {
             if (game.input.mousePointer.x > this.circle.x + this.circle.width / 2 && this.currPoint <= 9) {
                 this.circle.x = this.volPoints[++this.currPoint];
                 game.global.menuMusic.volume = this.currPoint / 10;
+                game.global.gameMusicVol = this.currPoint/10;
             }
             if (game.input.mousePointer.x < this.circle.x - this.circle.width && this.currPoint > 0) {
                 this.circle.x = this.volPoints[--this.currPoint];
                 game.global.menuMusic.volume = this.currPoint / 10;
+                game.global.gameMusicVol = this.currPoint/10;
+
 
             }
 

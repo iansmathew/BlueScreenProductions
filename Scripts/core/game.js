@@ -57,6 +57,8 @@ game.global = {
 
         }
     },
+    gameMusicVol : 1,
+    gameMusicPlay : true,
 };
 
 

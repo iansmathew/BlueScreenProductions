@@ -49,6 +49,9 @@ playState.prototype = {
         this.music = game.global.LevelMusicArray[game.global.MusicSelect];
         this.gameMusic = game.add.audio(this.music);
         this.gameMusic.loopFull(0.4);
+        this.gameMusic.volume = game.global.gameMusicVol;
+        if (!game.global.gameMusicPlay)
+            this.gameMusic.stop();
 
         this.scoreCounter1 = game.add.bitmapText(130, 20, "KennyFont",  'P1 Score: ' + this.player1.score, 20);
         this.scoreCounter2 = game.add.bitmapText(1010, 20, "KennyFont",  'P2 Score: ' + this.player2.score, 20);

@@ -1,6 +1,7 @@
 # Blue Screen Productions
 
 ## Project Info
+	Pew-Pew is a first year Game Production project created by BlueScreenProductions
 	This project is now closed.
 	
 	
